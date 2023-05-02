@@ -1,17 +1,16 @@
 class Solution {
     public boolean checkIfExist(int[] arr) {
-        Map<Integer, Integer> map = new HashMap<>();
-        int n = arr.length;
-        for (int i = 0; i < n; i++){
-            map.put(arr[i], i);
-        }
-        for (int i = 0; i < n; i++) {
-            if (map.containsKey(2 * arr[i]) &&
-                map.get(2 * arr[i]) != i) {
+        Set<Integer> set = new HashSet<>();
+        for (int i : arr) {
+            if (set.contains(i * 2) || (i % 2 == 0 && set.contains(i / 2))) {
                 return true;
             }
+            set.add(i);
         }
 
         return false;
     }
 }
+
+// TC: O(n * logn), SC: O(n)
+// set.contains() costs O(logn) at worst case
