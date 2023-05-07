@@ -1,22 +1,16 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        HashMap<Character, Integer> map = new HashMap<>();
-        for(int i=0;i<s.length();i++){
-            char ch = s.charAt(i);
-            map.put(ch,map.getOrDefault(ch,0)+1);
+        if (s.length() != t.length()) return false; // If both string are not of the same length
+
+        int[] store = new int[26]; // Create a bucket of 26 char; a=0, z=25; Only works if strings are just small letters and no numbers
+
+        for (int i = 0; i < s.length(); i++) { // Iterate through the strings;
+            store[s.charAt(i) - 'a']++; // Add 1 at ASCII value from s in the bucket store
+            store[t.charAt(i) - 'a']--; // Sub 1 at ASCII value from s in the bucket store
         }
-        for(int i=0;i<t.length();i++){
-            char ch = t.charAt(i);
-            if(map.get(ch)!=null){
-                if(map.get(ch)==1){
-                    map.remove(ch);
-                }else{
-                    map.put(ch,map.get(ch)-1);
-                }
-            }else{
-                return false;
-            }
-        }
-        return map.isEmpty();
+
+        for (int n : store) if (n != 0) return false; // If value of any char is not equal to 0, it is not a valid anagram
+
+        return true; // else return true;
     }
 }
