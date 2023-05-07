@@ -4,10 +4,9 @@ class Solution {
         int profitToday = 0;
         int leastSoFar = Integer.MAX_VALUE;
         for(int i=0;i<prices.length;i++){
-          profitToday = prices[i]-leastSoFar;
-          if(profitToday>maxProfit) maxProfit = profitToday;
-          leastSoFar = Math.min(leastSoFar,prices[i]);
-          //System.out.println("Least:"+leastSoFar+" profitToday"+profitToday);
+            leastSoFar = Math.min(leastSoFar,prices[i]); // What is the least price of stock so far
+            profitToday = prices[i]-leastSoFar; // What would be the best Profit if we bought at leastSoFar and sold today @ i
+            if(profitToday>maxProfit) maxProfit = profitToday; 
         }
         return maxProfit;
     }
