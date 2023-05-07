@@ -1,15 +1,19 @@
 class Solution {
 
     public int[] twoSum(int[] nums, int target) {
-       int[] ans = new int[2];
-        for(int i=0;i<nums.length-1;i++){
-            for(int j=i+1;j<nums.length;j++){
-                if(nums[i]+nums[j]==target){ // Basic n^2 Approach
-                    ans[0]=i;
-                    ans[1]=j;
-                }
+       HashMap<Integer, Integer> prevMap = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            int diff = target - num;
+
+            if (prevMap.containsKey(diff)) { // If map already has the diff return index of diff and i
+                return new int[] { prevMap.get(diff), i };
             }
+
+            prevMap.put(num, i); // Else add it in the hashmap
         }
-        return ans;
+
+        return new int[] {};
     }
 }
