@@ -1,29 +1,18 @@
 class Solution {
     public List<Integer> findDisappearedNumbers(int[] nums) {
-        int i = 0;
-        List<Integer> arr = new ArrayList<>();
-        while(i<nums.length){
-            int correct = nums[i]-1;
-            if(nums[i]==nums[correct]){
-                i++;
-            }else{
-                swap(nums,i,correct);
-            }
-        }
-        for(int j=0;j<nums.length;j++){
-            if(j!=nums[j]-1){
-                arr.add(j+1);
-            }
-        }
-        return arr;
-    }
+	int[] res = new int[nums.length + 1];
 
+	for (int num : nums) {
+		res[num] = num;
+	}
 
+	List<Integer> result = new ArrayList<>(res.length);
+	for (int i = 1; i < res.length; i++) {
+		if (res[i] == 0) {
+			result.add(i);
+		}
+	}
 
-   
-     public void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i]=arr[j];
-        arr[j]=temp;
-    }
+	return result;
+}
 }
