@@ -1,6 +1,9 @@
 class Solution {
     public boolean isSubsequence(String s, String t) {
         int i = s.length();
+        if(s.length()==0){
+            return true;
+        }
         System.out.println(i);
         int j = t.length();
         while(i>0&&j>0){
