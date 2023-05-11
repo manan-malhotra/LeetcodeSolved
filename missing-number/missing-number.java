@@ -1,12 +1,11 @@
 class Solution {
     public int missingNumber(int[] nums) { //binary search
-    Arrays.sort(nums);
-    int left = 0, right = nums.length, mid= (left + right)/2;
-    while(left<right){
-        mid = (left + right)/2;
-        if(nums[mid]>mid) right = mid;
-        else left = mid+1;
-    }
-    return left;
+    int n = nums.length;
+    int actSum = (n*(n+1))/2;
+System.out.println(actSum);
+   int sum = 0;
+   for(int i:nums) sum+=i;
+   System.out.println(sum);
+   return actSum-sum;
 }
 }
