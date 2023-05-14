@@ -1,13 +1,10 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int maxProfit = 0 ;
-        int profitToday = 0;
-        int leastSoFar = Integer.MAX_VALUE;
-        for(int i=0;i<prices.length;i++){
-            leastSoFar = Math.min(leastSoFar,prices[i]); // What is the least price of stock so far
-            profitToday = prices[i]-leastSoFar; // What would be the best Profit if we bought at leastSoFar and sold today @ i
-            if(profitToday>maxProfit) maxProfit = profitToday; 
+        int maxCur = 0, maxSoFar = 0;
+        for(int i = 1; i < prices.length; i++) {
+            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
+            maxSoFar = Math.max(maxCur, maxSoFar);
         }
-        return maxProfit;
+        return maxSoFar;
     }
 }
