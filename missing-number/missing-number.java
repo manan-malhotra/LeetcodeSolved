@@ -3,9 +3,9 @@ class Solution {
     int n = nums.length;
     int actSum = (n*(n+1))/2;
 System.out.println(actSum);
-   int sum = 0;
-   for(int i:nums) sum+=i;
-   System.out.println(sum);
-   return actSum-sum;
+   
+   for(int i:nums) actSum-=i;
+   
+   return actSum;
 }
 }
