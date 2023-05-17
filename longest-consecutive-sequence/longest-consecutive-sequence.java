@@ -10,12 +10,11 @@ class Solution {
         for (int num: nums) {
             if (!hashSet.contains(num - 1)) {
                 
-                int currentNum = num;
+                
                 int currentStreak = 1;
                 hashSet.remove(num);
-                while (hashSet.contains(currentNum + 1)) {
-                    hashSet.remove(num+1);
-                    currentNum += 1;
+                while (hashSet.contains(++num)) {
+                    hashSet.remove(num);
                     currentStreak += 1;
                 }
 
