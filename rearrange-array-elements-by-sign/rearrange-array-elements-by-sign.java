@@ -1,7 +1,6 @@
 class Solution {
     public int[] rearrangeArray(int[] nums) {
-        int len = nums.length;
-        int[] ans = new int[len];
+        int[] ans = new int[nums.length];
         int p =0;
         int n =1;
         for(int i : nums){
