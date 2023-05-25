@@ -12,9 +12,9 @@ class Solution {
             if(hm.get(nums[i])*3>n) hs.add(nums[i]);
         }
         for(int i=0;i<n;i++){
-            if(hs.contains(nums[i])){
+            if(hs.remove(nums[i])){
                 ans.add(nums[i]);
-                hs.remove(nums[i]);
+                
             }
         }
         return ans;
