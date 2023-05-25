@@ -2,29 +2,24 @@ class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> triplet = new ArrayList<>();
         for(int i=0;i<nums.length-2;i++){
-             if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
-            int aPtr = i+1;
-            int bPtr = nums.length-1;
-            int sum = 0-nums[i];
-            while(aPtr<bPtr){
-                if(nums[aPtr]+nums[bPtr]==sum){
-                    ans.add(Arrays.asList(nums[i], nums[aPtr], nums[bPtr]));
-                    while (aPtr < bPtr && nums[aPtr] == nums[aPtr + 1]) aPtr++;
-                    while (aPtr < bPtr && nums[bPtr] == nums[bPtr - 1]) bPtr--;
-
-                    aPtr++;
-                    bPtr--;
-                }else if(nums[aPtr]+nums[bPtr]>sum){
-                    bPtr--;
-                }else{
-                    aPtr++;
+            if(i==0||(i>0 && nums[i]!=nums[i-1])) {
+                int a = i+1;
+                int b = nums.length-1;
+                
+                while(a<b){
+                    int sum = nums[i]+nums[a]+nums[b];
+                    if(sum==0){
+                        ans.add(Arrays.asList(nums[i], nums[a], nums[b]));
+                        while(a<b && nums[a]==nums[a+1]) a++;
+                        while(a<b && nums[b]==nums[b-1]) b--;
+                        a++;
+                        b--;
+                    }else if(sum>0) b--;
+                    else a++;
                 }
-            }
             }
         }
         return ans;
-        }
-    
+    }
 }
