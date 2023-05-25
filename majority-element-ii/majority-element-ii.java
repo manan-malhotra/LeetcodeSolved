@@ -1,49 +1,34 @@
 class Solution {
-    public List<Integer> majorityElement(int[] nums) {
-        int count1=0;
-        int count2=0;
-        int ele1=-1;
-        int ele2=-1;
-
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]==ele1){
+    public List<Integer> majorityElement(int[] arr) {
+         int count1 = 0;
+        int count2 = 0;
+        int ele1 = -1;
+        int ele2 = -1;
+        for(int i: arr){
+            if(ele1==i){
                 count1++;
-            }else if(nums[i]==ele2){
+            }else if(ele2 == i){
                 count2++;
-            }            
-            else if(count1==0){
-                ele1=nums[i];
+            }else if(count1==0){
+                ele1 = i;
                 count1++;
             }else if(count2==0){
-                ele2=nums[i];
+                ele2=i;
                 count2++;
             }else{
                 count1--;
                 count2--;
             }
         }
-
         count1=0;
         count2=0;
-        ArrayList<Integer> arr=new ArrayList<>();
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]==ele1){
-                count1++;
-            }else if(nums[i]==ele2){
-                count2++;
-            }
+        for(int i:arr){
+            if(i==ele1) count1++;
+            else if(i==ele2) count2++;
         }
-        // System.out.println(ele1);
-        // System.out.println(ele2);
-        // System.out.println(count1);
-        // System.out.println(count2);
-
-        if(count1>nums.length/3){
-            arr.add(ele1);
-        }if(count2>nums.length/3){
-            arr.add(ele2);
-        }
-
-        return arr;
+        List<Integer> ans = new ArrayList<>();
+        if(count1>arr.length/3) ans.add(ele1);
+        if(count2>arr.length/3) ans.add(ele2);
+        return ans;
     }
 }
