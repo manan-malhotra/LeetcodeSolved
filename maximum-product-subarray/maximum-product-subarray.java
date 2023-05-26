@@ -1,30 +1,15 @@
 class Solution {
-    public int maxProduct(int[] A) {
-        // store the result that is the max we have found so far
-    int r = A[0];
-    int n = A.length;
-
-    // imax/imin stores the max/min product of
-    // subarray that ends with the current number A[i]
-    for (int i = 1, imax = r, imin = r; i < n; i++) {
-        // multiplied by a negative makes big number smaller, small number bigger
-        // so we redefine the extremums by swapping them
-        if (A[i] < 0){
-
-            int temp = imax;
-            imax=imin;
-            imin=temp;
+    public int maxProduct(int[] nums) {
+        int maxAns = Integer.MIN_VALUE;
+        int pre = 1, suff = 1;
+        int n = nums.length;
+        for(int i=0;i<n;i++){
+            if(pre==0) pre=1;
+            if(suff==0) suff=1;
+            pre = pre * nums[i];
+            suff = suff * nums[n-i-1];
+            maxAns = Math.max(maxAns, Math.max(pre,suff));
         }
-
-        // max/min product for the current number is either the current number itself
-        // or the max/min by the previous number times the current one
-        imax = Math.max(A[i], imax * A[i]);
-        imin = Math.min(A[i], imin * A[i]);
-
-        // the newly computed max value is a candidate for our global result
-        r = Math.max(r, imax);
+        return maxAns;
     }
-    return r;
-    }
-    
 }
