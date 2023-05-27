@@ -1,4 +1,4 @@
-<p>Given an unsorted integer array <code>nums</code>, return the smallest missing positive integer.</p>
+<h2><a href="https://leetcode.com/problems/first-missing-positive">First Missing Positive</a></h2> <img src='https://img.shields.io/badge/Difficulty-Hard-red' alt='Difficulty: Hard' /><hr><p>Given an unsorted integer array <code>nums</code>, return the smallest missing positive integer.</p>
 
 <p>You must implement an algorithm that runs in <code>O(n)</code> time and uses constant extra space.</p>
 
