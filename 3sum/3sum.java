@@ -4,9 +4,9 @@ class Solution {
         List<List<Integer>> ans = new ArrayList<>();
         if(nums[0]>0) return ans;
         for(int i=0; i < nums.length-2;i++){
+            if(i==0 || nums[i]!=nums[i-1]){
             int a = i+1;
             int b = nums.length-1;
-            if(i==0 || nums[i]!=nums[i-1]){
                 while(a<b){
                     int sum = nums[i]+nums[a]+nums[b];
                     if(sum==0){
