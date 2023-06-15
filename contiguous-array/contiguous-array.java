@@ -10,7 +10,7 @@ class Solution {
                 sum+=1;
             }
             if(sum==0){
-                maxLen = Math.max(maxLen,i+1);
+                maxLen = i+1;
             }
             if(hm.containsKey(sum)){
                 int len = i- hm.get(sum);
