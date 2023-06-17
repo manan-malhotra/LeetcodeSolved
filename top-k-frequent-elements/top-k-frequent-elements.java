@@ -18,7 +18,6 @@ class Solution {
             if(bucket[i]!=null){
                 for(int value : bucket[i]){
                     res[index++]=value;
-                    System.out.println(value + "val");
                 }
             }
 
