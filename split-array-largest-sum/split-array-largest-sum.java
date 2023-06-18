@@ -4,7 +4,6 @@ class Solution {
         int end = findSum(nums);
         while(start<end){
             int mid = start + (end-start)/2; 
-            int max = Integer.MIN_VALUE;
             int sum = 0;
             int piece = 1;
             
