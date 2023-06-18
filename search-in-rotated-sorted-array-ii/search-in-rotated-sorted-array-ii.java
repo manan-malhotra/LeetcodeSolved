@@ -8,8 +8,9 @@ class Solution {
             if(arr[mid]==arr[start] && arr[mid]==arr[end]){
                 start++;
                 end--;
+                continue;
             }
-            else if(arr[start]<=arr[mid]){
+            if(arr[start]<=arr[mid]){
                 // LHS is sorted
                 if(target>=arr[start] && target<arr[mid]){
                     end=mid-1;
