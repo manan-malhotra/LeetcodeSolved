@@ -1,4 +1,4 @@
-<p>An array <code>arr</code> a <strong>mountain</strong> if the following properties hold:</p>
+<h2><a href="https://leetcode.com/problems/peak-index-in-a-mountain-array">Peak Index in a Mountain Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>An array <code>arr</code> a <strong>mountain</strong> if the following properties hold:</p>
 
 <ul>
 	<li><code>arr.length &gt;= 3</code></li>
