@@ -1,4 +1,4 @@
-<p><em>(This problem is an <strong>interactive problem</strong>.)</em></p>
+<h2><a href="https://leetcode.com/problems/find-in-mountain-array">Find in Mountain Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Hard-red' alt='Difficulty: Hard' /><hr><p><em>(This problem is an <strong>interactive problem</strong>.)</em></p>
 
 <p>You may recall that an array <code>arr</code> is a <strong>mountain array</strong> if and only if:</p>
 
