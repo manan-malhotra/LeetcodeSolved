@@ -1,35 +1,23 @@
 class Solution {
-       public int minEatingSpeed(int[] piles, int H) {
-        int lo = 1, hi = getMaxPile(piles);
-        // Binary search to find the smallest valid K.
-        while (lo <hi) {
-            int K = lo + ((hi - lo)/2);
-            if (canEatAll(piles, K, H)) {
-                hi = K; 
-            } else {
-                lo = K + 1;
+    public int minEatingSpeed(int[] piles, int h) {
+        int min = 1;
+        int max = Integer.MIN_VALUE;
+        for(int i: piles){
+            if(i>max){
+                max=i;
             }
         }
-        
-        return lo;
-    }
-    
-    private boolean canEatAll(int[] piles, int K, int H) {
-        int countHour = 0; // Hours take to eat all bananas at speed K.
-        
-        for (int pile : piles) {
-            countHour += pile / K;
-            if (pile % K != 0)
-                countHour++;
+        while(min<max){
+            int mid = min + (max-min)/2;
+            int hoursReq = 0;
+            for(int i:piles){
+                hoursReq += (i/mid);
+                if(i%mid!=0) hoursReq++;
+            }
+            //System.out.println(mid+" "+hoursReq);
+            if(hoursReq <= h) max=mid;
+            else min = mid+1;
         }
-        return countHour <= H;
-    }
-    
-    private int getMaxPile(int[] piles) {
-        int maxPile = Integer.MIN_VALUE;
-        for (int pile : piles) {
-            maxPile = Math.max(pile, maxPile);
-        }
-        return maxPile;
+        return min;
     }
 }
