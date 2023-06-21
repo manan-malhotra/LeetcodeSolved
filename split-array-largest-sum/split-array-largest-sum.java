@@ -1,42 +1,32 @@
 class Solution {
-    public int splitArray(int[] nums, int k) {
-        int start = findMax(nums);
-        int end = findSum(nums);
+    public int splitArray(int[] arr, int k) {
+        int start = Integer.MIN_VALUE;
+        int end = 0;
+
+        for(int i : arr){
+            if(i>start) start = i;
+            end +=i;
+        }
+
         while(start<end){
-            int mid = start + (end-start)/2; 
-            int sum = 0;
-            int piece = 1;
-            
-            for(int i: nums){
-                sum += i;
-                if(sum>mid){
-                    sum = i;
-                    piece++;
+            int mid = start + (end-start)/2;
+            int splits = 1;
+            int currSum = 0;
+            for (int i : arr) {
+                if(currSum+i > mid){
+                    currSum = i;
+                    splits++;
+                }else{
+                    currSum+=i;
                 }
             }
-           if(piece>k){
+            if(splits>k){
                 start = mid + 1;
-            }else{
-                end = mid ;
+            } else {
+                end = mid;
             }
-            
         }
+        
         return end;
-    }
-    public int findMax(int[] nums) {
-        int max = Integer.MIN_VALUE;
-        for(int i : nums){
-            if(i>max){
-                max = i;
-            }
-        }
-        return max;
-    }
-    public int findSum(int[] nums) {
-        int sum = 0;
-        for(int i: nums){
-            sum+=i;
-        }
-        return sum;
     }
 }
