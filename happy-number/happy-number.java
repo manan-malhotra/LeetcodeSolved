@@ -6,7 +6,7 @@ class Solution {
             slow = findSquare(slow);
             fast = findSquare(findSquare(fast));
             System.out.println(slow);
-            if(slow==1 || fast == 1){
+            if(slow==1){
                 return true;
             }
         }while(slow!=fast);
