@@ -1,25 +1,22 @@
 class Solution {
     public boolean isHappy(int n) {
-        int slow = n;
-        int fast = n;
-        do{
-            slow = findSquare(slow);
-            fast = findSquare(findSquare(fast));
-            System.out.println(slow);
-            if(slow==1){
-                return true;
-            }
-        }while(slow!=fast);
-        return false;
+        int s = n,f = n; // slow , fast
         
+        do{
+            s = compute(s); // slow computes only once
+            f = compute(compute(f)); // fast computes 2 times
+            
+            if(s == 1)return true; // if we found 1 then happy indeed !!!
+        }while(s != f); // else at some point they will meet in the cycle
+        
+        return false; // it's a cycle , not happy at all !!!        
     }
-    public int findSquare(int n){
-        int square = 0;
-        while(n!=0){
-            int temp = n%10;
-            n=n/10;
-            square += temp*temp;
+    public int compute(int n){
+        int s = 0;
+        while(n != 0){
+            s += (n%10)*(n%10);
+            n = n/10;
         }
-        return square;
+        return s;
     }
 }
