@@ -17,8 +17,6 @@ class Solution {
         ListNode mid = middleNode(head);
 
         ListNode hs = reverseList(mid);
-        display(head);
-        display(hs);
         ListNode hf = head;
 
         // rearrange
@@ -35,14 +33,6 @@ class Solution {
         if (hf != null) {
             hf.next = null;
         }
-    }
-    public void display(ListNode head){
-        ListNode temp = head;
-        while(temp!=null){
-            System.out.print(temp.val + "->");
-            temp = temp.next;
-        }
-        System.out.println("null");
     }
     public ListNode middleNode(ListNode head){
         ListNode slow = head;
