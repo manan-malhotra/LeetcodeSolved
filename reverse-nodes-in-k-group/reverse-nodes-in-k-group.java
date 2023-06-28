@@ -15,7 +15,6 @@ class Solution {
         int startIndex = 1;
         int endIndex = k;
         while(totalDiv!=0){
-            System.out.println(head.val+" "+startIndex+" "+endIndex);
             head = reverseBetween(head,startIndex,endIndex);
             startIndex=endIndex+1;
             endIndex += k; 
