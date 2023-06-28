@@ -19,7 +19,6 @@ class Solution {
             temp=temp.next;
         }
         int rotations = k%size;
-        System.out.println(rotations);
         if(rotations==0) return head;
         else{
             temp.next=head;
