@@ -10,54 +10,44 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
-        if (head == null || head.next == null) {
-            return;
-        }
-
-        ListNode mid = middleNode(head);
-
-        ListNode hs = reverseList(mid);
+        if(head==null || head.next==null) return;
         ListNode hf = head;
-
-        // rearrange
-        while (hf != null && hs != null) {
+        ListNode mid = findMid(head);
+        ListNode hs = reverseList(mid);
+        while(hf!=null){
             ListNode temp = hf.next;
-            hf.next = hs;
-            hf = temp;
+            hf.next=hs;
+            hf=temp;
 
             temp = hs.next;
-            hs.next = hf;
-            hs = temp;
+            if(hf!=null){
+            hs.next=hf;
+            hs=temp;
+            }
         }
-        // next of tail to null
-        if (hf != null) {
-            hf.next = null;
-        }
+
     }
-    public ListNode middleNode(ListNode head){
-        ListNode slow = head;
+    public ListNode findMid(ListNode head){
+        ListNode slow = null;
         ListNode fast = head;
         while(fast!=null && fast.next!=null){
-            slow=slow.next;
-            fast=fast.next.next;
+            slow = slow==null? head : slow.next;
+            fast = fast.next.next;
         }
-        return slow;
+        ListNode mid = slow.next;
+        slow.next=null;
+        return mid;
     }
-    public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return head;
-        }
+    public ListNode reverseList(ListNode head){
+        if(head==null || head.next==null) return head;
         ListNode prev = null;
-        ListNode present = head;
-        ListNode next = present.next;
-
-        while (present != null) {
-            present.next = prev;
-            prev = present;
-            present = next;
-            if (next != null) {
-                next = next.next;
-            }
+        ListNode current = head;
+        ListNode next = head.next;
+        while(current!=null){
+            current.next=prev;
+            prev=current;
+            current = next;
+            if(next!=null) next=next.next;
         }
         return prev;
     }
