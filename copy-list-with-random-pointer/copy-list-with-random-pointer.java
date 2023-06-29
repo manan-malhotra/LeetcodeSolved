@@ -29,17 +29,18 @@ class Solution {
             temp.next.random = temp.random==null?null:temp.random.next;
             temp=temp.next.next;
         }
-        Node newHead = head.next;
-        Node newTemp = newHead;
-        temp = head;
-        while(newTemp!=null && newTemp.next!=null){
-            temp.next=temp.next.next;
-            newTemp.next=newTemp.next.next;
-            temp=temp.next;
-            newTemp=newTemp.next;
-        }
-        if(temp!=null) temp.next=null;
-        return newHead;
+        Node dummy = new Node(0);
+    Node itr = head;
+    temp = dummy;
+    Node fast;
+    while(itr != null) {
+        fast = itr.next.next;
+        temp.next = itr.next;
+        itr.next = fast;
+        temp = temp.next;
+        itr = fast;
+    }
+    return dummy.next;
 
     }
    
