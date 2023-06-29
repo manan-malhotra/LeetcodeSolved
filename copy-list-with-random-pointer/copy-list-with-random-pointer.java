@@ -15,35 +15,31 @@ class Node {
 
 class Solution {
     public Node copyRandomList(Node head) {
+        if(head==null) return head;
         Node temp = head;
-	//step 1
-    while(temp != null) {
-        Node newNode = new Node(temp.val);
-        newNode.next = temp.next;
-        temp.next = newNode;
-        temp = temp.next.next;
-    }
-	//step 2
-    Node itr = head;
-    while(itr != null) {
-        if(itr.random != null)
-            itr.next.random = itr.random.next;
-        itr = itr.next.next;
-    }
-	//step 3
-    Node dummy = new Node(0);
-    itr = head;
-    temp = dummy;
-    Node fast;
-    while(itr != null) {
-        fast = itr.next.next;
-        temp.next = itr.next;
-        itr.next = fast;
-        temp = temp.next;
-        itr = fast;
-    }
-    return dummy.next;
+        while(temp!=null){
+            Node node = new Node(temp.val);
+            node.next = temp.next;
+            temp.next=node;
+            temp=node.next;
+        }
+        temp = head;
+        while(temp!=null){
 
+            temp.next.random = temp.random==null?null:temp.random.next;
+            temp=temp.next.next;
+        }
+        Node newHead = head.next;
+        Node newTemp = newHead;
+        temp = head;
+        while(newTemp!=null && newTemp.next!=null){
+            temp.next=temp.next.next;
+            newTemp.next=newTemp.next.next;
+            temp=temp.next;
+            newTemp=newTemp.next;
+        }
+        if(temp!=null) temp.next=null;
+        return newHead;
 
     }
    
