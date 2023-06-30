@@ -10,17 +10,14 @@
  */
 class Solution {
     public ListNode swapPairs(ListNode head) {
-        return reverseKGroup(head,2);
-    }
-    public ListNode reverseKGroup(ListNode head, int k) {
         int size = findSize(head);
-        int totalDiv = size/k;
+        int totalDiv = size/2;
         int startIndex = 1;
-        int endIndex = k;
+        int endIndex = 2;
         while(totalDiv!=0){
             head = reverseBetween(head,startIndex,endIndex);
             startIndex=endIndex+1;
-            endIndex += k; 
+            endIndex += 2; 
             totalDiv--;
         }
         return head;
