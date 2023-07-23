@@ -12,7 +12,7 @@ class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         if(head==null || head.next==null) return head;
         int size = findSize(head);
-        System.out.println(size);
+
         int totalRotations = size/k;
         int left = 1;
         int right = k;
