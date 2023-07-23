@@ -1,23 +1,23 @@
 class Solution {
     public boolean isHappy(int n) {
-        int fast = n;
         int slow = n;
-        while(replace(fast)!=1 || replace(replace(fast)) !=1){
-            fast=replace(replace(fast));
-            slow=replace(slow);
-            if(slow==fast) return false;
-        }
-        
-        return true;
-        
+        int fast = n;
+        do{
+            slow = findSquare(slow);
+            fast = findSquare(findSquare(fast));
+            if(fast==1){
+                return true;
+            }
+        }while(slow!=fast);
+        return false;
         
     }
-    public int replace(int n){
-        int square=0;
+    public int findSquare(int n){
+        int square = 0;
         while(n!=0){
-            int rem = n%10;
-            square += rem*rem;
+            int temp = n%10;
             n=n/10;
+            square += temp*temp;
         }
         return square;
     }
