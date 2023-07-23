@@ -33,7 +33,7 @@ class Solution {
         }
         return size;
     }
-    public ListNode reverseBetween(ListNode head, int left, int right) {
+    public ListNode reverseBetween(ListNode head, int left, int right){
         if(left==right) return head;
         ListNode current = head;
         ListNode prev = null;
@@ -58,4 +58,5 @@ class Solution {
         newEnd.next=current;
         return head;
     }
+
 }
