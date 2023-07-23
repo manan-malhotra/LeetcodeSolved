@@ -37,7 +37,7 @@ class Solution {
         if(left==right) return head;
         ListNode current = head;
         ListNode prev = null;
-        for(int i=0;current!=null && i<left-1;i++){
+        for(int i=0;i<left-1;i++){
             prev = current;
             current = current.next;
         }
