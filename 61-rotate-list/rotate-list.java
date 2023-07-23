@@ -19,11 +19,10 @@ class Solution {
         }
         temp.next = head;
         int rotations = k%size;
-        int newHead = size-rotations;
-        temp = head;
-        while(newHead!=1){
+        rotations = size - rotations;
+        temp=head;
+        for(int i=1;i<rotations;i++){
             temp=temp.next;
-            newHead--;
         }
         head=temp.next;
         temp.next=null;
