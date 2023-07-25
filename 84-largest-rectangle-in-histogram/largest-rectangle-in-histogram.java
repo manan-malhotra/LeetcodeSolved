@@ -28,6 +28,7 @@ class Solution {
 
     int maxArea = 0;
     for (int i = 0; i < height.length; i++) {
+        System.out.println(i+"i"+"left"+lessFromRight[i]);
         maxArea = Math.max(maxArea, height[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
     }
 
