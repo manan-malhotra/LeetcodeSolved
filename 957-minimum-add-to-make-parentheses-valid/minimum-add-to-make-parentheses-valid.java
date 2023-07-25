@@ -6,15 +6,9 @@ class Solution {
             if(i=='('){
                 stack.push(i);
             }else{
-                if(stack.isEmpty()){
-                    count++;
-                }else{
-
-                char check = stack.pop();
-                if(check=='(' && i!=')') count++;
-               
-                }
-            }
+                if(stack.isEmpty()) count++;
+                else stack.pop();
+        }
         }
         while(!stack.isEmpty()){
             stack.pop();
