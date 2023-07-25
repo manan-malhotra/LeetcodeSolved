@@ -3,7 +3,7 @@ class Solution {
         Stack<Character> stack = new Stack();
         int count = 0;
         for(char i:s.toCharArray()){
-            if(i=='(' || i=='[' || i=='{'){
+            if(i=='('){
                 stack.push(i);
             }else{
                 if(stack.isEmpty()){
@@ -12,8 +12,7 @@ class Solution {
 
                 char check = stack.pop();
                 if(check=='(' && i!=')') count++;
-                else if(check=='[' && i!=']') count++;
-                else if(check=='{' && i!='}') count++;
+               
                 }
             }
         }
