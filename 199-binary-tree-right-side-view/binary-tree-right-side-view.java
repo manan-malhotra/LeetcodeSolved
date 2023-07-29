@@ -14,20 +14,19 @@
  * }
  */
 class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
-        Queue<TreeNode> queue = new LinkedList<>();
-        List<Integer> arr = new ArrayList<Integer>();
-        if(root==null) return arr;
-        queue.offer(root);
-        while(!queue.isEmpty()){
-            int queueSize = queue.size();
-            for(int i=0;i<queueSize;i++){
-                if(i==queueSize-1) arr.add(queue.peek().val);
-                if(queue.peek().left!=null) queue.offer(queue.peek().left);
-                if(queue.peek().right!=null) queue.offer(queue.peek().right);
-                queue.poll();
-            }
-        }
-        return arr;
+        public List<Integer> rightSideView(TreeNode root) {
+        List<Integer>result=new ArrayList<Integer>();
+        rightView(root,result,0);
+        return result;
     }
-}
+    public void rightView(TreeNode curr,List<Integer>result,int currDepth){
+        if(curr==null){
+        return;}
+        if(currDepth==result.size()){
+            result.add(curr.val);
+        }
+        rightView(curr.right,result,currDepth+1);
+        rightView(curr.left,result,currDepth+1);
+    }
+
+    }
