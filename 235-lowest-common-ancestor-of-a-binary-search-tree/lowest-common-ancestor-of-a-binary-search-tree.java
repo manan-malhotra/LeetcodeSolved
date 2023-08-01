@@ -22,18 +22,5 @@ class Solution {
         }
     }
 
-    public TreeNode helper(TreeNode root, TreeNode p, TreeNode q) {
-        if(root==null) return null;
-        if(p.val>root.val && q.val>root.val) return helper(root.right,p,q);
-        if(p.val<root.val && q.val<root.val) return helper(root.left,p,q);
-        if(p.val==root.val || q.val==root.val) return root;
-
-        TreeNode leftAns = helper(root.left,p,q);
-        TreeNode rightAns = helper(root.right,p,q);
-
-        if(leftAns==null) return rightAns;
-        if(rightAns==null) return leftAns;
-        return root;
-
-    }
+    
 }
