@@ -2,22 +2,16 @@
 class Solution {
     public List<Integer> intersection(int[][] nums) {
         
-        List<Integer> ans = new ArrayList<>();
-        
-        int[] count  = new int[1001];
-        
-        for(int[] arr : nums){
-            for(int i : arr){
-                count[i]++;
+                Map<Integer, Integer> countMap = new HashMap<>();
+        List<Integer> inEachArray = new ArrayList<>();
+        for (int[] num : nums) {
+            for (int x : num) {
+                countMap.put(x, countMap.getOrDefault(x, 0) + 1);
+                if (countMap.get(x) == nums.length) inEachArray.add(x);
             }
         }
-        
-       for(int i=0;i<count.length;i++){
-           if(count[i]==nums.length){
-               ans.add(i);
-           }
-       }
-        
-        return ans;
+        inEachArray.sort(Comparator.naturalOrder());
+        return inEachArray;
+
     }
 }
