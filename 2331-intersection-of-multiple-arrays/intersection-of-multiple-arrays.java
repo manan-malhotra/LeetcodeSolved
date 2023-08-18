@@ -1,20 +1,23 @@
+
 class Solution {
     public List<Integer> intersection(int[][] nums) {
-        int n = nums.length;
+        
         List<Integer> ans = new ArrayList<>();
-        Map<Integer,Integer> hm = new TreeMap<>();
-        for(int[] i : nums){
-            for(int j:i){
-                if(hm.containsKey(j)){
-                    hm.put(j,hm.get(j)+1);
-                }else{
-                    hm.put(j,1);
-                }
+        
+        int[] count  = new int[1001];
+        
+        for(int[] arr : nums){
+            for(int i : arr){
+                count[i]++;
             }
         }
-        for (Map.Entry<Integer,Integer> entry : hm.entrySet()) {
-            if(entry.getValue()==n) ans.add(entry.getKey());
-        }
+        
+       for(int i=0;i<count.length;i++){
+           if(count[i]==nums.length){
+               ans.add(i);
+           }
+       }
+        
         return ans;
     }
 }
