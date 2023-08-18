@@ -1,17 +1,22 @@
-
 class Solution {
-    public List<Integer> intersection(int[][] nums) {
-        
-                Map<Integer, Integer> countMap = new HashMap<>();
-        List<Integer> inEachArray = new ArrayList<>();
-        for (int[] num : nums) {
-            for (int x : num) {
-                countMap.put(x, countMap.getOrDefault(x, 0) + 1);
-                if (countMap.get(x) == nums.length) inEachArray.add(x);
-            }
-        }
-        inEachArray.sort(Comparator.naturalOrder());
-        return inEachArray;
+    public static List<Integer> intersection(int[][] nums) {
+		List<Integer> list = new ArrayList<>();
+		HashMap<Integer, Integer> map = new HashMap<>();
 
-    }
+		for (int i = 0; i < nums.length; i++) {
+			for (int j = 0; j < nums[i].length; j++) {
+				if (map.containsKey(nums[i][j])) {
+					map.put(nums[i][j], map.get(nums[i][j]) + 1);
+				} else {
+					map.put(nums[i][j], 1);
+				}
+			}
+		}
+        for (Map.Entry<Integer, Integer> ans : map.entrySet()) {
+			if (ans.getValue() == nums.length) {
+				list.add(ans.getKey());
+			}
+		}		Collections.sort(list);
+		return list;
+	}
 }
