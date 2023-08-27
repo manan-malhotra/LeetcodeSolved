@@ -35,7 +35,7 @@ class Solution {
         return (i + 1);
     }
     static int findGoodPivot(int[] arr,int low, int high){
-        swap(arr,low+1,high);
+        // swap(arr,low+1,high);
         return arr[high];
         // if( high-low+1 <=9){
         //     Arrays.sort(arr);
