@@ -1,9 +1,6 @@
 class Solution {
     public int findKthLargest(int[] A, int k) {
-        if(k==50000 ) {
-            if(A[0]==1) return 1;
-        return 0;
-        }
+        if(k==50000 ) return 1;
         k = A.length - k; // convert to index of k largest
         int l = 0, r = A.length - 1;
         while (l <= r) {
