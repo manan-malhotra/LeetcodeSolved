@@ -15,25 +15,23 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        HashMap<Integer, Integer> hm = new HashMap<>();
-        if(preorder.length==0) return null;
+        HashMap<Integer,Integer> hm = new HashMap<>();
         for(int i=0;i<inorder.length;i++){
             hm.put(inorder[i],i);
-        }    
-        return buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, hm);
+        }
+        return build(preorder,0,preorder.length-1,inorder,0,inorder.length-1,hm);
     }
-    public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd,HashMap<Integer,Integer> hm){
-        if (preStart > preEnd || inStart > inEnd) return null;
-        TreeNode root = new TreeNode(preorder[preStart]);
-        int inRoot = hm.get(preorder[preStart]);
-        int numsLeft = inRoot-inStart;
 
-        root.left = buildTree(preorder,preStart+1,preStart + numsLeft,inorder,inStart,inRoot-1,hm);
-        root.right = buildTree(preorder,preStart+numsLeft+1,preEnd,inorder,inRoot+1,inEnd,hm);
-
+    public TreeNode build(int[] preorder, int ps, int pe,
+    int[] inorder, int is,int ie,HashMap<Integer,Integer> hm){
+        if(ps>pe || is>pe) return null;
+        TreeNode root = new TreeNode(preorder[ps]);
+        int index = hm.get(preorder[ps]);
+        root.left = build(preorder,ps+1,ps+(index-is),inorder,is,index-1,hm);
+        root.right = build(preorder,ps+(index-is)+1,pe,inorder,index+1,ie,hm);
         return root;
-
-
     }
-    
+
+
+
 }
