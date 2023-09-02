@@ -30,7 +30,6 @@ class Solution {
         boolean first = true;
         curr.next=null;
         while(curr!=null){
-            System.out.println(curr.val);
             if(first){
                 nextLevel = curr.left;
                 first=false;
