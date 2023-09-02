@@ -22,6 +22,8 @@ class Solution {
     public TreeNode createRoot(int[] nums, int start, int end){
         if(start>end) return null;
         int mid = start + (end-start)/2;
-        return new TreeNode(nums[mid], createRoot(nums,start,mid-1),createRoot(nums,mid+1,end));
+        return new 
+        TreeNode(nums[mid], 
+        createRoot(nums,start,mid-1),createRoot(nums,mid+1,end));
     }
 }
