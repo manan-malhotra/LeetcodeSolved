@@ -16,13 +16,17 @@
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         List<Integer> arr = new ArrayList<>();
-        kthSmallest(root,arr);
-        return arr.get(k-1);
+        return kthSmallest(root,arr,k);
+        
     }
-    public void kthSmallest(TreeNode root, List<Integer> arr){
-        if(root==null) return;
-        kthSmallest(root.left,arr);
-        arr.add(root.val);
-        kthSmallest(root.right,arr);
+    int count = 0;
+    public int kthSmallest(TreeNode root, List<Integer> arr,int k){
+        if(root==null) return -1;
+        int left = kthSmallest(root.left,arr,k);
+        if(left!=-1) return left;
+        count++;
+        if(count==k) return root.val;
+        return kthSmallest(root.right,arr,k);
+        
     }
 }
