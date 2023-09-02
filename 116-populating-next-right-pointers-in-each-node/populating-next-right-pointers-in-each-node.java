@@ -25,20 +25,27 @@ class Solution {
     public Node connect(Node root) {
         Queue<Node> q = new LinkedList<>();
         if(root==null) return root;
-        q.offer(root);
-        while(!q.isEmpty()){
-            int levelSize = q.size();
-            for(int i=0;i<levelSize;i++){
-                Node curr = q.poll();
-                if(curr.left!=null) q.offer(curr.left);
-                if(curr.right!=null) q.offer(curr.right);
-                curr.next=q.peek();
-                if(i==levelSize-1) curr.next=null;
+        Node curr = root;
+        Node nextLevel = null;
+        boolean first = true;
+        curr.next=null;
+        while(curr!=null){
+            System.out.println(curr.val);
+            if(first){
+                nextLevel = curr.left;
+                first=false;
             }
-            // Node curr = q.poll();
-            // if(curr.left!=null) q.offer(curr.left);
-            // if(curr.right!=null) q.offer(curr.right);
-            // curr.next=null;
+            if(curr.left==null) break;
+            curr.left.next=curr.right;
+            if(curr.next==null){
+                curr.right.next=null;
+                curr=nextLevel;
+                first=true;
+            }else{
+                curr.right.next=curr.next.left;
+                curr=curr.next;
+            }
+
         }
         return root;
     }
