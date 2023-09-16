@@ -20,7 +20,7 @@ class Solution {
     public void recoverTree(TreeNode root) {
       prev = new TreeNode(Integer.MIN_VALUE);
       inorder(root);
-      System.out.println(f.val+" "+s.val);
+      //System.out.println(f.val+" "+s.val);
       int temp = f.val;
       f.val = s.val;
       s.val = temp;
@@ -29,12 +29,12 @@ class Solution {
       if(root==null) return;
       inorder(root.left);
       if(prev.val>root.val){
-        System.out.println(prev.val+" "+root.val);
+        //System.out.println(prev.val+" "+root.val);
         if(f==null){
           f=prev;
           s=root;
         }else if(f!=null){
-          System.out.println(f.val);
+          //System.out.println(f.val);
           s=root;
         }
       }
