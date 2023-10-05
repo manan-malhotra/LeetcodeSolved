@@ -26,7 +26,6 @@ class Solution {
                 matrix[r][c] = matrix[cell[0]][cell[1]] + 1;
             }
         }
-        
         return matrix;
     }
 }
