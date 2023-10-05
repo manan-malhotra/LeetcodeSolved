@@ -26,7 +26,7 @@ class Solution {
     }
     public void dfs(char[][] board, int i,int j){
         int n = board.length;
-        if (n==0) return;
+        //if (n==0) return;
         int m = board[0].length;
         if(i<0 || j<0|| i>=n || j>=m || board[i][j]!='O') return;
         board[i][j]='T';
