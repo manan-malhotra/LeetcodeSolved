@@ -13,8 +13,6 @@ class Solution {
             if(color[i]!=col) return false;
             return true;
         }
-        
-        System.out.println(i+" "+Arrays.toString(color));
         if(color[i]==0){
             color[i] = col;
             for(int j:graph[i]){
