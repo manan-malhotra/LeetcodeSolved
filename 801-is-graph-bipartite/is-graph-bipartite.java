@@ -20,7 +20,6 @@ class Solution {
         if(color[i]==0){
             color[i] = col;
             for(int j:graph[i]){
-                System.out.println(j + " j: "+Arrays.toString(graph[i]));
                 if(!dfs(j,graph,color,col*-1,vis)) return false;
             }
         }
