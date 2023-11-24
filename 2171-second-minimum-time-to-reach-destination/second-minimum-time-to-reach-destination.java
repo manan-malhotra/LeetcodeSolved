@@ -1,38 +1,61 @@
 class Solution {
-    int stepsTime(int steps, int time, int change) {
-    int res = 0;
-    while (--steps > 0) {
-        res += time;
-        if ((res / change) % 2 == 1)
-            res = (res / change + 1) * change;
-    }
-    return res + time;
-}    
-public int secondMinimum(int n, int[][] edges, int time, int change) {
-    List<List<Integer>> al = new ArrayList<List<Integer>>();
-    int[] minSteps = new int[n + 1];
-    Arrays.fill(minSteps, 10001);
-    for (int i = 0; i <= n; ++i)
-        al.add(new ArrayList<Integer>());
-    for (var e : edges) {
-        al.get(e[0]).add(e[1]);
-        al.get(e[1]).add(e[0]);
-    }
-    int step = -1;
-    List<Integer> q = new ArrayList<>(List.of(1));
-    while(!q.isEmpty() && ++step <= minSteps[n] + 1) {
-        List<Integer> q1 = new ArrayList<>();
-        for (int i : q) {
-            if (step == minSteps[i] || step > minSteps[i] + 1)
-                continue;
-            minSteps[i] = Math.min(minSteps[i], step);
-            if (i == n && step > minSteps[n])
-                return stepsTime(step, time, change);
-            for (int j : al.get(i))
-                q1.add(j);
+    public int secondMinimum(int n, int[][] edges, int time, int change) {
+		// build the graph
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 1; i <= n; i++) graph.put(i, new HashSet<>());
+        for (int[] e : edges) {
+            graph.get(e[0]).add(e[1]);
+            graph.get(e[1]).add(e[0]);
         }
-        q = q1;
+		// keep two min times for each node
+        int[][] visited = new int[n+1][2]; //{min, secMin}
+        for (int[] v : visited) {
+            Arrays.fill(v, Integer.MAX_VALUE);
+        }
+        
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> Integer.compare(a[1], b[1]));
+        pq.offer(new int[]{1, 0}); // {curNode, curTime}
+        
+        int min = Integer.MAX_VALUE, secMin = min;
+        
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int curNode = cur[0], curTime = cur[1];
+
+			// update the global value when reach target
+            if (curNode == n) {
+                if (curTime < min) {
+                    secMin = min;
+                    min = curTime;
+                } else if (curTime != min && curTime < secMin) {
+                    secMin = curTime;
+                }
+            }
+            
+			// calculate if we need to wait for the green light, if change is 5, then:
+			// 0~4 green
+			// 5~9 red
+			// 10 ~14 green
+			// ...
+            if ((curTime / change) % 2 ==1) {
+                curTime += change - (curTime % change);
+            }
+            
+            int nextTime = curTime + time;
+            
+            for (int nxt : graph.get(curNode)) {
+                int nxtMin = visited[nxt][0], nxtSecMin = visited[nxt][1];
+                if (nextTime < nxtMin) { // update min
+                    visited[nxt][1] = nxtMin;
+                    visited[nxt][0] = nextTime;
+                    pq.offer(new int[]{nxt, nextTime});
+                } else if (nextTime != nxtMin && nextTime < nxtSecMin) { // update secMin
+                    visited[nxt][1] = nextTime;
+                    pq.offer(new int[]{nxt, nextTime});
+                }
+            }
+        }
+  
+        return secMin;
     }
-    return stepsTime(minSteps[n] + 2, time, change);
-}
 }
