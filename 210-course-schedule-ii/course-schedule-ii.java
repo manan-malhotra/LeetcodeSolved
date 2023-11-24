@@ -14,8 +14,8 @@ class Solution {
             adj.add(new ArrayList<Integer>());
         }
         for(int i=0;i<mat.length;i++){
-            int pre = mat[i][0];
-            int course = mat[i][1];
+            int pre = mat[i][1];
+            int course = mat[i][0];
             adj.get(pre).add(course);
             indegree[course]++;
         }
@@ -35,7 +35,7 @@ class Solution {
         if(arr.size()<V) return new int[]{};
         int[] ans = new int[arr.size()];
         int k = 0;
-        Collections.reverse(arr);
+        // Collections.reverse(arr);
         for(int i:arr){
             ans[k++] = i;
         }
