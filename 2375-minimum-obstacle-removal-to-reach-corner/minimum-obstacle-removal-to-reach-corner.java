@@ -1,28 +1,65 @@
 class Solution {
-       private static final int[] d = {0, 1, 0, -1, 0};
+
+    final private static int[] X_DIRECTION = new int[]{1, -1, 0, 0};
+    final private static int[] Y_DIRECTION = new int[]{0, 0, 1, -1};
+
     public int minimumObstacles(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[][] dist = new int[m][n];
-        for (int[] di : dist) {
-            Arrays.fill(di, Integer.MAX_VALUE);
-        }
-        dist[0][0] = grid[0][0];
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        pq.offer(new int[]{dist[0][0], 0,  0});
-        while (!pq.isEmpty()) {
-            int[] cur = pq.poll();
-            int o = cur[0], r = cur[1], c = cur[2];
-            if (r == m - 1 && c == n - 1) {
-                return o;
+
+        int n = grid.length;
+        int m = grid[0].length;
+        int minSoFar = n + m - 3;
+
+        int ones = 0;
+        int totalSquares = n * m;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                ones += grid[i][j];
             }
-            for (int k = 0; k < 4; ++k) {
-                int i = r + d[k], j = c + d[k + 1];
-                if (0 <= i && i < m && 0 <= j && j < n && o + grid[i][j] < dist[i][j]) {
-                    dist[i][j] = o + grid[i][j];
-                    pq.offer(new int[]{dist[i][j], i, j});
+        }
+        if (ones == 0) {
+            return 0;
+        }
+        if (totalSquares - ones == 2) {
+            return minSoFar;
+        }
+
+        ArrayDeque<int[]> queue = new ArrayDeque<>();
+        int[][] visitedDist = new int[n][m];
+        for (int i = 0; i < visitedDist.length; i++) {
+            Arrays.fill(visitedDist[i], Integer.MAX_VALUE);
+        }
+
+
+        queue.offer(new int[]{0, 0, 0});
+        while (!queue.isEmpty()) {
+            int[] p = queue.poll();
+            int row = p[0];
+            int col = p[1];
+            int obs = p[2];
+
+            if (row == grid.length - 1 && col == grid[0].length - 1) {
+                minSoFar = Math.min(minSoFar, obs);
+                return minSoFar;
+            }
+
+            for (int dir = 0; dir < 4; dir++) {
+                int nextRow = row + X_DIRECTION[dir];
+                int nextCol = col + Y_DIRECTION[dir];
+
+                if (nextRow < n && nextRow >= 0 && nextCol < m && nextCol >= 0) {
+                    if (visitedDist[nextRow][nextCol] > obs + grid[nextRow][nextCol]) {
+                        if (grid[nextRow][nextCol] == 1) {
+                            queue.addLast(new int[]{nextRow, nextCol, obs + grid[nextRow][nextCol]});
+                        } else {
+                            queue.addFirst(new int[]{nextRow, nextCol, obs + grid[nextRow][nextCol]});
+                        }
+                        visitedDist[nextRow][nextCol] = obs + grid[nextRow][nextCol];
+                    }
                 }
+
             }
         }
-        return dist[m - 1][n - 1];
+
+        return minSoFar;
     }
 }
