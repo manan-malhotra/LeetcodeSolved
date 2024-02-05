@@ -1,38 +1,18 @@
 class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        Stack<Integer> st = new Stack<>();
-        int[] next = new int[nums2.length];
-        for(int i=nums2.length-1;i>=0;i--){
-            System.out.println(st);
-            if(st.isEmpty()){
-                next[i]=-1;
-                st.push(nums2[i]);
+        Map<Integer, Integer> map = new HashMap<>(); // map for next greater element
+        Stack<Integer> stack = new Stack<>();
+        for (int num : nums2) {
+            while (!stack.empty() && stack.peek() < num) { // Pop elements from stack and update map with next greater element
+                map.put(stack.pop(), num);
             }
-            else{
-                int num = st.peek();
-                if(nums2[i]<num){
-                    next[i]=num;
-                    st.push(nums2[i]);
-                }else{
-                    while(true){
-                        if(!st.isEmpty() && st.peek()<=nums2[i]){
-                            st.pop();
-                        }else{
-                            break;
-                        }
-                    }
-                    i++;
-                }
-            }
+            stack.push(num); // Push current element onto stack
         }
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        for(int i=0;i<nums2.length;i++){
-            hm.put(nums2[i],i);
+        for (int i = 0; i < nums1.length; i++) { // Check if each element in nums1 has a next greater element in map
+            nums1[i] = map.containsKey(nums1[i]) ? map.get(nums1[i]) : -1; // Update element in nums1 with next greater element or -1
         }
-        for(int i=0;i<nums1.length;i++){
-            nums1[i]=next[hm.get(nums1[i])];
-        }
-    return nums1;
+        return nums1;
+
     }
 
 }
