@@ -1,17 +1,19 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        // Moore voting
-        int res = 0, count = 0;
-        for(int num:nums){
+        int possible = 0 ;
+        int count = 0 ;
+        for(int num : nums){
             if(count==0){
-                res=num;
-            }
-            if(num!=res){
-                count--;
-            }else{
+                possible=num;
                 count++;
+            }else{
+                if(possible==num){
+                    count++;
+                }else{
+                    count--;
+                }
             }
         }
-        return res;
+        return possible;
     }
 }
