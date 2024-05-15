@@ -7,7 +7,7 @@ class Solution {
             int mid = start + (end-start)/2;
             if(nums[mid]==target) {
                 foundAt = mid;
-                end=start-1;
+                end=start-1; // break
             }else if(nums[mid]>target){
                 end=mid-1;
             }else{
