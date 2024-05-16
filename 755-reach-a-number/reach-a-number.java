@@ -34,7 +34,7 @@ class Solution {
                 if(difference%2!=0){
                     
 					//if n+1 is odd
-                    if((numMoves+1)%2!=0){
+                    if((numMoves)%2==0){
                         numMoves+=1;
                     }
                     else{
