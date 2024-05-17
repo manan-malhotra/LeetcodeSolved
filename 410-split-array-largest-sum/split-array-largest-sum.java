@@ -9,10 +9,8 @@ class Solution {
         int start = max;
         int end = sum;
         while(start<end){
-        // System.out.println(start+" "+end);
             int mid = start + (end-start)/2;
             int t = findSubArrays(nums,mid);
-            System.out.println(mid+" "+t);
             if(t>k){
                 start=mid+1;
             }else{
@@ -28,10 +26,8 @@ class Solution {
             if(i>temp){
                 t++;
                 temp=mid;
-                temp-=i;
-            }else{
-                temp-=i;
             }
+                temp-=i;
         }
         return t;
     }
