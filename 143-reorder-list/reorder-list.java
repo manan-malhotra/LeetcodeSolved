@@ -10,37 +10,43 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
-        if(head==null || head.next==null) return;
-        ListNode slow = head;
+        if(head==null || head.next==null || head.next.next==null) return ;
+        ListNode slow = null;
         ListNode fast = head;
-        ListNode end = null;
         while(fast!=null && fast.next!=null){
-            if(end==null) end=head;
-            else end=end.next;
-            slow=slow.next;
-            fast=fast.next.next;
+            if(slow==null){
+                slow=head;
+            }else{
+                slow = slow.next;
+            }
+            fast = fast.next.next;
         }
-        end.next=null;
-        end = null;
-        fast=slow.next;
-        while(slow!=null){
-            slow.next=end;
-            end=slow;
-            slow=fast;
-            if(fast!=null) fast=fast.next;
+        ListNode midHead = slow.next;
+        slow.next = null; // removing connection from mid;
+        midHead = reverseList(midHead);
+
+        ListNode a = head;
+        ListNode b = midHead;
+        while(a!=null){
+            ListNode X = a.next;
+            ListNode Y = b.next;
+            a.next = b;
+            if(X!=null) b.next = X;
+            a=X;
+            b=Y;
         }
-        slow = end;
-        fast = head;
-        while(fast!=null){
-            end = fast.next;
-            fast.next = slow;
-            fast = end;
-            end=slow.next;
-            if(fast!=null) slow.next=fast;
-            
-            slow=end;
+        return ;
+    }
+    public ListNode reverseList(ListNode head){
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = curr.next;
+        while(curr!=null){
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            if(next!=null) next=next.next;
         }
-        if(fast!=null) System.out.println(fast.val);
-        
+        return prev;
     }
 }
