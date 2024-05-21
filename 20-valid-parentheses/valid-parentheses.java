@@ -10,10 +10,11 @@ class Solution {
                 }
                 char check = stack.pop();
                 if(check=='(' && i!=')') return false;
-                else if(check=='[' && i!=']') return false;
-                else if(check=='{' && i!='}') return false;
+                if(check=='[' && i!=']') return false;
+                if(check=='{' && i!='}') return false;
             }
         }
-            return stack.isEmpty();
+            if(stack.isEmpty()) return true;
+            return false;
     }   
 }
