@@ -1,16 +1,15 @@
 class Solution {
-    public int[] dailyTemperatures(int[] temp) {
-        int n = temp.length;
-        int[] ans = new int[n];
-        Stack<Integer> st = new Stack<>();
-        for(int i=0;i<n;i++){
-            while(!st.isEmpty() && temp[st.peek()]<temp[i]){
-                int t = st.pop();
-                ans[t] = i-t;
+    public int[] dailyTemperatures(int[] temps) {
+        int[] results = new int[temps.length];
+        Stack<Integer> stack = new Stack<>();
+        /// UPVOTE !
+        for (int i = 0; i < temps.length; i++) {
+            while (!stack.isEmpty() && temps[stack.peek()] < temps[i]) {
+                results[stack.peek()] = i - stack.pop();
             }
-            st.push(i);
-            // System.out()
+            stack.push(i);
         }
-        return ans;
+
+        return results;
     }
 }
