@@ -1,34 +1,26 @@
 class Solution {
     public String removeKdigits(String num, int k) {
-        Stack<Character> stack = new Stack<>();
-        
-        for (char digit : num.toCharArray()) {
-            while (!stack.isEmpty() && k > 0 && stack.peek() > digit) {
-                stack.pop();
+        StringBuilder s = new StringBuilder();
+        s.append(num.charAt(0));
+        for (int i = 1; i < num.length(); ++i) {
+            if (k > 0 && s.length() > 0 && num.charAt(i) < s.charAt(s.length() - 1)) {
+                s.deleteCharAt(s.length() - 1);
                 k--;
+                i--;
+                continue;
             }
-            stack.push(digit);
+            s.append(num.charAt(i));
         }
-        
-        // Remove remaining k digits from the end of the stack
-        while (k > 0 && !stack.isEmpty()) {
-            stack.pop();
+        while (k > 0 && s.length() > 0) {
+            s.deleteCharAt(s.length() - 1);
             k--;
         }
-        
-        // Construct the resulting string from the stack
-        StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty()) {
-            sb.append(stack.pop());
+        while (s.length() > 0 && s.charAt(0) == '0') {
+            s.deleteCharAt(0);
         }
-        sb.reverse(); // Reverse to get the correct order
-        
-        // Remove leading zeros
-        while (sb.length() > 0 && sb.charAt(0) == '0') {
-            sb.deleteCharAt(0);
+        if (s.length() == 0) {
+            s.append('0');
         }
-        
-        // Handle edge case where result might be empty
-        return sb.length() > 0 ? sb.toString() : "0";
+        return s.toString();
     }
 }
