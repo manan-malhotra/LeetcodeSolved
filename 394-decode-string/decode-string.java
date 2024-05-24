@@ -1,30 +1,31 @@
 class Solution {
-    public String decodeString(String s) {
-        Stack<Integer> st = new Stack<>();
-        Stack<StringBuilder> st1 = new Stack<>();
-        StringBuilder sb = new StringBuilder();
-        int n = 0;
-
-        for (char c : s.toCharArray()) {
-            if (Character.isDigit(c)) {
-                n = n * 10 + (c - '0');
-            } else if (c == '[') {
-                st.push(n);
-                n = 0;
-                st1.push(sb);
-                sb = new StringBuilder();
-            } else if (c == ']') {
-                int k = st.pop();
-                StringBuilder temp = sb;
-                sb = st1.pop();
-                while (k-- > 0) {
-                    sb.append(temp);
+    String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> stringStack = new Stack<>();
+        StringBuilder currentString = new StringBuilder();
+        int k = 0;
+        for (char ch : s.toCharArray()) {
+            if (Character.isDigit(ch)) {
+                k = k * 10 + ch - '0';
+            } else if (ch == '[') {
+                // push the number k to countStack
+                countStack.push(k);
+                // push the currentString to stringStack
+                stringStack.push(currentString);
+                // reset currentString and k
+                currentString = new StringBuilder();
+                k = 0;
+            } else if (ch == ']') {
+                StringBuilder decodedString = stringStack.pop();
+                // decode currentK[currentString] by appending currentString k times
+                for (int currentK = countStack.pop(); currentK > 0; currentK--) {
+                    decodedString.append(currentString);
                 }
+                currentString = decodedString;
             } else {
-                sb.append(c);
+                currentString.append(ch);
             }
         }
-
-        return sb.toString();
+        return currentString.toString();
     }
 }
