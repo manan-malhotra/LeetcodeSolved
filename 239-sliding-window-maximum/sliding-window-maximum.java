@@ -6,25 +6,29 @@ class Solution {
         int[] ans = new int[n-k+1];
         int start=-1;
         int end=-1;
-        for(int i=n-1;i>=0;i--){
-            if(end==-1){ // dq is empty
+        int i = 0;
+        int j = 0;
+        while(j!=n){
+            if(end==-1){
                 start++;
-                dq[++end]=i;
-            }else if(nums[i]<=nums[dq[end]]){ // nums[i] is smaller
-                dq[++end]=i;
-                
+                end++;
+                dq[end]=j;
+            }else if(nums[j]<=nums[dq[end]]){
+                end++;
+                dq[end]=j;
             }else{
-                while(end>=0 && nums[i]>nums[dq[end]] && end>=start){
+                while(end!=-1 && end>=start && nums[dq[end]]<nums[j]){
                     end--;
                 }
                 end++;
-                dq[end]=i;
+                dq[end]=j;
             }
-            if(start!=-1 && i==dq[start]-k){
-                start++;
+            if(j-i+1==k){
+                ans[i] = nums[dq[start]];
+                if(dq[start]==i) start++;
+                i++;
             }
-            if(i<ans.length) ans[i]=nums[dq[start]];
-            // ans[i]=dq[start];
+            j++;
         }
         return ans;
     }
