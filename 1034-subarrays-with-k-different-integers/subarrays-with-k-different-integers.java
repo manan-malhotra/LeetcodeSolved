@@ -6,23 +6,24 @@ class Solution {
     }
     public int upto(int[] nums, int k){
         
-        int i = 0, j=0, n=nums.length;
-        int ans = 0;
-        int count =0;
-        HashMap<Integer,Integer> map = new HashMap<>();
-        while(j!=n){
-            map.put(nums[j],map.getOrDefault(nums[j],0)+1);
-            if(map.get(nums[j])==1) count++;
-            if(count>k){
-                while(count>k){
-                    map.put(nums[i],map.get(nums[i])-1);
-                    if(map.get(nums[i])==0) count--;
-                    i++;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int left = 0, right = 0, ans = 0;
+        
+        while (right < nums.length) {
+            map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+            
+            while (map.size() > k) {
+                map.put(nums[left], map.get(nums[left]) - 1);
+                if (map.get(nums[left]) == 0) {
+                    map.remove(nums[left]);
                 }
+                left++;
             }
-            j++;
-            ans+=j-i;
+            
+            ans += right - left + 1; // Size of subarray
+            right++;
         }
+        
         return ans;
     }
 }
