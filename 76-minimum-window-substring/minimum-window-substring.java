@@ -1,35 +1,36 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if (s == null || t == null || s.length() == 0 || t.length() == 0 ||
-                s.length() < t.length()) {
-            return new String();
-        }
-        int[] map = new int[128];
+        HashMap<Character, Integer> mp1 = new HashMap<>();
         int count = t.length();
-        int start = 0, end = 0, minLen = Integer.MAX_VALUE, startIndex = 0;
-        /// UPVOTE !
-        for (char c : t.toCharArray()) {
-            map[c]++;
+        for (char i : t.toCharArray()) {
+            mp1.put(i, mp1.getOrDefault(i, 0) + 1);
         }
-
-        char[] chS = s.toCharArray();
-
-        while (end < chS.length) {
-            if (map[chS[end++]]-- > 0) {
+        int i = 0, j = 0, mini = s.length() + 1, start = 0;
+        while (j < s.length()) {
+            if (mp1.containsKey(s.charAt(j)) && mp1.get(s.charAt(j)) > 0) {
                 count--;
             }
-            while (count == 0) {
-                if (end - start < minLen) {
-                    startIndex = start;
-                    minLen = end - start;
-                }
-                if (map[chS[start++]]++ == 0) {
-                    count++;
-                }
+            if (mp1.containsKey(s.charAt(j))) {
+                mp1.put(s.charAt(j), mp1.get(s.charAt(j)) - 1);
             }
+            while (count == 0) {
+                if (mini > j - i + 1) {
+                    mini = j - i + 1;
+                    start = i;
+                }
+                if (mp1.containsKey(s.charAt(i))) {
+                    mp1.put(s.charAt(i), mp1.get(s.charAt(i)) + 1);
+                    if (mp1.get(s.charAt(i)) > 0) {
+                        count++;
+                    }
+                }
+                i++;
+            }
+            j++;
         }
-
-        return minLen == Integer.MAX_VALUE ? new String() :
-                new String(chS, startIndex, minLen);
+        if (mini == s.length() + 1) {
+            return "";
+        }
+        return s.substring(start, start + mini);
     }
 }
