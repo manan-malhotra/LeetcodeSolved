@@ -1,9 +1,7 @@
 class Solution {
     public int subarraysWithKDistinct(int[] nums, int k) {
-        // if(k==1) return nums.length;
         int a = upto(nums,k);
         int b = upto(nums,k-1);
-        System.out.println(a+" "+b);
         return a-b;
     }
     public int upto(int[] nums, int k){
