@@ -5,7 +5,7 @@ class Solution {
         return a-b;
     }
     public int upto(int[] nums, int k){
-        if(k==0) return 0;
+        
         int i = 0, j=0, n=nums.length;
         int ans = 0;
         int count =0;
