@@ -4,11 +4,12 @@ class Solution {
         f(0,n-1,s);
     }
     public void f(int l,int r,char[]s){
-        if(l>=r) return;
-        swap(l,r,s);
-        l++;
-        r--;
-        f(l,r,s);
+        if(l<r){
+            swap(l,r,s);
+           l++;
+            r--;
+            f(l,r,s);
+        }
     }
     public void swap(int l,int r,char[]s){
         char temp = s[l];
