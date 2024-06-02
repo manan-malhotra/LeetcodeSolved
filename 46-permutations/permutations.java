@@ -1,32 +1,31 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (nums.length == 1) {
-            List<Integer> singleList = new ArrayList<>();
-            singleList.add(nums[0]);
-            res.add(singleList);
-            return res;
+        List<List<Integer>> result = new ArrayList<>();
+        permuteRec(nums, 0, result);
+        return result;
+    }
+
+    private void permuteRec(int[] nums, int currentIndex, List<List<Integer>> result) {
+        if (currentIndex == nums.length - 1) {
+            List<Integer> currentPermutation = new ArrayList<>();
+            for (int num : nums) {
+                currentPermutation.add(num);
+            }
+            result.add(currentPermutation);
+            return;
         }
 
-        for (int i = 0; i < nums.length; i++) {
-            int n = nums[i];
-            int[] remainingNums = new int[nums.length - 1];
-            int index = 0;
-            for (int j = 0; j < nums.length; j++) {
-                if (j != i) {
-                    remainingNums[index] = nums[j];
-                    index++;
-                }
-            }
-            
-            List<List<Integer>> perms = permute(remainingNums);
-            for (List<Integer> p : perms) {
-                p.add(n);
-            }
-            
-            res.addAll(perms);
+        for (int index = currentIndex; index < nums.length; index++) {
+            swap(nums, currentIndex, index);
+            permuteRec(nums, currentIndex + 1, result);
+            swap(nums, currentIndex, index);
         }
-        
-        return res;        
     }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[j];
+        nums[j] = nums[i];
+        nums[i] = temp;
+    }
+
 }
