@@ -12,9 +12,9 @@ class Solution {
         }
         if(i==arr.length) return;
         if(target<0) return;
+        rec(i+1,target,list,temp,arr);
         temp.add(arr[i]);
         rec(i,target-arr[i],list,temp,arr);
         temp.remove(temp.size()-1);
-        rec(i+1,target,list,temp,arr);
     }
 }
