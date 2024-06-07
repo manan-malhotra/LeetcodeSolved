@@ -2,14 +2,14 @@ class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> ans=new ArrayList<>();
         Arrays.sort(candidates);
-        List<Integer> al=new ArrayList<>();
-        findAns(0,candidates, target,ans,al);
+        List<Integer> temp=new ArrayList<>();
+        findAns(0,candidates, target,ans,temp);
         return ans;
     }
 
-    public void findAns(int index,int[] candidates, int target,List<List<Integer>> ans,List<Integer> al){
+    public void findAns(int index,int[] candidates, int target,List<List<Integer>> ans,List<Integer> temp){
         if(target==0){
-            ans.add(new ArrayList<>(al));
+            ans.add(new ArrayList<>(temp));
             return;
         }
         for(int i=index;i<candidates.length;i++){
@@ -19,9 +19,9 @@ class Solution {
             if(candidates[i]>target){
                 break;
             }
-            al.add(candidates[i]);
-            findAns(i+1,candidates, target-candidates[i],ans,al);
-            al.remove(al.size()-1);
+            temp.add(candidates[i]);
+            findAns(i+1,candidates, target-candidates[i],ans,temp);
+            temp.remove(temp.size()-1);
         }
     }
 }
