@@ -1,15 +1,11 @@
 class Solution {
-    // static List<List<Integer>> matrix = new ArrayList<>();
     static void permutation(int[] ar,int fi,Set<List<Integer>> matrix){
     if(fi==ar.length-1){
-    //   System.out.println(ar);
         List<Integer> temp = new ArrayList<>();
     for(int i=0;i<ar.length;i++){
         temp.add(ar[i]);
     }
     matrix.add(temp);
-    // System.out.println(matrix);
-    // System.out.println("--"+temp);
       return;
     }
     for(int i=fi;i<ar.length;i++){
@@ -27,14 +23,9 @@ class Solution {
         List<List<Integer>> ans = new ArrayList<>();
         Set<List<Integer>> matrix = new HashSet<>();
         permutation(nums,0,matrix);
-        // System.out.print("+"+matrix);
-      //  HashSet<List<Integer>> set = new HashSet<>(matrix);
-      //   System.out.print("="+set+"=");
         for (List<Integer> element : matrix) {
            ans.add(element);
         }
-        // System.out.print(ans+"=");
-
         return ans;
     }
 }
