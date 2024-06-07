@@ -1,22 +1,40 @@
 class Solution {
-    public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> list = new ArrayList<>();
-        Arrays.sort(nums);
-        backtrack(list, new ArrayList<>(), nums, new boolean[nums.length]);
-        return list;
+    // static List<List<Integer>> matrix = new ArrayList<>();
+    static void permutation(int[] ar,int fi,Set<List<Integer>> matrix){
+    if(fi==ar.length-1){
+    //   System.out.println(ar);
+        List<Integer> temp = new ArrayList<>();
+    for(int i=0;i<ar.length;i++){
+        temp.add(ar[i]);
     }
-    private void backtrack(List<List<Integer>> list, List<Integer> tempList, int[] nums, boolean[] used) {
-        if (tempList.size() == nums.length) {
-            list.add(new ArrayList<>(tempList));
-        } else {
-            for (int i = 0; i < nums.length; i++) {
-                if (used[i] || i > 0 && nums[i] == nums[i - 1] && !used[i - 1])  continue;
-                used[i] = true;
-                tempList.add(nums[i]);
-                backtrack(list, tempList, nums, used);
-                used[i] = false;
-                tempList.remove(tempList.size() - 1);
-            }
+    matrix.add(temp);
+    // System.out.println(matrix);
+    // System.out.println("--"+temp);
+      return;
+    }
+    for(int i=fi;i<ar.length;i++){
+      swap(ar,i,fi);
+      permutation(ar,fi+1,matrix);
+      swap(ar,i,fi);
+    }
+  }
+    static void swap(int[] ar,int i,int fi){
+      int temp=ar[i];
+      ar[i]=ar[fi];
+      ar[fi]=temp;
+  }
+        public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Set<List<Integer>> matrix = new HashSet<>();
+        permutation(nums,0,matrix);
+        // System.out.print("+"+matrix);
+      //  HashSet<List<Integer>> set = new HashSet<>(matrix);
+      //   System.out.print("="+set+"=");
+        for (List<Integer> element : matrix) {
+           ans.add(element);
         }
+        // System.out.print(ans+"=");
+
+        return ans;
     }
 }
