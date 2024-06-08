@@ -5,6 +5,6 @@ class Solution {
         for(int i=n-2;i>=0;i--){
             if(i+nums[i]>=last) last = i;
         }
-        return last<=0;
+        return last<1;
     }
 }
