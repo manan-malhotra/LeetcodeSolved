@@ -1,25 +1,35 @@
-class Solution {
+public class Solution {
     public List<List<String>> partition(String s) {
-        List<List<String>> ans = new ArrayList<>();
-        solve(ans,new ArrayList<>(), s, 0);
-        return ans;   
+        List<List<String>> result = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>(), result);
+        return result;
     }
-    public void solve(List<List<String>> ans, List<String> temp, String s,int index){
-        if(index==s.length()){
-            ans.add(new ArrayList<>(temp));
+
+    private void backtrack(String s, int start, List<String> path, List<List<String>> result) {
+        // If we've reached the end of the string, add the current partition to the result list
+        if (start == s.length()) {
+            result.add(new ArrayList<>(path));
             return;
         }
-        for(int i=index;i<s.length();i++){
-            if(isPalindrome(s,index,i)){
-                temp.add(s.substring(index,i+1));
-                solve(ans,temp,s,i+1);
-                temp.remove(temp.size()-1);
+        // Explore all possible partitions
+        for (int end = start + 1; end <= s.length(); end++) {
+            // If the current substring is a palindrome, add it to the current path
+            if (isPalindrome(s, start, end - 1)) {
+                path.add(s.substring(start, end));
+                // Recur to find other partitions
+                backtrack(s, end, path, result);
+                // Backtrack to explore other partitions
+                path.remove(path.size() - 1);
             }
         }
     }
-    public boolean isPalindrome(String s, int start, int end){
-        while(start<=end){
-            if(s.charAt(start++)!=s.charAt(end--)) return false;
+
+    private boolean isPalindrome(String s, int left, int right) {
+        // Check if the substring s[left:right+1] is a palindrome
+        while (left < right) {
+            if (s.charAt(left++) != s.charAt(right--)) {
+                return false;
+            }
         }
         return true;
     }
