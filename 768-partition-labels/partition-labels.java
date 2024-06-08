@@ -10,12 +10,12 @@ class Solution {
             lastIndex [s.charAt(i) - 'a'] = i;
             // this will be the last index of each characters 
         }
-        int prev = 0;
+        int prev = -1;
         for (int j = 0; j < n; j++){
             end = Math.max(end, lastIndex[s.charAt(j) - 'a']);
             if (end == j) {
-                ans.add(end + 1- prev);
-                prev = j + 1;
+                ans.add(end - prev);
+                prev = j ;
                 
 
             }
