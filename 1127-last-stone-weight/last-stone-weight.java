@@ -10,7 +10,6 @@ class Solution {
             int rem = a-b;
             if(rem!=0) pq.offer(rem);
         }
-        if(pq.isEmpty()) return 0;
-        return pq.poll();
+        return pq.size()==0?pq.size():pq.poll();
     }
 }
