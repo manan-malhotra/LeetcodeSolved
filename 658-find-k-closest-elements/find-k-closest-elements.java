@@ -1,19 +1,28 @@
 class Solution {
-            public List<Integer> findClosestElements(int[] A, int k, int x) {
-        int left = 0, right = A.length - k;
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (x - A[mid] > A[mid + k] - x)
-                left = mid + 1;
-            else
-                right = mid;
+    
+    // Approach:
+    // Using two pointers, we are going the 'start' and 'end' pointers towards each other,
+    // until only k elements between 'start' and 'end'.
+    
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        
+        int start = 0;
+        int end = arr.length - 1;
+        // Between the 'start' and 'end' pointers, inclusive, contains all the k integers that is closest to x.
+        while (end - start >= k) {
+            // Move 'start' to the right if 'end' is closer to x, or move 'end' to the left if 'start' is closer to x.
+            if (Math.abs(arr[start] - x) > Math.abs(arr[end] - x)) {
+                start++;
+            } else {
+                end--;
+            }
         }
-        return adde(A,left,left+k);
-        // Arrays.stream(A, left, left + k).boxed().collect(Collectors.toList());
+
+        // Input all the k closest integers into the result.
+        List<Integer> result = new ArrayList<>(k);
+        for (int i = start; i <= end; i++) {
+            result.add(arr[i]);
+        }
+        return result;
     }
-        public List<Integer> adde(int[] arr, int l, int r){
-            List<Integer> a = new ArrayList<Integer>();
-            for(int i=l;i<r;i++) a.add(arr[i]);
-            return a;
-        }
 }
