@@ -14,10 +14,10 @@ class Solution {
         if (root == null || root == p || root == q) {
             return root;
         }
-        if (p.val > root.val && q.val > root.val) {
+        else if (p.val > root.val && q.val > root.val) {
             return lowestCommonAncestor(root.right, p, q);
         }
-        if (p.val < root.val && q.val < root.val) {
+        else if (p.val < root.val && q.val < root.val) {
             return lowestCommonAncestor(root.left, p, q);
         }
             return root;
