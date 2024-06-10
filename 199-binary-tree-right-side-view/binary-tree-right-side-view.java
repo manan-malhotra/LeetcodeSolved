@@ -14,19 +14,26 @@
  * }
  */
 class Solution {
-        public List<Integer> rightSideView(TreeNode root) {
-        List<Integer>result=new ArrayList<Integer>();
-        rightView(root,result,0);
-        return result;
+    public List<Integer> rightSideView(TreeNode root) {
+       List<List<Integer>> ans = levelOrder(root);
+       List<Integer> result = new ArrayList<>();
+        for(List<Integer> list:ans){
+            result.add(list.get(list.size()-1));
+       }
+       return result;
     }
-    public void rightView(TreeNode curr,List<Integer>result,int currDepth){
-        if(curr==null){
-        return;}
-        if(currDepth==result.size()){
-            result.add(curr.val);
-        }
-        rightView(curr.right,result,currDepth+1);
-        rightView(curr.left,result,currDepth+1);
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(root, 0, ans);
+        return ans;
     }
-
+    private void helper(TreeNode root, int level, List<List<Integer>> ans) {
+        if (root == null)
+            return;
+        if (ans.size() <= level)
+            ans.add(new ArrayList<>());
+        ans.get(level).add(root.val);
+        helper(root.left, level + 1, ans);
+        helper(root.right, level + 1, ans);
     }
+}
