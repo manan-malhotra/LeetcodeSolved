@@ -15,22 +15,19 @@
  */
 class Solution {
     public void flatten(TreeNode root) {
-        if(root==null) return;
-        if(root.left!=null){
-        TreeNode rightMost = findRightmost(root);
-        // System.out.println(rightMost.val+" "+root.right.val);
-        rightMost.right = root.right;
-        root.right=root.left;
-        root.left = null;
+        List<TreeNode> pre = new ArrayList<>();
+        preOrder(root,pre);
+        
+        for(int i=0;i<pre.size();i++){
+            TreeNode curr = pre.get(i);
+            curr.left=null;
+            if(i!=pre.size()-1) curr.right=pre.get(i+1);
         }
-        flatten(root.right);
     }
-    public TreeNode findRightmost(TreeNode root){
-        if(root.left==null) return root;
-        TreeNode curr = root.left;
-        while(curr.right!=null) curr=curr.right;
-        // System.out.println(curr.val);
-        return curr;
+    public void preOrder(TreeNode root, List<TreeNode> pre){
+        if(root==null) return;
+        pre.add(root);
+        preOrder(root.left,pre);
+        preOrder(root.right,pre);
     }
-    
 }
