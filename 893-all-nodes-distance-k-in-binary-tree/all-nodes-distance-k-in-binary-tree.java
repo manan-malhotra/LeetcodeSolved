@@ -17,7 +17,10 @@ class Solution {
         visited.add(target);
         q.offer(target);
         int distance = 0;
-        while(!q.isEmpty() && distance<k){
+        while(!q.isEmpty() ){
+            if(distance==k){
+                break;
+            }
             int size = q.size();
             distance++;
             for(int i=0;i<size;i++){
@@ -38,9 +41,7 @@ class Solution {
                     q.offer(right);
                 }
             }
-            if(distance==k){
-                break;
-            }
+            
         }
         List<Integer> ans = new ArrayList<>();
         while(!q.isEmpty()){
