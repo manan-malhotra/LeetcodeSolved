@@ -1,15 +1,19 @@
 class Solution {
-    PriorityQueue<Integer> pq=new PriorityQueue<>((x,y)->y-x);
+    int ans=0;
+    int count=0;
     public int kthSmallest(TreeNode root, int k) {
-        if(root==null) return -1;        
-        helper(root,k);
-        return pq.poll(); 
+        if(root==null) return 0;
+        kthSmallestHelper(root,k);
+        return ans;
     }
-    public void helper(TreeNode root,int k){
-        if(root==null) return;      
-        helper(root.left,k);
-        pq.add(root.val);
-        if(pq.size()>k) pq.poll();
-        helper(root.right,k);
+    public void kthSmallestHelper(TreeNode root, int k) {
+        if(root==null)  return;
+        kthSmallestHelper(root.left,k);
+        count++;
+        if(count==k){
+            ans=root.val;
+            return;
+        }
+        kthSmallestHelper(root.right, k);
     }
 }
