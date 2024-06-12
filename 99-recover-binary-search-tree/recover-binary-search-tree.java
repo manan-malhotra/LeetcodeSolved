@@ -18,7 +18,6 @@ class Solution {
    TreeNode f;
    TreeNode s;
     public void recoverTree(TreeNode root) {
-      prev = new TreeNode(Integer.MIN_VALUE);
       inorder(root);
       int temp = f.val;
       f.val = s.val;
