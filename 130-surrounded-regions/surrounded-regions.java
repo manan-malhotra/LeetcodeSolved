@@ -22,7 +22,7 @@ class Solution {
         }
     }
     public void dfs(char[][] board, int i,int j,int n,int m){
-        if(i<0 || j<0|| i>=n || j>=m || board[i][j]=='X' || board[i][j]=='T' ) return;
+        if(i<0 || j<0|| i>=n || j>=m || board[i][j]!='O') return;
         board[i][j]='T';
         dfs(board,i+1,j,n,m);
         dfs(board,i-1,j,n,m);
