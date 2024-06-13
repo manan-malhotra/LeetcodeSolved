@@ -25,9 +25,7 @@ class Solution {
                 for(int j=0;j<4;j++){
                     int newRow = x+row[j];
                     int newCol = y+col[j];
-                    System.out.println(newRow+" "+newCol);
                     if(newRow<0 || newRow>=n || newCol<0 || newCol>=m || mat[newRow][newCol]==0) continue;
-                    System.out.println("changed");
                     mat[newRow][newCol]=0;
                     queue.offer(new Pair(newRow,newCol));
                     ans[newRow][newCol] = distance;
