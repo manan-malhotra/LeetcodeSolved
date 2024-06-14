@@ -6,7 +6,7 @@ class Solution {
         int[] pathVisited = new int[n];
         for(int i=0;i<n;i++){
             if(visited[i]==0){
-                dfsCheck(i,-1,graph,visited,pathVisited);
+                dfsCheck(i,graph,visited,pathVisited);
             }
         }
         for(int i=0;i<n;i++){
@@ -14,16 +14,14 @@ class Solution {
         }
         return ans;
     }
-    public boolean dfsCheck(int startNode, int parentNode, int[][] graph, int[] visited, int[] pathVisited) {
+    public boolean dfsCheck(int startNode, int[][] graph, int[] visited, int[] pathVisited) {
         visited[startNode] = 1;
         pathVisited[startNode] = 1;
         for(int childNode : graph[startNode]){
-            // if(childNode!=parentNode){
-                if(visited[childNode]==0){
-                    if(dfsCheck(childNode,startNode,graph,visited,pathVisited)) return true;
-                }
-                if(pathVisited[childNode] == 1) return true;
-            // }
+            if(visited[childNode]==0){
+                if(dfsCheck(childNode,graph,visited,pathVisited)) return true;
+            }
+            if(pathVisited[childNode] == 1) return true;
         }
         pathVisited[startNode] = 0;
         visited[startNode] = -1;
