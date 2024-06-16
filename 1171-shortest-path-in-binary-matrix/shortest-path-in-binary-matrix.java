@@ -1,44 +1,52 @@
 class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
         int n = grid.length;
-        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
+        if (n == 1) {
+            if (grid[0][0] == 0)
+                return 1;
             return -1;
         }
+        Queue<Node> queue = new LinkedList<>();
+        if (grid[0][0] == 0 && grid[n - 1][n - 1] == 0)
+            queue.offer(new Node(0, 0));
+        int[] row = { 1, 1, 1, 0, 0, -1, -1, -1 };
+        int[] col = { -1, 0, 1, -1, 1, -1, 0, 1 };
+        int result = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            result++;
+            for (int k = 0; k < size; k++) {
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                grid[i][j] = grid[i][j] == 1 ? -1 : Integer.MAX_VALUE;
-            }
-        }
-        grid[0][0] = 1;
-
-        int[][] dir = {{0, -1}, {-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}};
-
-        Queue<Integer> rows = new LinkedList<>();
-        Queue<Integer> cols = new LinkedList<>();
-        rows.offer(0);
-        cols.offer(0);
-
-        int ans = Integer.MAX_VALUE;
-        while (!rows.isEmpty()) {
-            int row = rows.poll();
-            int col = cols.poll();
-            if (row == n - 1 && col == n - 1) {
-                ans = Math.min(grid[row][col], ans);
-            }
-            for (int i = 0; i < 8; i++) {
-                int nr = row + dir[i][0];
-                int nc = col + dir[i][1];
-                if (nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr][nc] != -1) {
-                    if (grid[nr][nc] > grid[row][col] + 1) {
-                        grid[nr][nc] = grid[row][col] + 1;
-                        rows.offer(nr);
-                        cols.offer(nc);
+                Node node = queue.poll();
+                int x = node.x;
+                int y = node.y;
+                if (x == y && x == n - 1)
+                    return result;
+                for (int i = 0; i < 8; i++) {
+                    int newRow = x + row[i];
+                    int newCol = y + col[i];
+                    if (isValid(newRow, newCol, n, grid)) {
+                        queue.offer(new Node(newRow, newCol));
+                        grid[newRow][newCol] = 1;
                     }
                 }
             }
-        }
 
-        return ans == Integer.MAX_VALUE ? -1 : ans;
+        }
+        return -1;
+    }
+
+    public boolean isValid(int i, int j, int n, int[][] grid) {
+        return (i >= 0 && j >= 0 && i < n && j < n && grid[i][j] == 0);
+    }
+}
+
+class Node {
+    int x;
+    int y;
+
+    public Node(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }
