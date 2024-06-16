@@ -7,8 +7,8 @@ class Solution {
         }
         Queue<Node> queue = new LinkedList<>();
         if(grid[0][0]==0 && grid[n-1][n-1]==0)queue.offer(new Node(0,0,1));
-        int[] row = {1,1,1,0,0,-1,-1,-1};
-        int[] col = {-1,0,1,-1,1,-1,0,1};
+        int[] row = {0,-1,-1,-1,1,1,1,0};
+        int[] col = {1,-1,0,1,-1,0,1,-1};
         while(!queue.isEmpty()){
             Node node = queue.poll();
             int x = node.x;
