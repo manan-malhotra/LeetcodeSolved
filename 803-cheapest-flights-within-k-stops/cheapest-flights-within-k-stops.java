@@ -22,15 +22,14 @@ class Solution {
             for(int i=0;i<size;i++){
                 Stop currentStop = queue.poll();
                 int stop = currentStop.stop;
-                int price = currentStop.weight;
-                // System.out.println(stop+" "+price);
+                int price = currentStop.price;
                 if(stop==dst) ans = Math.min(price,ans);
                 for(Stop stops : adj.get(stop)){
                     int newStop = stops.stop;
-                    int newWeight = stops.weight+price;
-                    if(visited[newStop]>newWeight){
-                        queue.offer(new Stop(newStop,newWeight));
-                        visited[newStop] = newWeight;
+                    int newprice = stops.price+price;
+                    if(visited[newStop]>newprice){
+                        queue.offer(new Stop(newStop,newprice));
+                        visited[newStop] = newprice;
                     }
                 }
             }
@@ -40,9 +39,9 @@ class Solution {
 }
 class Stop{
     int stop;
-    int weight;
-    public Stop(int stop,int weight){
+    int price;
+    public Stop(int stop,int price){
         this.stop=stop;
-        this.weight=weight;
+        this.price=price;
     }
 }
