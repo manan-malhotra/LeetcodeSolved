@@ -8,7 +8,7 @@ class Solution {
             m = triangle.get(i).size();
             for(int j=0;j<m;j++){
                 if(j==0) dp[i%2][j] = dp[(i-1)%2][j];
-                if(j!=0)dp[i%2][j] = dp[(i-1)%2][j-1];
+                else if(j!=0)dp[i%2][j] = dp[(i-1)%2][j-1];
                 if(j!=m-1) dp[i%2][j]=Math.min(dp[i%2][j],dp[(i-1)%2][j]);
                 dp[i%2][j] += triangle.get(i).get(j);
             }
