@@ -11,9 +11,7 @@ class Solution {
                 if(j!=0)dp[i][j] = dp[i-1][j-1];
                 if(j!=m-1) dp[i][j]=Math.min(dp[i][j],dp[i-1][j]);
                 dp[i][j] += triangle.get(i).get(j);
-                System.out.print(dp[i][j]+" "+m);
             }
-            System.out.println(" ");
         }
         int ans = Integer.MAX_VALUE;
         m = dp[0].length;
