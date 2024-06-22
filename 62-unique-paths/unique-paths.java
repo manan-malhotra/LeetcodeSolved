@@ -13,12 +13,6 @@ class Solution {
                 dp[j][i] = dp[j-1][i] + dp[j][i-1];
             }
         }
-        for(int j=0;j<m;j++){
-            for(int i=0;i<n;i++){
-                System.out.print(dp[j][i]+" ");
-            }
-            System.out.println();
-        }
         return dp[m-1][n-1];
     }
 }
