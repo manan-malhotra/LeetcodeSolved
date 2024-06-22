@@ -10,7 +10,6 @@ class Solution {
                 dp[0][i] = dp[0][i-1];
             }
         }
-        if(m==1) return dp[0][n-1];
         for(int j=1;j<m;j++){
             if(obstacleGrid[j][0]==0) {
                 dp[j][0] = dp[j-1][0];
