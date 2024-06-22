@@ -9,8 +9,14 @@ class Solution {
                     dp[j][i] = grid[j][i]; 
                     continue;
                 }
-                if(j==0) {dp[0][i] = dp[0][i-1] + grid[0][i]; continue;}
-                if(i==0) {dp[j][0] = dp[j-1][0] + grid[j][0]; continue;}
+                if(j==0) {
+                    dp[0][i] = dp[0][i-1] + grid[0][i]; 
+                    continue;
+                }
+                if(i==0) {
+                    dp[j][0] = dp[j-1][0] + grid[j][0]; 
+                    continue;
+                }
                 dp[j][i] = Math.min(dp[j-1][i],dp[j][i-1]) + grid[j][i];
             }
         }
