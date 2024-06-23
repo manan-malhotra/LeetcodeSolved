@@ -1,27 +1,32 @@
 class Solution {
+    int dp[][]; 
+
+    int solve(int[][] matrix, int row, int col) {
+        if (row >= matrix.length || col >= matrix[0].length || col < 0) {
+            return Integer.MAX_VALUE;
+        }
+        if (row == matrix.length - 1) {
+            if (col < matrix[0].length && col >= 0)
+                return matrix[row][col];
+            else 
+                return 0;
+        }
+        if (dp[row][col] != Integer.MIN_VALUE) {
+            return dp[row][col];
+        }
+        return dp[row][col] = matrix[row][col] + Math.min(solve(matrix,row + 1, col), 
+        Math.min(solve(matrix, row + 1, col - 1), solve(matrix, row + 1, col + 1)));
+    }
+
     public int minFallingPathSum(int[][] matrix) {
-        int n = matrix.length;
-        int[][] dp = new int[2][n];
-        for(int j=0;j<n;j++){
-            dp[0][j] = matrix[0][j];
+        dp = new int[matrix.length][matrix[0].length];
+        for (int [] a : dp) {
+            Arrays.fill(a, Integer.MIN_VALUE);
         }
-        for(int i=1;i<n;i++){
-            for(int j=0;j<n;j++){
-                int topLeft = Integer.MAX_VALUE;
-                if(j!=0) topLeft = dp[(i-1)%2][j-1];
-                int top = dp[(i-1)%2][j];
-                int topRight = Integer.MAX_VALUE;
-                if(j!=n-1) topRight = dp[(i-1)%2][j+1];
-                dp[i%2][j] = matrix[i][j] + Math.min(top,Math.min(topLeft,topRight));
-            }
+        int min_value = Integer.MAX_VALUE;
+        for (int i = 0; i < matrix.length; ++i) {
+            min_value = Math.min(min_value, solve(matrix, 0, i));
         }
-        int ans = Integer.MAX_VALUE;
-        for(int j=0;j<n;j++){
-            ans = Math.min(ans,dp[(n-1)%2][j]);
-        }
-        return ans;
+        return min_value;
     }
 }
-
-
-
