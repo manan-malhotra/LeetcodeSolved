@@ -2,11 +2,6 @@ class Solution {
     public int coinChange(int[] coins, int amount) {
         if(amount==0) return 0;
         int n = coins.length;
-        int min = coins[0];
-        for(int coin:coins){
-            min=Math.min(coin,min);
-        }
-        if(min>amount) return -1;
         int[][] dp = new int[n][amount+1];
         for(int i=0;i<=amount;i++){
             if (i % coins[0] == 0)
