@@ -5,11 +5,14 @@ class Solution {
         int[][] dp = new int[n+1][m+1];
         for(int i=n-1;i>=0;i--){
             for(int j=m-1;j>=0;j--){
-                int diagonal = text1.charAt(i)==text2.charAt(j)?1:0;
-                int right = dp[i][j+1];
-                int down = down = dp[i+1][j];
-                diagonal+=dp[i+1][j+1];
-                dp[i][j] = Math.max(diagonal, Math.max(right,down));
+                if(text1.charAt(i)==text2.charAt(j)){
+                    dp[i][j] = 1 + dp[i+1][j+1];
+                }
+                else{
+                    int right = dp[i][j+1];
+                    int down = down = dp[i+1][j];
+                    dp[i][j] = Math.max(right,down);
+                }
             }
         }
         return dp[0][0];
