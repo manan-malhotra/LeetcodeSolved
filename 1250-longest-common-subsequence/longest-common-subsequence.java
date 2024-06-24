@@ -3,8 +3,18 @@ class Solution {
         int n = text1.length();
         int m = text2.length();
         int[][] dp = new int[n][m];
-        for(int[] arr : dp) Arrays.fill(arr,-1);
-        return lcs(0,0,text1,text2,n,m,dp);
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                int diagonal = text1.charAt(i)==text2.charAt(j)?1:0;
+                int right = 0;
+                int down = 0;
+                if(i+1 < n && j+1<m) diagonal+=dp[i+1][j+1];
+                if(i+1<n) down = dp[i+1][j];
+                if(j+1<m) right = dp[i][j+1];
+                dp[i][j] = Math.max(diagonal, Math.max(right,down));
+            }
+        }
+        return dp[0][0];
     }
     public int lcs(int i,int j,String text1,String text2, int n, int m,int[][] dp){
         if(i==n || j==m) return 0;
