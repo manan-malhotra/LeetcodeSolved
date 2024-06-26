@@ -2,21 +2,18 @@ class Solution {
     public int numDistinct(String s, String t) {
         int n = s.length();
         int m = t.length();
-        int[][] dp = new int[n][m];
-        for(int[] arr:dp){
-            Arrays.fill(arr,-1);
+        int[][] dp = new int[2][m+1];
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                int ans = dp[(i+1)%2][j];
+                if(s.charAt(i)==t.charAt(j)){
+                    if(j==m-1) ans+=1;
+                    else ans+=dp[(i+1)%2][j+1];
+                }
+                dp[i%2][j]=ans;
+            }
         }
-        return match(0,0,s,t,n,m,dp);
+       return dp[0][0];
     }
-    public int match(int i,int j,String s, String t,int n, int m,int[][] dp){
-        if(i==n || j==m) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int ans = 0;
-        if(s.charAt(i)==t.charAt(j)){
-            if(j==m-1) ans+=1;
-            else ans+=match(i+1,j+1,s,t,n,m,dp);
-        } 
-        ans+=match(i+1,j,s,t,n,m,dp);
-        return dp[i][j] = ans;
-    }
+    
 }
