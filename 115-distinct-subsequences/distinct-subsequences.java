@@ -11,9 +11,11 @@ class Solution {
     public int match(int i,int j,String s, String t,int n, int m,int[][] dp){
         if(i==n || j==m) return 0;
         if(dp[i][j]!=-1) return dp[i][j];
-        if(s.charAt(i)==t.charAt(j) && j==m-1) return dp[i][j] = 1+match(i+1,j,s,t,n,m,dp);
         int ans = 0;
-        if(s.charAt(i)==t.charAt(j)) ans+=match(i+1,j+1,s,t,n,m,dp);
+        if(s.charAt(i)==t.charAt(j)){
+        if(j==m-1) ans+=1;
+        ans+=match(i+1,j+1,s,t,n,m,dp);
+        } 
         ans+=match(i+1,j,s,t,n,m,dp);
         return dp[i][j] = ans;
     }
