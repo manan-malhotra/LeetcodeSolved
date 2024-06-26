@@ -14,7 +14,7 @@ class Solution {
                     dp[i%2][j] = dp[(i-1)%2][j-1];
                 }
                 else if(p.charAt(j-1)=='*'){
-                     dp[i%2][j] = dp[(i-1)%2][j-1] || dp[(i-1)%2][j] || dp[i%2][j-1];
+                     dp[i%2][j] =  dp[(i-1)%2][j] || dp[i%2][j-1];
                 }
                 else dp[i%2][j]=false;
             }
