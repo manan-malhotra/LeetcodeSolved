@@ -13,8 +13,8 @@ class Solution {
         if(dp[i][j]!=-1) return dp[i][j];
         int ans = 0;
         if(s.charAt(i)==t.charAt(j)){
-        if(j==m-1) ans+=1;
-        ans+=match(i+1,j+1,s,t,n,m,dp);
+            if(j==m-1) ans+=1;
+            else ans+=match(i+1,j+1,s,t,n,m,dp);
         } 
         ans+=match(i+1,j,s,t,n,m,dp);
         return dp[i][j] = ans;
