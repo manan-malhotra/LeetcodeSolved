@@ -13,7 +13,8 @@ class Solution {
             else return dp[isBought][i] = 0;
         }
         if(isBought==1){
-            int sell = prices[i] + maxProfit(i+2,0,prices,n,dp);
+            int sell = prices[i] ;
+            if(i+2<=n)sell += maxProfit(i+2,0,prices,n,dp);
             int hold = maxProfit(i+1,isBought,prices,n,dp);
             return dp[isBought][i] = Math.max(sell,hold);
         }else{
