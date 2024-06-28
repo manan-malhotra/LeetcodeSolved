@@ -14,15 +14,5 @@ class Solution {
         }
         return dp[1][0];
     }
-    public int lengthOfLIS(int i, int j, int[] nums, int n,int[][] dp){
-        if(i==n+1) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int take = 0;
-        if(j==0 || nums[i-1]>nums[j-1]){
-            take = 1 + lengthOfLIS(i+1,i,nums,n,dp);
-        }
-        int notTake = lengthOfLIS(i+1,j,nums,n,dp);
-        return dp[i][j] = Math.max(take,notTake);
-    }
 }
 
