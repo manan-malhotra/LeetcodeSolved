@@ -14,7 +14,6 @@ class Solution {
             }
                 if (currMax!=-1) dp[i] = dp[currMax] + 1;
                 finalAns = Math.max(dp[i],finalAns);
-                System.out.println(i+" "+dp[i]+" "+currMax);
         }
         return finalAns;
     }
