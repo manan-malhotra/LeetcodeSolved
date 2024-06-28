@@ -1,5 +1,4 @@
 class Solution {
-    
     public int longestStrChain(String[] words) {
         int ans = 1;
         int n = words.length;
@@ -9,9 +8,7 @@ class Solution {
         for(int i=1;i<n;i++){
             int maxVal = 0;
             for(int j=0;j<i;j++){
-                if(compareStrings(words[i],words[j])){
-                    maxVal = Math.max(maxVal,dp[j]);
-                }
+                if(compareStrings(words[i],words[j])) maxVal = Math.max(maxVal,dp[j]);
                 dp[i] = maxVal+1;
                 ans = Math.max(dp[i],ans);
             }
@@ -23,7 +20,7 @@ class Solution {
         int l2 = smaller.length();
         if(l1-l2!=1) return false;
         int i=0,j=0;
-        while(i!=l1 && j!=l2){
+        while(i!=l1 && j!=l2 && i-j<2){
             if(bigger.charAt(i)==smaller.charAt(j)){
                 i++;
                 j++;
