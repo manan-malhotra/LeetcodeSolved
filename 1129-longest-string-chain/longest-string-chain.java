@@ -18,7 +18,6 @@ class Solution {
         }
         return ans;
     }
-    
     public boolean compareStrings(String bigger, String smaller){
         int l1 = bigger.length();
         int l2 = smaller.length();
@@ -28,9 +27,7 @@ class Solution {
             if(bigger.charAt(i)==smaller.charAt(j)){
                 i++;
                 j++;
-            }else{
-                i++;
-            }
+            }else i++;
         }
         return (j==l2 && (i==l1 || i==l1-1));
     }
