@@ -1,9 +1,18 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        int dp[][] = new int[n+1][n+1];
-        for(int[] arr : dp) Arrays.fill(arr,-1);
-        return lengthOfLIS(1,0,nums,n,dp);
+        int dp[][] = new int[n+2][n+2];
+        for(int i=n;i>0;i--){
+            for(int j=n-1;j>=0;j--){
+                int take = 0;
+                if(j==0 || nums[i-1]>nums[j-1]){
+                    take = 1 + dp[i+1][i];
+                }
+                int notTake = dp[i+1][j];
+                dp[i][j] = Math.max(take,notTake);
+            }
+        }
+        return dp[1][0];
     }
     public int lengthOfLIS(int i, int j, int[] nums, int n,int[][] dp){
         if(i==n+1) return 0;
