@@ -22,19 +22,6 @@ class Solution {
         }
         return dp[1][n];
     }
-    public int f(int i, int j, List<Integer> arr,int[][] dp){
-        if(dp[i][j]!=-1) return dp[i][j];
-        if(i>j) return dp[i][j] = 0;
-        if(i==j){
-            return dp[i][j] = arr.get(i-1)*arr.get(i)*arr.get(i+1);
-        }
-        int maxi = Integer.MIN_VALUE;
-        for(int k=i;k<=j;k++){
-            int total = f(i,k-1,arr,dp) + f(k+1,j,arr,dp) + (arr.get(i-1) * arr.get(k) * arr.get(j+1));
-            maxi = Math.max(maxi,total);
-        }
-        return dp[i][j] = maxi;
-    }
 }
 
 
