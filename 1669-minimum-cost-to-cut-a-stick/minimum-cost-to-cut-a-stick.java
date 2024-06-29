@@ -1,24 +1,28 @@
-import java.util.Arrays;
-
 class Solution {
     public int minCost(int n, int[] cuts) {
-        Arrays.sort(cuts);
-        int m = cuts.length;
-        int[][] dp = new int[m + 2][m + 2];
+        int c = cuts.length;
+        List<Integer> arr = new ArrayList<>();
+        for(int i:cuts) arr.add(i);
+        arr.add(0);
+        arr.add(n);
+        Collections.sort(arr);
+        int[][] dp = new int[c + 2][c + 2];
+        for (int i = c; i >= 1; i--) {
+            for (int j = 1; j <= c; j++) {
+                if (i > j) continue;
 
-        for (int l = 2; l <= m + 1; l++) {
-            for (int i = 0; i + l <= m + 1; i++) {
-                int j = i + l;
-                dp[i][j] = Integer.MAX_VALUE;
-                for (int k = i + 1; k < j; k++) {
-                    dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k][j]);
+                int mini = Integer.MAX_VALUE;
+
+                for (int ind = i; ind <= j; ind++) {
+                    int ans = arr.get(j + 1) - arr.get(i - 1) + dp[i][ind - 1] + dp[ind + 1][j];
+                    mini = Math.min(mini, ans);
                 }
-                int left = (i == 0) ? 0 : cuts[i - 1];
-                int right = (j == m + 1) ? n : cuts[j - 1];
-                dp[i][j] += right - left;
+
+                dp[i][j] = mini;
             }
         }
 
-        return dp[0][m + 1];
+        return dp[1][c];
+        
     }
 }
