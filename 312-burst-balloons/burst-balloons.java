@@ -20,12 +20,6 @@ class Solution {
                 dp[i][j] = maxi;
             }
         }
-        for(int[] row:dp){
-            for(int nn:row){
-                System.out.print(nn+" ");
-            }
-            System.out.println();
-        }
         return dp[1][n];
     }
     public int f(int i, int j, List<Integer> arr,int[][] dp){
