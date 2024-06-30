@@ -2,12 +2,20 @@ class Solution {
     public int maxSumAfterPartitioning(int[] arr, int k) {
         int n = arr.length;
         int[] dp = new int[n+1];
-        Arrays.fill(dp,-1);
-        return f(0,n,k,arr,dp);
+        dp[n] = 0;
+        for(int i=n-1;i>=0;i--){
+            int maxCost = Integer.MIN_VALUE;
+            for(int j=i;j<i+k;j++){
+                if(j>=n) continue;
+                int cost = (findMax(i,j+1,arr)*(j+1-i)) + dp[j+1];
+                maxCost = Math.max(cost,maxCost);
+            }
+            dp[i] = maxCost;
+        }
+        return dp[0];
     }
     public int f(int i, int n, int k, int[] arr,int[] dp ){
         if(dp[i]!=-1) return dp[i];
-        if(i==n) return 0;
         int maxCost = Integer.MIN_VALUE;
         for(int j=i;j<i+k;j++){
             if(j>=n) continue;
