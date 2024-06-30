@@ -20,7 +20,7 @@ class Solution {
                 }else{
                     st.push(hp.contains('t') ? 't' : 'f');
                 }
-            }else if(ch!=','){
+            }else {
                 st.push(ch);
             }
         }
