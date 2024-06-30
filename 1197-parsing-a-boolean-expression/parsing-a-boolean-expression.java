@@ -1,29 +1,40 @@
 class Solution {
-    public boolean parseBoolExpr(String s) {
-        int n = s.length();
-        Stack<Character> st = new Stack<>();
-        
-        for(int j=0; j<n; j++){
-            char ch = s.charAt(j);
-
-            if(ch==')'){
-                HashSet<Character> hp = new HashSet<>();
-                while(st.peek()!='('){
-                    hp.add(st.pop());
-                }
-                st.pop();
-                char op = st.pop();
-                if(op=='!'){
-                    st.push(hp.contains('t') ? 'f' : 't');
-                }else if(op=='&'){
-                    st.push(hp.contains('f') ? 'f' : 't');
-                }else{
-                    st.push(hp.contains('t') ? 't' : 'f');
-                }
-            }else {
-                st.push(ch);
-            }
+    public boolean parseBoolExpr(String expression) {
+        if(expression.charAt(0) == 't'){
+            return true;
         }
-        return st.peek()=='t';
+        if(expression.charAt(0) == 'f'){
+            return false;
+        }
+        if(expression.charAt(0)=='!'){
+            return !parseBoolExpr(expression.substring(2,expression.length()-1));
+        }
+        return parseList(expression.substring(2,expression.length()-1),expression.charAt(0)=='|');
+        
+    }
+
+    private boolean parseList(String expression, boolean operator){
+        int parenParity = 0;
+        int prevIdx = 0;
+        int idx = 0;
+        while(idx<expression.length()){
+            if(expression.charAt(idx)=='('){
+                parenParity++;
+            }
+            else if(expression.charAt(idx)==')'){
+                parenParity--;
+            }
+            else if(expression.charAt(idx)==',' && parenParity==0){
+                if(parseBoolExpr(expression.substring(prevIdx,idx))==operator){
+                    return operator;
+                }
+                prevIdx=idx+1;
+            }
+            idx++;
+        }
+        if(parseBoolExpr(expression.substring(prevIdx,idx))==operator){
+            return operator;
+        }
+        return !operator;
     }
 }
