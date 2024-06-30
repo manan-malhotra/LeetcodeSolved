@@ -24,6 +24,6 @@ class Solution {
                 st.push(ch);
             }
         }
-        return st.peek()=='t' ? true : false;
+        return st.peek()=='t';
     }
 }
