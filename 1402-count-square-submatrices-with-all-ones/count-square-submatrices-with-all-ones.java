@@ -24,10 +24,8 @@ class Solution {
         int total = 0;
         for(int[] row:dp){
             for(int num:row){
-                System.out.print(num+" ");
                 total+=num;
             }
-            System.out.println();
         }
         return total;
     }
