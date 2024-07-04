@@ -1,74 +1,41 @@
-class Node{
-    char data;
-    Node left;
-    Node right;
-
-    Node(char data){
-        this.data = data;
-        left = null;
-        right = null;
-    }
-}
 class Solution {
-     static void insert(Node root, int num){
-        Node curr = root;
+    Set<Integer> vis = new HashSet<>();
+
+    public int findMaximumXOR(int[] nums) {
+        int max = 0, ans = 0, mask = 0, masks = 0;
+
+        for(int num : nums) {
+            max = Math.max(max, num);
+        }
         
-        for(int i=31; i>=0; i--){
-            int bit = (num>>i) & 1;
-            if(bit==0){
-                if(curr.left==null){
-                    Node x = new Node('0');
-                    curr.left = x;
-                }
-                curr = curr.left;
-            }else{
-                if(curr.right==null){
-                    Node x = new Node('1');
-                    curr.right = x;   
-                }
-                curr = curr.right;
-            }
+        int bit = 31;
+
+        while(bit-- >= 0) {
+            if((max >> bit & 1) == 1) break;
         }
-    }
 
-    
-    static int helper(Node root, int num){
-        int ans = 0;
-        Node curr = root;
+        for(int i = bit; i >= 0; i--) {
+            mask = 1 << i;
+            masks |= mask;
 
-        for(int i=31; i>=0; i--){
-            int bit = (num>>i) & 1;
-            if(bit==0){
-                if(curr.right!=null){
-                    curr = curr.right;
-                    ans += (1 << i);
-                }else{
-                    curr = curr.left;
-                }
-            }else{
-                if(curr.left!=null){
-                    curr = curr.left;
-                    ans += (1 << i);
-                }else{
-                    curr = curr.right;
-                }
+            if(check(nums, masks, ans | mask)) {
+                ans |= mask;
             }
+            vis.clear();
         }
         return ans;
     }
 
-
-    public int findMaximumXOR(int[] arr) {
-        int n = arr.length;
-        int ans = 0;
-
-
-        Node root = new Node('.');
-        insert(root,arr[0]);
-        for(int i=1; i<n; i++){
-            ans = Math.max(ans,helper(root,arr[i]));
-            insert(root,arr[i]);
+    private boolean check(int[] nums, int masks, int ans) {
+        
+        for(int num : nums) {
+            num &= masks;
+            
+            if(vis.contains(num ^ ans)) {
+                return true;
+            }
+            vis.add(num);
         }
-        return ans;
+        return false;
     }
 }
