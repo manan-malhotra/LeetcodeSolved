@@ -9,6 +9,7 @@ class Solution {
             if(hashset.contains(num-1)) continue;
             int currentCount = 1;
             while(hashset.contains(num+1)){
+                hashset.remove(num);
                 currentCount++;
                 num++;
             }
