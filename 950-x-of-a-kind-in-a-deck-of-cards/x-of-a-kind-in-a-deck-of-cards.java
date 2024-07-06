@@ -5,6 +5,7 @@ class Solution {
             hm.put(num,hm.getOrDefault(num,0)+1);
         }
         int freq = hm.get(deck[0]);
+        hm.remove(deck[0]);
         for(int frequencies : hm.values()){
             freq = gcd(freq,frequencies);
 
