@@ -6,13 +6,15 @@ class Solution {
         }
         int freq = hm.get(deck[0]);
         for(int frequencies : hm.values()){
-            freq = hcf(freq,frequencies);
+            freq = gcd(freq,frequencies);
 
         }
         return freq!=1;
     }
-    int hcf(int x, int y){
+    int gcd(int x, int y){
         if(y==0) return x;
-        return hcf(y,x%y);
+        return gcd(y,x%y);
     }
 }
+
+
