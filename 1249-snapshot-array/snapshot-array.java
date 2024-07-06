@@ -1,16 +1,22 @@
 class SnapshotArray {
 
-    SnapNode[] arr;
-    int snapId;
+    int snapId=0;
+    List<SnapObj>[] arr;
     public SnapshotArray(int length) {
-        arr = new SnapNode[length];      
+        
+        this.arr = new ArrayList[length];
+
+        for(int i=0; i<length; i++) {
+            this.arr[i] = new ArrayList<>();
+            this.arr[i].add(new SnapObj(0,0));
+        }
     }
     
     public void set(int index, int val) {
-        if(arr[index] == null) {
-            arr[index] = new SnapNode(index);
-        }
-        arr[index].map.put(snapId, val);
+
+            SnapObj snapObj = new SnapObj(snapId, val);
+            arr[index].add(snapObj);
+
     }
     
     public int snap() {
@@ -18,34 +24,37 @@ class SnapshotArray {
     }
     
     public int get(int index, int snap_id) {
-        if(arr[index] == null) {
-            arr[index] = new SnapNode(index);
+
+        List<SnapObj> iterList = arr[index];
+
+        int left=0, right = iterList.size()-1;
+
+        int res=0;
+        while(left <= right) {
+            int mid = left + (right-left) / 2;
+
+            SnapObj tempObj = iterList.get(mid);
+
+            if(tempObj.id <= snap_id) {
+                res = mid;
+                left = mid+1;
+            } else {
+                right = mid-1;
+            }
         }
-        Integer floor = arr[index].map.floorKey(snap_id);
-        if(floor == null) {
-            return 0;
+
+        return iterList.get(res).val;
+    }
+
+    public class SnapObj {
+        int id;
+        int val;
+
+        public SnapObj(int id, int val) {
+            this.id = id;
+            this.val = val;
         }
-        return arr[index].map.get(floor);
     }
-}
-
-class SnapNode {
-    int index;
-    TreeMap<Integer, Integer> map = new TreeMap<>();
-    SnapNode(int index) {
-        this.index = index;
-    }
-}
-
-class Snap {
-    int value;
-    int snapId;
-
-    Snap(int value, int snapId) {
-        this.value = value;
-        this.snapId = snapId;
-    }
-
 }
 
 /**
