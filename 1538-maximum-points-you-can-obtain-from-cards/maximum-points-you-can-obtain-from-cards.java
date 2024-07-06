@@ -1,23 +1,23 @@
 class Solution {
     public int maxScore(int[] cardPoints, int k) {
-        int totalScore = 0;
-        for(int i:cardPoints) totalScore+=i;
         int n = cardPoints.length;
-        if(n==k) return totalScore;
-        k=n-k;
-        int i=0,j=0;
-        int minSubArray = totalScore;
-        int sum = 0;
-        while(j!=n){
-            sum+=cardPoints[j];
-            if(j-i+1==k){
-                minSubArray = Math.min(minSubArray,sum);
-                sum-=cardPoints[i];
-                i++;
+        int total = 0;
+        for(int cardPoint : cardPoints) total+=cardPoint;
+        if(n==k) return total;
+        k = n-k;
+        //Need to find n consecutive min number now;
+        int mini = Integer.MAX_VALUE;
+        int curr = 0;
+        int i=0;
+        int j=0;
+        while(i!=n){
+            curr+=cardPoints[i++];
+            if((i)-j==k){
+                mini = Math.min(curr,mini);
+                curr-=cardPoints[j++];
             }
-            j++;
         }
-        // System.out.println()
-        return totalScore-minSubArray;
+        total-=mini;
+        return total;
     }
 }
