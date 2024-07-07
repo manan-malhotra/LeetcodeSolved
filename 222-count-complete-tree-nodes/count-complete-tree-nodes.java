@@ -19,22 +19,6 @@ class Solution {
         if (root==null) return 0;
         return countNodes(root.left)+countNodes(root.right)+1;
     }
-    public int heightLeft(TreeNode root){
-        int count = 0;
-        while(root.left!=null){
-            count++;
-            root=root.left;
-        }
-        return count;
-    }
-    public int heightRight(TreeNode root){
-        int count = 0;
-        while(root.right!=null){
-            count++;
-            root=root.right;
-        }
-        return count;
-    }
 }
 
 
