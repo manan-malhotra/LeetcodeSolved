@@ -10,43 +10,44 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
-        if(head==null || head.next==null || head.next.next==null) return ;
-        ListNode slow = null;
-        ListNode fast = head;
-        while(fast!=null && fast.next!=null){
-            if(slow==null){
-                slow=head;
-            }else{
-                slow = slow.next;
-            }
-            fast = fast.next.next;
-        }
-        ListNode midHead = slow.next;
-        slow.next = null; // removing connection from mid;
-        midHead = reverseList(midHead);
-
-        ListNode a = head;
-        ListNode b = midHead;
-        while(a!=null){
-            ListNode X = a.next;
-            ListNode Y = b.next;
-            a.next = b;
-            if(X!=null) b.next = X;
-            a=X;
-            b=Y;
-        }
-        return ;
+        if(head.next==null) return ;
+        ListNode mid = findMid(head);
+        ListNode secondHead = mid.next;
+        mid.next = null;
+        secondHead = reverse(secondHead);
+        combine(head,secondHead);
     }
-    public ListNode reverseList(ListNode head){
+    public ListNode findMid(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+    public ListNode reverse(ListNode head){
         ListNode prev = null;
         ListNode curr = head;
-        ListNode next = curr.next;
+        ListNode next = head.next;
         while(curr!=null){
             curr.next = prev;
             prev = curr;
             curr = next;
-            if(next!=null) next=next.next;
+            if(next!=null)next = next.next;
         }
         return prev;
+    }
+    public void combine(ListNode first, ListNode second){
+        ListNode temp1 = first;
+        ListNode temp2 = second;
+        while(second!=null){
+            temp1 = first.next;
+            temp2 = second.next;
+            first.next = second;
+            first = temp1;
+            second.next = first;
+            second = temp2;
+        }
     }
 }
