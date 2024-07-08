@@ -4,9 +4,9 @@ class Solution {
         int leastPrice = Integer.MAX_VALUE;
         int ifSoldToday = 0;
         for(int price: prices){
-            leastPrice = Math.min(leastPrice,price);
+            if(price<leastPrice) leastPrice = price;
             ifSoldToday = price - leastPrice;
-            totalProfit = Math.max(totalProfit,ifSoldToday);
+            if(ifSoldToday> totalProfit) totalProfit = ifSoldToday;
         }
         return totalProfit;
     }
