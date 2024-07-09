@@ -1,66 +1,30 @@
 class Solution {
-    public class Pair {
-        char ch;
-        int freq;
-
-        Pair(char ch, int freq){
-            this.ch = ch;
-            this.freq = freq;
+    public String reorganizeString(String str) {
+        int hash[]=new int[26];
+        for(int i=0;i<str.length();i++){
+            hash[str.charAt(i)-'a']++;
         }
-
-    }
-
-
-    public String reorganizeString(String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
-
-        for(int i = 0; i < s.length(); i++){
-            map.put(s.charAt(i) , map.getOrDefault(s.charAt(i), 0) + 1 );
-        }
-
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> b.freq - a.freq);
-
-        for(Map.Entry<Character, Integer> e : map.entrySet()){
-            pq.add(new Pair(e.getKey() , e.getValue() ));
-        }
-
-        Pair prev = new Pair('#', -1);
-
-        StringBuilder sb = new StringBuilder();
-
-        while(!pq.isEmpty()){
-            Pair curr = pq.poll();
-            sb.append(curr.ch);
-            curr.freq--;
-
-            if(prev.freq > 0){
-                pq.add(prev);
+        int max=0,letter=0;
+        for(int i=0;i<hash.length;i++){
+            if(hash[i]>max){
+                max=hash[i];
+                letter=i;
             }
-
-            prev =curr;
         }
-
-        if(sb.length() != s.length()) return "";
-        return sb.toString();
-
-
+        if(max>(str.length()+1)/2)return "";
+        char res[]=new char[str.length()];
+        int idx=0;
+        while(hash[letter]-->0){
+            res[idx]=(char)(letter+'a');
+            idx+=2;
+        }
+        for(int i=0;i<hash.length;i++){
+            while(hash[i]-->0){
+                if(idx>=res.length)idx=1;
+                res[idx]=(char)(i+'a');
+                idx+=2;
+            }
+        }
+        return String.valueOf(res);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
