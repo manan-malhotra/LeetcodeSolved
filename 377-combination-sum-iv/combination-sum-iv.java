@@ -1,25 +1,27 @@
 class Solution {
+    int[] t;
     public int combinationSum4(int[] nums, int target) {
-        int ans = 0;
-        int n = nums.length;
-        int[][] dp = new int[n][target+1];
-        for(int[] row: dp) Arrays.fill(row,-1);
-        for(int i=0;i<n;i++){
-            if(nums[i]<=target){
-                ans+= addCombinationStartingWith(i,target-nums[i],nums,n,dp);
-            }
-        }
-        return ans;
+        t = new int[target+1];
+        Arrays.fill(t,-1);
+        return solve(nums,target);
     }
-    public int addCombinationStartingWith(int start, int target, int[] nums, int n,int[][] dp){
-        if(dp[start][target]!=-1) return dp[start][target] ; 
-        int ans = 0;
-        if(target==0) return dp[start][target] = 1;
-        for(int i=0;i<n;i++){
-            if(nums[i]<=target){
-                ans+= addCombinationStartingWith(i,target-nums[i],nums,n,dp);
-            }
+    public int solve(int[] nums, int target)
+    {
+        if(target == 0) {
+            return 1;
         }
-        return dp[start][target] = ans;
+        if(target < 0) {
+            return 0;
+        }
+        
+        if(t[target] != -1) {
+            return t[target];
+        }
+        
+        int result = 0;
+        for(int i = 0; i<nums.length;i++) {
+            result += solve(nums, target-nums[i]);
+        }
+        return t[target] = result;
     }
 }
