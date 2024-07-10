@@ -14,25 +14,17 @@
  * }
  */
 class Solution {
-  
     public int rob(TreeNode root) {
-        return rob(root, 0, 0, new HashMap<>());
+        int rob[] = {0} ,notRob[] = {0};
+        return getMax(root,rob,notRob);
     }
-    public int rob(TreeNode node, int left, int right, HashMap<TreeNode, Integer> map){
-        if(node == null)return 0;
-        if(node.right == null && node.left == null) return node.val;
-
-        if(map.containsKey(node))return map.get(node);
-
-        if(node.left!=null)
-            left = rob(node.left.left, 0, 0, map) + rob(node.left.right, 0, 0, map);
-        if(node.right!=null)
-            right = rob(node.right.right, 0, 0, map)+ rob(node.right.left, 0 ,0, map);
-
-        int sum  = left + right + node.val;
-
-        int result  = Math.max(sum, rob(node.left,0, 0, map) + rob(node.right,0, 0, map));
-        map.put(node, result);
-        return result;
+    public int getMax(TreeNode root ,int rob[] ,int notRob[]){
+        if(root == null) return 0;
+        int leftRob[] = {0} ,leftNotRob[] = {0} ,rightRob[] = {0} , rightNotRob[] = {0};
+        int left = getMax(root.left,leftRob,leftNotRob);
+        int right = getMax(root.right,rightRob,rightNotRob);
+        rob[0] = root.val + leftNotRob[0] + rightNotRob[0];
+        notRob[0] = left + right;
+        return Math.max(rob[0],notRob[0]);
     }
 }
