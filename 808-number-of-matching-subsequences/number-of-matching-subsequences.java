@@ -1,30 +1,26 @@
 class Solution {
     public int numMatchingSubseq(String s, String[] words) {
-        Map<String, Integer> map = new HashMap<>();
-        for (String str : words) {
-            map.put(str, map.getOrDefault(str, 0) + 1);
+        int count = 0;
+        Map<String,Integer> map = new HashMap<>();
+        for(String word:words){
+            map.put(word,map.getOrDefault(word,0)+1);
         }
-
-        int ans = 0;
-        char[] ch = s.toCharArray();
-        
-        for (String str : map.keySet()) {
-            
-            char[] temp = str.toCharArray();
-            int i = 0;
-            int j = 0;
-
-            while (i < ch.length && j < temp.length) {
-                if (ch[i] == temp[j]) {
-                    j++;
-                }
-                i++;
-            }
-            
-            if (j == temp.length) {
-                ans += map.get(str);
-            }
+        for(String word:map.keySet()){
+            if(isSubsequence(s,word)) count+= map.get(word);
         }
-        return ans;
+        return count;
+    }
+    public boolean isSubsequence(String s, String word){
+        int n = s.length();
+        int m = word.length();
+        if(m>n) return false;
+        int i=0, j=0;
+        while(j!=m && i!=n){
+            if(s.charAt(i)==word.charAt(j)){
+                j++;
+            }
+            i++;
+        }
+        return j==m;
     }
 }
