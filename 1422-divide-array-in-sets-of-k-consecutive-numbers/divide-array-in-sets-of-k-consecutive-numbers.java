@@ -3,7 +3,6 @@ class Solution {
         int n = nums.length;
         Arrays.sort(nums);
         if(n%k!=0) return false;
-        System.out.println(n+" "+k);
         HashMap<Integer,Integer> map = new HashMap<>();
         for(int num:nums){
             map.put(num,map.getOrDefault(num,0)+1);
@@ -20,9 +19,6 @@ class Solution {
                     }
                 }
             }
-        }
-        for(int num:map.keySet()){
-            System.out.println(num);
         }
         return map.size()==0;
     }
