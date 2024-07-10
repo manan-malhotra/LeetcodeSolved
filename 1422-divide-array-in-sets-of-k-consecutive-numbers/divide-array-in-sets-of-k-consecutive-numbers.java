@@ -8,8 +8,8 @@ class Solution {
             map.put(num,map.getOrDefault(num,0)+1);
         }
         for(int num:nums){
-            if(map.containsKey(num-1)) continue;
-            else if(map.containsKey(num)){
+            // if(map.containsKey(num-1)) continue;
+            if(map.containsKey(num)){
                 for(int i=0;i<k;i++){
                     int newNum = num+i;
                     if(!map.containsKey(newNum)) return false;
