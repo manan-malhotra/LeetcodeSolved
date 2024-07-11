@@ -4,7 +4,7 @@ class Solution {
         int maxArea = 0;
         int left = 0, right = n - 1;
 
-        for (int i = 0; left < right; i++) {
+        while(left < right) {
             int h = Math.min(height[left], height[right]);
             int w = right - left;
             int curA = h * w;
