@@ -5,7 +5,7 @@ class Solution {
         }
         int start = 0;
         int last = s.length() - 1;
-        while(start <= last) {
+        while(start < last) {
         	char currFirst = s.charAt(start);
         	char currLast = s.charAt(last);
         	if (!Character.isLetterOrDigit(currFirst )) {
