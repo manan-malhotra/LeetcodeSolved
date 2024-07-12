@@ -28,14 +28,14 @@ class Solution {
                 }
             }
             
-            int doCurJob = jobs[i].profit;
+            int take = jobs[i].profit;
             if (res != -1) {
-                doCurJob += dp[res];
+                take += dp[res];
             }
             
-            int notDoCurJob = dp[i - 1];
+            int nottake = dp[i - 1];
             
-            dp[i] = Math.max(doCurJob, notDoCurJob);
+            dp[i] = Math.max(take, nottake);
         }
         
         return dp[len - 1];
