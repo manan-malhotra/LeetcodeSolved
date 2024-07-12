@@ -33,7 +33,6 @@ class Solution {
         }
         int ans = 0;
         for(int i=0;i<n;i++){
-            System.out.print(next[i]+" ");
             ans = Math.max(ans, heights[i]*(next[i]-prev[i]-1));
         }
         return ans;
