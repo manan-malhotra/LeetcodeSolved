@@ -34,7 +34,7 @@ class Solution {
             curr = curr.next;
         }
         
-        curr.next = (l1 != null) ? l1 : l2;
+        curr.next = (l1 == null) ? l2 : l1;
         
         return dummy.next;
     }
