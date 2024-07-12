@@ -43,9 +43,9 @@ class Solution {
     }
     
     public void dfs(int[][] heights, int[][] visited, int i, int j){
-        if(i < 0 || j < 0 || i >= heights.length || j >= heights[0].length){
-            return;
-        }
+        // if(i < 0 || j < 0 || i >= heights.length || j >= heights[0].length){
+        //     return;
+        // }
         
         visited[i][j] = 1;
         int r = heights.length;
