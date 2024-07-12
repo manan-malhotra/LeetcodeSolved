@@ -1,33 +1,30 @@
 class Solution {
-    public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        if (!wordList.contains(endWord) || beginWord.equals(endWord))
-            return 0;
-
-        Queue<Pair<String,Integer>> queue = new LinkedList<>();
-        Set<String> words = new HashSet<>();
-        for(String word:wordList){
-            if(word.equals(beginWord)) continue;
-            words.add(word);
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashSet<String> set = new HashSet<>();
+        for(String word : wordList){
+            if(word==beginWord) continue;
+            set.add(word);
         }
+        if(!set.contains(endWord)) return 0;
+        Queue<Pair<String,Integer>> queue = new LinkedList<>();
         queue.offer(new Pair(beginWord,1));
+        int n = beginWord.length();
         while(!queue.isEmpty()){
-            String newWord = queue.peek().getKey();
-            int step = queue.poll().getValue();
-           
-            for(int i=0;i<newWord.length();i++){
-                char[] newWordArray = newWord.toCharArray();
+            String word = queue.peek().getKey();
+            int distance = queue.poll().getValue();
+            for(int i=0;i<n;i++){
+                char[] wordArr = word.toCharArray();
                 for(char ch='a';ch<='z';ch++){
-                    newWordArray[i] = ch;
-                    String word = new String(newWordArray);
-                    if(words.contains(word)){
-                        if(word.equals(endWord)) return step+1;
-                        words.remove(word);
-                        queue.offer(new Pair(word,step+1));
+                    wordArr[i] = ch;
+                    String newWord = new String(wordArr);
+                    if(newWord.equals(endWord)) return distance+1;
+                    if(set.contains(newWord)){
+                        queue.add(new Pair(newWord, distance+1));
+                        set.remove(newWord);
                     }
                 }
-            }
+            }   
         }
         return 0;
     }
-
 }
