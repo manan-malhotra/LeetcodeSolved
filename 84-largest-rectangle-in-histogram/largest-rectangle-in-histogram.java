@@ -1,36 +1,41 @@
 class Solution {
-    public int largestRectangleArea(int[] height) {
-    if (height == null || height.length == 0) {
-        return 0;
-    }
-    int[] lessFromLeft = new int[height.length]; // idx of the first bar the left that is lower than current
-    int[] lessFromRight = new int[height.length]; // idx of the first bar the right that is lower than current
-    lessFromRight[height.length - 1] = height.length;
-    lessFromLeft[0] = -1;
-
-    for (int i = 1; i < height.length; i++) {
-        int p = i - 1;
-
-        while (p >= 0 && height[p] >= height[i]) {
-            p = lessFromLeft[p];
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        int[] prev = new int[n];
+        int[] next = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        prev[0] = -1;
+        stack.add(0);
+        for(int i=1;i<n;i++){
+            while(!stack.isEmpty() && heights[stack.peek()]>heights[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()){
+                prev[i] = -1;
+            }else{
+                prev[i] = stack.peek();
+            }
+            stack.push(i);
         }
-        lessFromLeft[i] = p;
-    }
-
-    for (int i = height.length - 2; i >= 0; i--) {
-        int p = i + 1;
-
-        while (p < height.length && height[p] >= height[i]) {
-            p = lessFromRight[p];
+        next[n-1] = n;
+        while(!stack.isEmpty()) stack.pop();
+        stack.add(n-1);
+        for(int i=n-2;i>=0;i--){
+            while(!stack.isEmpty() && heights[stack.peek()]>=heights[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()){
+                next[i] = n;
+            }else{
+                next[i] = stack.peek();
+            }
+            stack.push(i);
         }
-        lessFromRight[i] = p;
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            System.out.print(next[i]+" ");
+            ans = Math.max(ans, heights[i]*(next[i]-prev[i]-1));
+        }
+        return ans;
     }
-
-    int maxArea = 0;
-    for (int i = 0; i < height.length; i++) {
-        maxArea = Math.max(maxArea, height[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
-    }
-
-    return maxArea;
-}
 }
