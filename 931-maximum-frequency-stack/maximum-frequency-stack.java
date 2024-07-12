@@ -1,36 +1,36 @@
 class FreqStack {
-    Map<Integer,Integer> cnt;//frequency count for every digit
-    int max;//max frequency present for any num(we don't know which)
-    
-    //used to store frequency-wise stacks of inputs.eg.
-    //([2,1,2,5,5,5])(1 freq-[2,1,5],2 freq-[2,5],3 freq-[5])
-    Map<Integer,ArrayList<Integer>> stack;//stack assigned with num of frequencies
+    int maxFreq;
+    HashMap<Integer,Integer> count;
+    HashMap<Integer, List<Integer>> stack;
     public FreqStack() {
-        //initialise our members
-        cnt=new HashMap<>();
-        stack=new HashMap<>();
-        max=0;
+        maxFreq = 0;
+        count = new HashMap<>();
+        stack = new HashMap<>();
     }
     
     public void push(int val) {
-        //increment val count
-        int valCnt=cnt.getOrDefault(val,0)+1;
-        cnt.put(val,valCnt);
-        //if current cal count is more than max
-        if(valCnt>max){
-            max=valCnt;
-            stack.put(max,new ArrayList<>());//add new stack for this new max count
+        int currFreq = count.getOrDefault(val,0);
+        int newFreq = currFreq + 1;
+        count.put(val,newFreq);
+        if(newFreq>maxFreq){
+            maxFreq = newFreq;
+            stack.put(maxFreq, new ArrayList<>());
         }
-        stack.get(valCnt).add(val);//add this num to its stacks
+        stack.get(newFreq).add(val);
     }
     
     public int pop() {
-        //remove last element of max freq
-        int res=stack.get(max).remove(stack.get(max).size()-1);
-        cnt.put(res,cnt.get(res)-1);//reduce freq of number
-        if(stack.get(max).size()==0){//if now this freq have no num left
-            max--;//reduce the freq
-        }
-        return res;
+        List<Integer> topFreq = stack.get(maxFreq);
+        int topValue = topFreq.remove(topFreq.size()-1);
+        if(topFreq.size()==0) maxFreq--;
+        count.put(topValue,count.get(topValue)-1);
+        return topValue;
     }
 }
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * FreqStack obj = new FreqStack();
+ * obj.push(val);
+ * int param_2 = obj.pop();
+ */
