@@ -1,40 +1,61 @@
 class WordDictionary {
-    Map<Integer, List<String>> map = new HashMap<>();
-public void addWord(String word) {
-    int index = word.length();
-	if (!map.containsKey(index)) {
-	    List<String> list = new ArrayList<>();
-	    list.add(word);
-		map.put(index, list);
-	} else {
-		map.get(index).add(word);
-	}
-}
+    // implement a prefix tree again
+    private static final int ALPHABET_SIZE = 26;
+    private TrieNode root = new TrieNode();
 
+    private class TrieNode {
+        private TrieNode[] children = new TrieNode[ALPHABET_SIZE];
+        private boolean isWordEnd = false;
 
-public boolean search(String word) {
-  int index = word.length();
-  if (!map.containsKey(index)) {
-      return false;
-  }
-  
-  List<String> list = map.get(index);
-  for(String s : list) { 
-      if(isSame(s, word)) { // when word has '.'
-          return true;
-      }
-  }
-  return false;
-}
+        private TrieNode() {
 
-public boolean isSame(String s, String word) { // word has '.'
-    for (int i = 0; i < s.length(); i++) {
-        if (word.charAt(i) != '.' && s.charAt(i) != word.charAt(i)) {
-            return false;
         }
     }
-    return true;
-}
+
+    public WordDictionary() {
+        
+    }
+    
+    public void addWord(String word) {
+        // add word to trie char by char
+        TrieNode curr = this.root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            int cI = (int)c - (int)'a';
+            if (curr.children[cI] == null) {
+                curr.children[cI] = new TrieNode();
+            }
+            curr = curr.children[cI];
+        }
+        curr.isWordEnd = true;
+    }
+    
+    public boolean search(String word) {
+        return search(word, this.root, 0);
+    }
+
+    private boolean search(String word, TrieNode root, int j) {
+        TrieNode curr = root;
+
+        for (int i = j; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (c == '.') {
+                for (TrieNode child : curr.children) {
+                    if (child != null && search(word, child, i + 1)) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                int cI = (int)c - (int)'a';
+                if (curr.children[cI] == null) {
+                    return false;
+                }
+                curr = curr.children[cI]; 
+            }
+        }
+        return curr != null && curr.isWordEnd;
+    }
 }
 
 /**
