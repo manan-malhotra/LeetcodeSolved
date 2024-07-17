@@ -45,7 +45,6 @@ class Solution {
             }
         }
 		
-        helper[i] = false;  
-        return false;
+        return helper[i] = false;  
     }
 }
