@@ -14,7 +14,6 @@ class Solution {
                 if(check=='{' && i!='}') return false;
             }
         }
-            if(stack.isEmpty()) return true;
-            return false;
+            return stack.isEmpty();
     }   
 }
