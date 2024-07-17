@@ -1,88 +1,64 @@
 class Solution {
-    /**
- * @param words array of unique words
- * @return all the pairs of the distinct indices (i, j) in words, so that the concatenation of words[i] + words[j]
- * is a palindrome
- */
-public List<List<Integer>> palindromePairs(String[] words) {
-	var pairs = new ArrayList<List<Integer>>();
-	var reverseIndex = getReverseIndex(words);
-	addEmptyAndPalindromes(words, pairs, reverseIndex);
-	addReverses(words, pairs, reverseIndex);
-	addSplits(words, pairs, reverseIndex);
-	return pairs;
-}
 
-/**
- * T/S: O(nw)/O(nw), where n = size(words), w = avg_size(words[i])
- *
- * @param words array of words
- * @return a map of reverse words to their indices
- */
-private Map<String, Integer> getReverseIndex(String[] words) {
-	var reverseIndex = new HashMap<String, Integer>();
-	for (var i = 0; i < words.length; i++)
-		reverseIndex.put(new StringBuilder(words[i]).reverse().toString(), i);
-	return reverseIndex;
-}
+    int wordMaxLength = 301;
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = words.length;
+        Map<String, Integer> map = new HashMap<>();
+        boolean[] seen = new boolean[wordMaxLength];
+        for (int i = 0; i < n; i++) {
+            String word = words[i];
+            map.put(word, i);
+            seen[word.length()] = true;
+        }
 
-/**
- * Case 1
- * T/S: O(nw)/O(n), where n = size(words), w = avg_size(words[i])
- */
-private void addEmptyAndPalindromes(String[] words, List<List<Integer>> pairs, Map<String, Integer> reverseIndex) {
-	var i = reverseIndex.getOrDefault("", -1);
-	if (i == -1)
-		return;
-	for (var j = 0; j < words.length; j++)
-		if (j != i && isPalindrome(words[j])) {
-			pairs.add(List.of(i, j));
-			pairs.add(List.of(j, i));
-		}
-}
+        for (int i = 0; i < n; i++) {
+            String word = words[i];
+            int m = word.length();
+            if (m == 0) continue;
+            char[] cs = word.toCharArray();
+            String re = new StringBuilder(word).reverse().toString();
 
-/**
- * Case 2
- * T/S: O(n)/O(n), where n = size(words), w = avg_size(words[i])
- */
-private void addReverses(String[] words, List<List<Integer>> pairs, Map<String, Integer> reverseIndex) {
-	for (int i = 0; i < words.length; i++) {
-		var j = reverseIndex.getOrDefault(words[i], -1);
-		if (i != j && j != -1)
-			pairs.add(List.of(i, j));
-	}
-}
+            for (int j = 0; j < m - 1; j++) {
+                if (seen[j + 1] && isPalindrome(cs, j + 1, m - 1)) {
+                    String s = re.substring(m - j - 1, m);
+                    Integer k = map.get(s);
+                    if (k != null){
+                        ans.add(List.of(i, k));
+                    }
+                }
+                if (seen[m - j - 1] && isPalindrome(cs, 0, j)) {
+                    String s = re.substring(0, m - j - 1);
+                    Integer k = map.get(s);
+                    if (k != null){
+                        ans.add(List.of(k, i));
+                    }
+                }
+            }
 
-/**
- * Case 3
- * T/S: O(nw²)/O(nw²), where n = size(words), w = avg_size(words[i])
- */
-private void addSplits(String[] words, List<List<Integer>> pairs, Map<String, Integer> reverseIndex) {
-	for (var i = 0; i < words.length; i++) {
-		var word = words[i];
-
-		for (var j = 1; j < word.length(); j++) {
-			var left = word.substring(0, j);
-			var right = word.substring(j);
-
-			if (reverseIndex.containsKey(right) && isPalindrome(left))
-				pairs.add(List.of(reverseIndex.get(right), i));
-			if (reverseIndex.containsKey(left) && isPalindrome(right))
-				pairs.add(List.of(i, reverseIndex.get(left)));
-		}
-	}
-}
-
-/**
- * T/S: O(w)/O(1), where w = size(s)
- *
- * @param s string
- * @return true if the string is a palindrome, else false
- */
-private boolean isPalindrome(String s) {
-	for (int i = 0, j = s.length() - 1; i < j; i++, j--)
-		if (s.charAt(i) != s.charAt(j))
-			return false;
-	return true;
-}
+            if (isPalindrome(cs, 0, m - 1)) {
+                Integer k = map.get("");
+                if (k != null) {
+                    ans.add(List.of(k, i));
+                    ans.add(List.of(i, k));
+                }
+            } else {
+                Integer k = map.get(re);
+                if (k != null) {
+                    ans.add(List.of(i, k));
+                }
+            }
+        }
+        return ans;
+    }
+    
+    private boolean isPalindrome(char[] cs, int left, int right) {
+        while (left < right) {
+            if (cs[left] != cs[right])
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
 }
