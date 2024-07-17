@@ -1,18 +1,28 @@
 class Solution {
-        public int intersectionSizeTwo(int[][] intervals) {
-        int n = intervals.length;
-        Arrays.sort(intervals, (a, b) -> a[1] == b[1] ? a[0] - b[0] : a[1] - b[1]); // Sort intervals: 1- end 2- start- O(nlogn)
-        List<Integer> res = new ArrayList<>();
-        res.add(intervals[0][1] - 1); // Add one before end
-        res.add(intervals[0][1]); // Add end
-        for (int i = 1; i < n; i++) { // O(n)
-            int start = intervals[i][0], end = intervals[i][1], size = res.size(), last = res.get(size - 1), secondLast = res.get(size - 2);
-            if (start > last) { // We need to add two fresh points
-                res.add(end - 1);
-                res.add(end);
-            } else if (start == last) res.add(end); // We already added one. We need to add the end of this interval
-            else if (start > secondLast) res.add(end); // We already added last. We need one more
-        }
-        return res.size();
+  public int intersectionSizeTwo(int[][] intervals) {
+    int ans = 0;
+    int max = -1;
+    int secondMax = -1;
+
+    Arrays.sort(intervals, (a, b) -> a[1] == b[1] ? b[0] - a[0] : a[1] - b[1]);
+
+    for (int[] interval : intervals) {
+      final int a = interval[0];
+      final int b = interval[1];
+      // The maximum and the second maximum still satisfy.
+      if (max >= a && secondMax >= a)
+        continue;
+      if (max >= a) { // The maximum still satisfy.
+        secondMax = max;
+        max = b; // Add b to the set S.
+        ans += 1;
+      } else {             // The maximum and the second maximum can't satisfy.
+        max = b;           // Add b to the set S.
+        secondMax = b - 1; // Add b - 1 to the set S.
+        ans += 2;
+      }
     }
+
+    return ans;
+  }
 }
