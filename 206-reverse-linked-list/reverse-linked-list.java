@@ -9,18 +9,17 @@
  * }
  */
 class Solution {
-    public ListNode reverseList(ListNode curr) {
-        if(curr==null) return curr;
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        if(curr==null) return head;
         ListNode next = curr.next;
-        ListNode p = null;
         while(curr!=null){
-            curr.next = p;
-            p = curr;
-            curr=next;
-            if(next!=null){
-                next=next.next;
-            }
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            if(next!=null) next = next.next;
         }
-        return p;
+        return head = prev;
     }
 }
