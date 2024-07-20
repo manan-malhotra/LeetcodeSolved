@@ -4,15 +4,17 @@ class Solution {
         char[] ans = s.toCharArray(); 
         int left = 0; 
         int max = 0;         
+        int maxans = 0;
         for (int right = 0; right < ans.length; right++) {
-            arr[ans[right] - 'A']++;
-            max = Math.max(max, arr[ans[right] - 'A']); 
+            // arr[ans[right] - 'A']++;
+            max = Math.max(max, ++arr[ans[right] - 'A']); 
             // Check if the current window is valid
             while ((right - left + 1) - max > k) {
                 arr[ans[left++] - 'A']--; 
             }
+            maxans = Math.max(maxans, right-left+1);
         }
         
-        return ans.length - left; 
+        return maxans;
     }
 }
