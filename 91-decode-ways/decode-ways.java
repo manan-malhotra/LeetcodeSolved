@@ -1,25 +1,29 @@
 class Solution {
     public int numDecodings(String s) {
-        if (s.charAt(0) == '0') {
-            return 0;
-        }
-
         int n = s.length();
-        int[] dp = new int[n + 1];
-        dp[0] = dp[1] = 1;
+        int[] dp = new int[n+1];
+        Arrays.fill(dp,-1);
+        return f(s, 0, n , dp);
+    }
 
-        for (int i = 2; i <= n; i++) {
-            int one = Character.getNumericValue(s.charAt(i - 1));
-            int two = Integer.parseInt(s.substring(i - 2, i));
-
-            if (1 <= one && one <= 9) {
-                dp[i] += dp[i - 1];
-            }
-            if (10 <= two && two <= 26) {
-                dp[i] += dp[i - 2];
+    public int f(String s, int i, int n,int[] dp) {
+        if (i >= n)
+            return 1;
+        if(dp[i]!=-1) return dp[i];
+        if (s.charAt(i) == '0')
+            return dp[i] = 0;
+        int first = Character.getNumericValue(s.charAt(i));
+        int second = -1;
+        if (i + 1 < n)
+            second = Character.getNumericValue(s.charAt(i + 1));
+        if (second == '0')
+            return dp[i] = f(s, i + 2, n,dp);
+        if (second != -1) {
+            int total = (first * 10) + second;
+            if (total < 27) {
+                return dp[i] = f(s, i + 1, n,dp) + f(s, i + 2, n,dp);
             }
         }
-
-        return dp[n];        
+        return dp[i] = f(s, i + 1, n,dp);
     }
 }
