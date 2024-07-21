@@ -16,8 +16,6 @@ class Solution {
         int second = -1;
         if (i + 1 < n)
             second = Character.getNumericValue(s.charAt(i + 1));
-        if (second == '0')
-            return dp[i] = f(s, i + 2, n,dp);
         if (second != -1) {
             int total = (first * 10) + second;
             if (total < 27) {
