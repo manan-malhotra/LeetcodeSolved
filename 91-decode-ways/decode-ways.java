@@ -2,19 +2,20 @@ class Solution {
     public int numDecodings(String s) {
         if(s.charAt(0)=='0') return 0;
         int n = s.length();
-        int[] dp = new int[n+1];
-        dp[n] = 1;
-        dp[n-1] = s.charAt(n-1)=='0'?0:1;
+        int[] dp = new int[3];
+        dp[n%3] = 1;
+        dp[(n-1)%3] = s.charAt(n-1)=='0'?0:1;
         for(int i=n-2;i>=0;i--){
             if(s.charAt(i)=='0') {
-                dp[i] = 0;
+                dp[i%3] = 0;
                 continue;
             }else{
                 int first = s.charAt(i)-'0';
                 int second = s.charAt(i+1)-'0';
                 int total = first*10 + second;
-                if(total<27) dp[i]+= dp[i+2];
-                dp[i] += dp[i+1];
+                dp[i%3] = 0;
+                if(total<27) dp[i%3]+= dp[(i+2)%3];
+                dp[i%3] += dp[(i+1)%3];
             }
         }
         return dp[0];
