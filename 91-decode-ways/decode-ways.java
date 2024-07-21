@@ -13,7 +13,6 @@ class Solution {
                 int first = s.charAt(i)-'0';
                 int second = s.charAt(i+1)-'0';
                 int total = first*10 + second;
-                System.out.println(first+" "+second+" "+total);
                 if(total<27) dp[i]+= dp[i+2];
                 dp[i] += dp[i+1];
             }
