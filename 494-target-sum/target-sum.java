@@ -5,7 +5,7 @@ class Solution {
     }
     public int findTarget(int i, int target, int[] nums){
         if(i==0){
-            if(nums[0]== target && nums[0]==target*-1) return 2;
+            if(nums[0]== target && nums[0]==0) return 2;
             if(nums[0]== target || nums[0]==target*-1) return 1;
             return 0;
         }
