@@ -24,7 +24,7 @@ class Solution {
 
     public TreeNode build(int[] preorder, int ps, int pe,
     int[] inorder, int is,int ie,HashMap<Integer,Integer> hm){
-        if(ps>pe || is>ie) return null;
+        if(ps>pe || is>pe) return null;
         TreeNode root = new TreeNode(preorder[ps]);
         int index = hm.get(preorder[ps]);
         root.left = build(preorder,ps+1,ps+(index-is),inorder,is,index-1,hm);
