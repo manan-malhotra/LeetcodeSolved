@@ -6,7 +6,6 @@ class Solution {
             min = Math.min(min, num);
             max = Math.max(max, num);
         }
-        
         min--;
         int[] count = new int[max-min+1];
         Integer[] result = new Integer[nums.length];
@@ -25,7 +24,7 @@ class Solution {
                 k += (-k&k);
             }
         }
-        
         return Arrays.asList(result);
     }
 }
+
