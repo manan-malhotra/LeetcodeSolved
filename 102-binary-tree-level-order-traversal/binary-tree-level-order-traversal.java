@@ -27,7 +27,7 @@ class Solution {
                 if(node.left!=null) queue.offer(node.left);
                 if(node.right!=null) queue.offer(node.right);
             }
-            level.add(new ArrayList<>(list));
+            level.add(list);
         }
         return level;
     }
