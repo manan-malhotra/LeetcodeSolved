@@ -15,7 +15,6 @@ class Solution {
             if(i+1<n) second = s.charAt(i+1) - '0';
             if(second!=-1){
                 int total = first*10 + second;
-                System.out.println(total);
                 if(total<27){
                     return dp[i] =  f(s,n,i+1,dp) + f(s,n,i+2,dp);
                 }
