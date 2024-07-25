@@ -6,24 +6,28 @@ class Solution {
             set.add(word);
         }
         if(!set.contains(endWord)) return 0;
-        Queue<Pair<String,Integer>> queue = new LinkedList<>();
-        queue.offer(new Pair(beginWord,1));
-        int n = beginWord.length();
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        int distance = 1;
         while(!queue.isEmpty()){
-            String word = queue.peek().getKey();
-            int distance = queue.poll().getValue();
-            for(int i=0;i<n;i++){
-                char[] wordArr = word.toCharArray();
-                for(char ch='a';ch<='z';ch++){
-                    wordArr[i] = ch;
-                    String newWord = new String(wordArr);
-                    if(newWord.equals(endWord)) return distance+1;
-                    if(set.contains(newWord)){
-                        queue.add(new Pair(newWord, distance+1));
-                        set.remove(newWord);
+            int size = queue.size();
+            for(int i=0;i<size;i++){
+                String word = queue.remove();
+                // System.out.println(word);
+                if(word.equals(endWord)) return distance;
+                for(int j=0;j<word.length();j++){
+                char[] charArray = word.toCharArray();
+                    for(char ch = 'a'; ch<='z';ch++){
+                        charArray[j] = ch;
+                        String newWord = new String(charArray);
+                        if(set.contains(newWord)) {
+                            queue.offer(newWord);
+                            set.remove(newWord);
+                        }
                     }
                 }
-            }   
+            }
+            distance++;
         }
         return 0;
     }
