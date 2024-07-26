@@ -9,6 +9,7 @@
  * }
  */
 class Solution {
+
     public void reorderList(ListNode head) {
         if(head.next==null) return ;
         ListNode mid = findMid(head);
@@ -17,6 +18,7 @@ class Solution {
         secondHead = reverse(secondHead);
         combine(head,secondHead);
     }
+
     public ListNode findMid(ListNode head){
         ListNode slow = head;
         ListNode fast = head.next;
@@ -26,6 +28,7 @@ class Solution {
         }
         return slow;
     }
+
     public ListNode reverse(ListNode head){
         ListNode prev = null;
         ListNode curr = head;
@@ -38,6 +41,7 @@ class Solution {
         }
         return prev;
     }
+
     public void combine(ListNode first, ListNode second){
         ListNode temp1 = first;
         ListNode temp2 = second;
@@ -50,4 +54,6 @@ class Solution {
             second = temp2;
         }
     }
+
+    
 }
