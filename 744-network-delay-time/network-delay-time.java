@@ -1,50 +1,45 @@
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+        int vis[] = new int[n];
+        Arrays.fill(vis,Integer.MAX_VALUE);
+        vis[k-1] = 0;
+        List<List<Node>> adj = new ArrayList<>();
         for(int i=0;i<n;i++){
-            adj.add(new ArrayList<Pair>());
+            adj.add(new ArrayList<>());
         }
-        for(int[] edge : times){
-            int u = edge[0];
-            int v = edge[1];
-            int w = edge[2];
-            adj.get(u-1).add(new Pair(w,v-1));
+        for(int[] time : times){
+            int from = time[0]-1;
+            int to = time[1]-1;
+            int wt = time[2];
+            adj.get(from).add(new Node(to,wt));
         }
-        return dijkstra(n,adj,k-1);
-    }
-    public int dijkstra(int V, ArrayList<ArrayList<Pair>> adj, int src){
-        PriorityQueue<Pair> pq = new PriorityQueue<>((x,y)->x.distance-y.distance);
-        int[] dist = new int[V];
-        Arrays.fill(dist,(int)1e9);
-        dist[src] = 0;
-        pq.add(new Pair(0,src));
-        while(pq.size()!=0){
-            Pair pair = pq.poll();
-            int node = pair.node;
-            int distance = pair.distance;
-            ArrayList<Pair> edges = adj.get(node);
-            for(Pair edge:edges){
-                int edgeW = edge.distance;
-                int adjN = edge.node;
-                if(edgeW + distance < dist[adjN]){
-                    dist[adjN] = edgeW + distance;
-                    pq.add(new Pair(dist[adjN],adjN));
+        Queue<Node> q = new LinkedList<>();
+        q.offer(new Node(k-1,0));
+        while(!q.isEmpty()){
+            Node node = q.poll();
+            int stop = node.stop;
+            int wt = node.wt;
+            for(Node newNode : adj.get(stop)){
+                int newStop = newNode.stop;
+                int newWt = wt + newNode.wt;
+                if(vis[newStop]>newWt){
+                    vis[newStop] = newWt;
+                    q.offer(new Node(newStop,vis[newStop]));
                 }
             }
         }
-        int max = -1;
-        for(int i : dist){
-            if(i==1e9) return -1;
-            if(i>max) max=i;
+        int max = 0;
+        for(int i : vis){
+            max = Math.max(i,max);
         }
-        return max;
+        return max==Integer.MAX_VALUE ? -1 : max;
     }
 }
-class Pair{
-    int distance;
-    int node;
-    public Pair(int distance, int node){
-        this.distance = distance;
-        this.node = node;
+class Node{
+    int stop;
+    int wt;
+    public Node(int stop, int wt){
+        this.stop = stop;
+        this.wt = wt;
     }
 }
