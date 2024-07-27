@@ -11,9 +11,7 @@ class Solution {
         return true;
     }
     public boolean dfs(int i,int col, int[] vis, int[] color, int[][] graph){
-        System.out.println(i+" "+col);
         vis[i] = 1;
-
         color[i] = col;
         for(int child : graph[i]){
             if(vis[child]==0){
