@@ -1,30 +1,32 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        List<Integer> ans = new ArrayList<>();
         int n = graph.length;
-        int[] visited = new int[n];
-        int[] pathVisited = new int[n];
+        List<List<Integer>> revadj = new ArrayList<>();
+        int[] outdegree = new int[n];
         for(int i=0;i<n;i++){
-            if(visited[i]==0){
-                dfsCheck(i,graph,visited,pathVisited);
+            revadj.add(new ArrayList<>());
+        }
+        for(int i=0;i<n;i++){
+            for(int num : graph[i]){
+                revadj.get(num).add(i);
+                outdegree[i]++;
             }
         }
+        Queue<Integer> queue = new LinkedList<>();
         for(int i=0;i<n;i++){
-            if(visited[i]==-1) ans.add(i);
+            if(outdegree[i]==0)queue.add(i);
         }
+        List<Integer> ans = new ArrayList<>();
+        while(!queue.isEmpty()){
+            ans.add(queue.peek());
+            int node = queue.poll();
+            for(int child:revadj.get(node)){
+                if(--outdegree[child]==0){
+                    queue.add(child);
+                }
+            }
+        }
+        Collections.sort(ans);
         return ans;
-    }
-    public boolean dfsCheck(int startNode, int[][] graph, int[] visited, int[] pathVisited) {
-        visited[startNode] = 1;
-        pathVisited[startNode] = 1;
-        for(int childNode : graph[startNode]){
-            if(visited[childNode]==0){
-                if(dfsCheck(childNode,graph,visited,pathVisited)) return true;
-            }
-            if(pathVisited[childNode] == 1) return true;
-        }
-        pathVisited[startNode] = 0;
-        visited[startNode] = -1;
-        return false;
     }
 }
