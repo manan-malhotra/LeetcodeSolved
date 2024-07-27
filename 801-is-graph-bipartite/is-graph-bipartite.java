@@ -1,24 +1,25 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
+        int[] vis = new int[n];
         int[] color = new int[n];
         for(int i=0;i<n;i++){
-            if(color[i]==0 && !dfs(i,graph,color,1)) return false;
-        }
-        return true;
-    }
-    public boolean dfs(int i, int[][] graph, int[] color, int col){
-        
-        if(color[i]!=0){
-            if(color[i]!=col) return false;
-            return true;
-        }
-        if(color[i]==0){
-            color[i] = col;
-            for(int j:graph[i]){
-                if(!dfs(j,graph,color,col*-1)) return false;
+            if(vis[i]==0){
+                if(dfs(i,1,vis,color,graph)) return false;
             }
         }
         return true;
+    }
+    public boolean dfs(int i,int col, int[] vis, int[] color, int[][] graph){
+        System.out.println(i+" "+col);
+        vis[i] = 1;
+
+        color[i] = col;
+        for(int child : graph[i]){
+            if(vis[child]==0){
+                if(dfs(child,-col,vis,color,graph)) return true;
+            }else if(color[child]==col) return true;
+        }
+        return false;
     }
 }
