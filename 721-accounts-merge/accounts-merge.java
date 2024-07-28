@@ -52,7 +52,6 @@ class Solution {
         int n = details.size();
         DisjointSet ds = new DisjointSet(n);
         HashMap<String, Integer> mapMailNode = new HashMap<String, Integer>();
-
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < details.get(i).size(); j++) {
                 String mail = details.get(i).get(j);
@@ -63,7 +62,6 @@ class Solution {
                 }
             }
         }
-
         ArrayList<String>[] mergedMail = new ArrayList[n];
         for (int i = 0; i < n; i++) mergedMail[i] = new ArrayList<String>();
         for (Map.Entry<String, Integer> it : mapMailNode.entrySet()) {
@@ -71,9 +69,7 @@ class Solution {
             int node = ds.findUPar(it.getValue());
             mergedMail[node].add(mail);
         }
-
         List<List<String>> ans = new ArrayList<>();
-
         for (int i = 0; i < n; i++) {
             if (mergedMail[i].size() == 0) continue;
             Collections.sort(mergedMail[i]);
@@ -85,6 +81,5 @@ class Solution {
             ans.add(temp);
         }
         return ans;
-
     }
 }
