@@ -1,13 +1,14 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int totalProfit = 0;
-        int leastPrice = Integer.MAX_VALUE;
+        int profit = 0;
         int ifSoldToday = 0;
-        for(int price: prices){
-            if(price<leastPrice) leastPrice = price;
-            ifSoldToday = price - leastPrice;
-            if(ifSoldToday> totalProfit) totalProfit = ifSoldToday;
+        int least = Integer.MAX_VALUE;
+        for(int price : prices){
+            if(price<least) least = price;
+            ifSoldToday = price - least; 
+            if(profit<ifSoldToday) profit = ifSoldToday;
+            System.out.println(profit+" "+ifSoldToday+" "+price+" "+least);
         }
-        return totalProfit;
+        return profit;
     }
 }
