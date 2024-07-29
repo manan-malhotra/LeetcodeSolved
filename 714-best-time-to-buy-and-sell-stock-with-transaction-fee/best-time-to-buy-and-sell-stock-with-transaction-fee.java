@@ -1,24 +1,23 @@
 class Solution {
-    public int maxProfit(int[] prices,int fee) {
+    public int maxProfit(int[] prices, int fee) {
         int n = prices.length;
-        int[][] dp = new int[2][n];
-        for(int[] arr:dp) Arrays.fill(arr,-1);
-        return maxProfit(0,0,prices,n-1,dp,fee);
+        int dp[][] = new int[n][2];
+        for(int[] row : dp) Arrays.fill(row,-1);
+        return f(0,0,n,prices,dp,fee);
     }
-    public int maxProfit(int i, int isBought, int[] prices, int n,int[][] dp, int fee){
-        if(dp[isBought][i]!=-1) return dp[isBought][i];
-        if(i==n){
-            if(isBought==1) return dp[isBought][i] = prices[i];
-            else return dp[isBought][i] = 0;
+    public int f(int i, int isBought, int n, int[] prices,int[][] dp,int fee){
+        if(i>=n) return 0;
+        if(dp[i][isBought]!=-1) return dp[i][isBought];
+        if(i==n-1){
+            if(isBought==1) return dp[i][isBought] = prices[i];
+            else return dp[i][isBought] = 0;
         }
+        int ignore = f(i+1,isBought,n,prices,dp,fee);
         if(isBought==1){
-            int sell = prices[i] + maxProfit(i+1,0,prices,n,dp,fee);
-            int hold = maxProfit(i+1,isBought,prices,n,dp,fee);
-            return dp[isBought][i] = Math.max(sell,hold);
-        }else{
-            int buy =  maxProfit(i+1,1,prices,n,dp,fee) - prices[i]-fee;
-            int ignore = maxProfit(i+1,isBought,prices,n,dp,fee);
-            return dp[isBought][i] = Math.max(buy,ignore);
+            int sell = f(i+1,0,n,prices,dp,fee) + prices[i];
+            return dp[i][isBought] = Math.max(sell,ignore);
         }
+        int buy = f(i+1,1,n,prices,dp,fee) - prices[i] - fee;
+        return dp[i][isBought] = Math.max(buy,ignore);
     }
 }
