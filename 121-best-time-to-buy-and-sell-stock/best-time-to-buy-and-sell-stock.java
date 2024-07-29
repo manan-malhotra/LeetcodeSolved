@@ -7,7 +7,6 @@ class Solution {
             if(price<least) least = price;
             ifSoldToday = price - least; 
             if(profit<ifSoldToday) profit = ifSoldToday;
-            System.out.println(profit+" "+ifSoldToday+" "+price+" "+least);
         }
         return profit;
     }
