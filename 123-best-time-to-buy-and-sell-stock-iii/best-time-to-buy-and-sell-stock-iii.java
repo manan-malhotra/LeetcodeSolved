@@ -1,25 +1,25 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        int[][][] dp = new int[2][2][3];
-        dp[(n-1)%2][1][0] = prices[n-1];
-        dp[(n-1)%2][1][1] = prices[n-1];
-        for(int i=n-2;i>=0;i--){
-            for(int isBought = 1;isBought>=0;isBought--){
-                for(int timesSold = 1; timesSold>=0;timesSold--){
-                    if(isBought==1){
-                        int hold = dp[(i+1)%2][isBought][timesSold];
-                        int sell = prices[i] + dp[(i+1)%2][0][timesSold+1];
-                        dp[i%2][isBought][timesSold] = Math.max(sell,hold);
-                    }else{
-                        int buy =  dp[(i+1)%2][1][timesSold] - prices[i];
-                        int ignore = dp[(i+1)%2][isBought][timesSold];
-                        dp[i%2][isBought][timesSold] = Math.max(buy,ignore);
-                    }
-                }
-            }
+        int[][][] dp = new int[n][2][3];
+        for(int[][] arr: dp){
+            for(int[] row:arr) Arrays.fill(row,-1);
         }
-        return dp[0][0][0];
+        return f(0,0,2,n,prices,dp);
+    }
+    public int f(int i, int bought, int left, int n, int[] prices, int[][][] dp){
+        if(dp[i][bought][left]!=-1) return dp[i][bought][left];
+        if(left==0) return dp[i][bought][left] = 0;
+        if(i==n-1){
+            if(bought==1) return dp[i][bought][left] = prices[i];
+            else return dp[i][bought][left] = 0;
+        }
+        int ignore = f(i+1,bought,left,n,prices,dp);
+        if(bought==1){
+            int sell = f(i+1,0,left-1,n,prices,dp) + prices[i];
+            return dp[i][bought][left] = Math.max(sell,ignore);
+        }
+        int buy = f(i+1,1,left,n,prices,dp) - prices[i];
+        return dp[i][bought][left] = Math.max(buy,ignore);
     }
 }
-
