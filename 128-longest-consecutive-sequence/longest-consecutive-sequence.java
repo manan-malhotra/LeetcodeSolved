@@ -10,7 +10,7 @@ class Solution {
             int curr = num;
             int count = 0;
             while(set.contains(curr)){
-                curr++;
+                set.remove(curr++);
                 count++;
             }
             max = Math.max(count,max);
