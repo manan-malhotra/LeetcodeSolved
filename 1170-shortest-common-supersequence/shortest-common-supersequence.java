@@ -3,8 +3,6 @@ class Solution {
         if(str1.equals(str2)) return str1;
         String lcs = longestCommonSubsequence(str1,str2);
         int l = lcs.length();
-        System.out.println(l);
-        System.out.println(lcs);
         if(l==0) return str1+str2;
         int n = str1.length();
         int m = str2.length();
@@ -69,7 +67,6 @@ class Solution {
             }
         }
         String lcs = sb.toString();
-        System.out.println(dp[0][0]);
         return lcs;
     }
 }
