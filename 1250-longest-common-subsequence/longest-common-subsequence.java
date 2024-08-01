@@ -10,7 +10,7 @@ class Solution {
         if(i==n || j==m) return 0;
         if(dp[i][j]!=-1) return dp[i][j];
         int match = 0;
-        if(text1.charAt(i)==text2.charAt(j)) match = 1 + f(i+1,j+1,n,m,text1,text2,dp);
+        if(text1.charAt(i)==text2.charAt(j)) return dp[i][j] =  1 + f(i+1,j+1,n,m,text1,text2,dp);
         int ignore = Math.max(f(i,j+1,n,m,text1,text2,dp),f(i+1,j,n,m,text1,text2,dp));
         return  dp[i][j] =  Math.max(match,ignore);
     }
