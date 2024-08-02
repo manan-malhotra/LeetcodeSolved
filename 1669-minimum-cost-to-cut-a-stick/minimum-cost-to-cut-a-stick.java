@@ -9,9 +9,9 @@ class Solution {
         Collections.sort(arr);
         int[][] dp = new int[c + 2][c + 2];
         for (int i = c; i >= 1; i--) {
-            for (int j = 1; j <= c; j++) {
-                if (i > j)
-                    continue;
+            for (int j = i; j <= c; j++) {
+                // if (i > j)
+                //     continue;
 
                 int mini = Integer.MAX_VALUE;
 
