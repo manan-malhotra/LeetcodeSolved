@@ -10,8 +10,8 @@ class Solution {
             dp[i][i] = arr.get(i-1)*arr.get(i)*arr.get(i+1);
         }
         for(int i=n;i>=1;i--){
-            for(int j=1;j<=n;j++){
-                if(i>=j) continue;
+            for(int j=i+1;j<=n;j++){
+                // if(i>=j) continue;
                 int maxi = Integer.MIN_VALUE;
                 for(int k=i;k<=j;k++){
                     int total = dp[i][k-1] + dp[k+1][j] + (arr.get(i-1) * arr.get(k) * arr.get(j+1));
