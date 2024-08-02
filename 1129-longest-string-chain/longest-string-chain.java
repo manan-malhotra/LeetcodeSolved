@@ -26,6 +26,6 @@ class Solution {
                 j++;
             }else i++;
         }
-        return (j==l2 && (i==l1 || i==l1-1));
+        return (j==l2);
     }
 }
