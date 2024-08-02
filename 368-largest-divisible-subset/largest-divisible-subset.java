@@ -20,10 +20,13 @@ class Solution {
         for(int i=n-1;i>=0;i--){
             if(prev%nums[i]==0 && dp[i]==subsetLength){
                 subsetLength--;
-                ans.add(0,nums[i]);
+                ans.add(nums[i]);
                 prev = nums[i];
             }
         }
         return ans;
     }
 }
+
+
+
