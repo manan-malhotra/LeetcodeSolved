@@ -5,7 +5,7 @@ class Solution {
             map.put(num,map.getOrDefault(num,0)+1);
         }
         int max = 0;
-        for(int num : nums){
+        for(int num : map.keySet()){
             int currCount = map.get(num);
             int nextCount = map.getOrDefault(num+1,0);
             if(nextCount!=0){
