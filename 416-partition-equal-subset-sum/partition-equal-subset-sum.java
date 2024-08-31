@@ -2,9 +2,15 @@ class Solution {
     public boolean canPartition(int[] nums) {
         if(nums.length==1) return false;
         int target = 0;
-        for(int num:nums) target+=num;
+        int max = nums[0];
+        for(int num:nums) {
+            target+=num;
+            max=Math.max(max,num);
+        }
         if(target%2==1) return false;
-        return partitionSum(nums,nums.length,target/2);
+        target /= 2;
+        if(max>target) return false;
+        return partitionSum(nums,nums.length,target);
     }
     public boolean partitionSum(int[] nums,int n,int target){
         if(nums[0]>target) return false;
