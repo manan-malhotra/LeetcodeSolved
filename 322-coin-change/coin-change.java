@@ -13,9 +13,7 @@ class Solution {
                     dp[i][j] = dp[i-1][j];
                     if(coins[i]<=j) dp[i][j] = Math.min(dp[i][j], 1 + dp[i][j-coins[i]]);
                 }
-                // System.out.print(dp[i][j]+" ");
             }
-            // System.out.println();
         }
         return dp[n-1][amount]==(int)1e9?-1:dp[n-1][amount];
     }
