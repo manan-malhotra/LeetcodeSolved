@@ -2,27 +2,27 @@ class Solution {
     public boolean isMatch(String s, String p) {
         int n = s.length();
         int m = p.length();
-        boolean[][] dp = new boolean[2][m+1];
-        dp[0][0] = true;
-        for(int j=1;j<=m;j++){
-            if(p.charAt(j-1)=='*') dp[0][j] = dp[0][j-1];
+        int[][] dp = new int[n][m];
+        for(int[] arr : dp) Arrays.fill(arr,-1);
+        return isMatch(n-1,m-1,s,p,dp);
+    }
+    public boolean isMatch(int i,int j, String s, String p,int[][] dp){
+        if(i==-1 && j==-1) return true;
+        if(i==-1) {
+            if(p.charAt(j)=='*') return isMatch(i,j-1,s,p,dp);
+            return false;
         }
-        for(int i=1;i<=n;i++){
-            for(int j=0;j<=m;j++){
-                if(j==0) dp[i%2][j] = false;
-                else if(s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1)=='?'){
-                    dp[i%2][j] = dp[(i-1)%2][j-1];
-                }
-                else if(p.charAt(j-1)=='*'){
-                     dp[i%2][j] =  dp[(i-1)%2][j] || dp[i%2][j-1];
-                }
-                else dp[i%2][j]=false;
-            }
+        if(j==-1) return false;
+        if(dp[i][j]!=-1) return dp[i][j]==1;
+        if(s.charAt(i) == p.charAt(j) || p.charAt(j)=='?'){
+            return isMatch(i-1,j-1,s,p,dp);
         }
-        return dp[n%2][m];
+        if(p.charAt(j)=='*'){
+            if(isMatch(i-1,j-1,s,p,dp) || isMatch(i-1,j,s,p,dp) || isMatch(i,j-1,s,p,dp)) dp[i][j] =1;
+            else dp[i][j]=0;
+        }
+        return dp[i][j]==1;
     }
 }
-
-
 
 
