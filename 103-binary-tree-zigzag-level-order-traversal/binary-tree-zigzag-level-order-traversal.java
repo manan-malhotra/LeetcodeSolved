@@ -1,26 +1,30 @@
-public class Solution {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) 
-    {
-Queue < TreeNode > queue = new LinkedList < TreeNode > ();
-        List<List<Integer>>  wrapList = new ArrayList < > ();
-
-        if (root == null) return wrapList;
-
-        queue.offer(root);
-        boolean flag = true;
-        while (!queue.isEmpty()) {
-            int levelNum = queue.size();
-            ArrayList < Integer > subList = new ArrayList < Integer > (levelNum);
-            for (int i = 0; i < levelNum; i++) {
-                int index = i;
-                if (queue.peek().left != null) queue.offer(queue.peek().left);
-                if (queue.peek().right != null) queue.offer(queue.peek().right);
-                if (flag == true) subList.add(queue.poll().val);
-                else subList.add(0, queue.poll().val);
-            }
-            flag = !flag;
-            wrapList.add(subList);
-        }
-        return wrapList;
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(root,ans,0,false);
+        return ans;
+    }
+    public void helper(TreeNode root, List<List<Integer>> ans, int level, boolean isReverse){
+        if(root==null) return;
+        if(ans.size()<=level) ans.add(new ArrayList<>());
+        if(isReverse) ans.get(level).add(0,root.val);
+        else ans.get(level).add(root.val);
+        helper(root.left, ans, level+1, !isReverse);
+        helper(root.right, ans, level+1, !isReverse);
     }
 }
