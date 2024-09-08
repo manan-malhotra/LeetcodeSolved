@@ -13,30 +13,33 @@
  *     }
  * }
  */
-class Solution {
-    public TreeNode bstFromPreorder(int[] preorder) {
-        TreeNode root = new TreeNode(preorder[0]);
-        for(int i=1;i<preorder.length;i++){
-            buildTree(root,preorder[i]);
-        }
-        return root;
-    }
 
-    public void buildTree(TreeNode root,int newVal){
-        if(root.val>newVal){
-            if(root.left!=null){
-                buildTree(root.left,newVal);
-            }else{
-                root.left = new TreeNode(newVal);
-                return;
+
+
+    class Solution {
+        public TreeNode bstFromPreorder(int[] preorder) {
+            TreeNode root = new TreeNode(preorder[0]);
+            for(int i=1;i<preorder.length;i++){
+                buildTree(root,preorder[i]);
             }
-        }else{
-            if(root.right!=null){
-                buildTree(root.right,newVal);
+            return root;
+        }
+
+        public void buildTree(TreeNode root,int newVal){
+            if(root.val>newVal){
+                if(root.left!=null){
+                    buildTree(root.left,newVal);
+                }else{
+                    root.left = new TreeNode(newVal);
+                    return;
+                }
             }else{
-                root.right = new TreeNode(newVal);
-                return;
+                if(root.right!=null){
+                    buildTree(root.right,newVal);
+                }else{
+                    root.right = new TreeNode(newVal);
+                    return;
+                }
             }
         }
     }
-}
