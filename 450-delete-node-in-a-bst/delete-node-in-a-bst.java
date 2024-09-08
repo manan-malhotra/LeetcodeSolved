@@ -9,18 +9,13 @@ class Solution {
         }else{
         //case1 leafnode
             if(root.right==null && root.left==null){
-                root=null;
-                return root;
+                return null;
             }
             // single sided node
             else if(root.right==null){
-                TreeNode temp=root.left;
-                root=null;
-                return temp ;
+                return root.left;
             }else if(root.left==null){
-                TreeNode temp=root.right;
-                root=null;
-                return temp;
+                return root.right;
             //sub complete bst
             }else{
                TreeNode temp=findmin(root.right);//we can also find for max in left sub tree
