@@ -21,8 +21,6 @@ class Solution {
                TreeNode temp=findmin(root.right);//we can also find for max in left sub tree
                root.val=temp.val;
                root.right=deleteNode(root.right,temp.val);
-                
-                
             }         
             
         }
