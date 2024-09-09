@@ -13,6 +13,7 @@
  *     }
  * }
  */
+
 class BSTIterator {
     Stack<TreeNode> stack= new Stack<>();
     public BSTIterator(TreeNode root) {
@@ -28,7 +29,7 @@ class BSTIterator {
     public int next() {
         if(hasNext()){
             TreeNode node = stack.pop();
-            if(node.right!=null) build(node.right);
+            build(node.right);
             return node.val;
         }
         return -1;
