@@ -30,7 +30,7 @@ class Solution {
         if(f==null){
           f=prev;
           s=root;
-        }else if(f!=null){
+        }else{
           s=root;
         }
       }
