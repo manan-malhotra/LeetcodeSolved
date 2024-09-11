@@ -29,10 +29,8 @@ class Solution {
       if(prev!=null && prev.val>root.val){
         if(f==null){
           f=prev;
-          s=root;
-        }else{
-          s=root;
         }
+        s=root;
       }
       prev=root;
       inorder(root.right);
