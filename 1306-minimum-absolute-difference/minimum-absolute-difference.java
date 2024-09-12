@@ -18,8 +18,8 @@ class Solution {
                 if(min >= diff){
                     if(diff < min){
                         result = new ArrayList<>();
-                        min = diff;
                     }
+                        min = diff;
                     result.add(Arrays.asList(arr[i], arr[i + 1]));
                 }
             }
