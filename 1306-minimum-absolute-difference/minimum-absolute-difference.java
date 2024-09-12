@@ -16,10 +16,11 @@ class Solution {
             }
             else{
                 if(min >= diff){
+                    System.out.println(min+" "+diff);
                     if(diff < min){
                         result = new ArrayList<>();
+                        min = diff;
                     }
-                    min = diff;
                     result.add(Arrays.asList(arr[i], arr[i + 1]));
                 }
             }
