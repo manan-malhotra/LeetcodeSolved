@@ -16,7 +16,6 @@ class Solution {
             }
             else{
                 if(min >= diff){
-                    System.out.println(min+" "+diff);
                     if(diff < min){
                         result = new ArrayList<>();
                         min = diff;
