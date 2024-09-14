@@ -3,7 +3,8 @@ class Solution {
         int n = prices.length;
         int[][] dp = new int[n][2];
         for(int[] row: dp) Arrays.fill(row,-1);
-        return f(0,n,0,prices,dp);
+        f(0,n,0,prices,dp);
+        return dp[0][0];
     }
     public int f(int i, int n, int buy,int[] prices,int[][] dp){
         if(dp[i][buy]!=-1) return dp[i][buy];
