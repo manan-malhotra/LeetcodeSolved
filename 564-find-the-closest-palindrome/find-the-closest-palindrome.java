@@ -1,30 +1,41 @@
 class Solution {
-    private long generatePalindrome(long prefix, boolean isEven) {
-        String s = Long.toString(prefix);
-        String rev = new StringBuilder(s.substring(0, s.length() - (isEven ? 0 : 1))).reverse().toString();
-        return Long.parseLong(s + rev);
+    public String nearestPalindromic(String numberStr) {
+        long number = Long.parseLong(numberStr);
+        if (number <= 10) return String.valueOf(number - 1);
+        if (number == 11) return "9";
+
+        int length = numberStr.length();
+        long leftHalf = Long.parseLong(numberStr.substring(0, (length + 1) / 2));
+        
+        long[] palindromeCandidates = new long[5];
+        palindromeCandidates[0] = generatePalindromeFromLeft(leftHalf - 1, length % 2 == 0);
+        palindromeCandidates[1] = generatePalindromeFromLeft(leftHalf, length % 2 == 0);
+        palindromeCandidates[2] = generatePalindromeFromLeft(leftHalf + 1, length % 2 == 0);
+        palindromeCandidates[3] = (long)Math.pow(10, length - 1) - 1;
+        palindromeCandidates[4] = (long)Math.pow(10, length) + 1;
+
+        long nearestPalindrome = 0;
+        long minDifference = Long.MAX_VALUE;
+
+        for (long candidate : palindromeCandidates) {
+            if (candidate == number) continue;
+            long difference = Math.abs(candidate - number);
+            if (difference < minDifference || (difference == minDifference && candidate < nearestPalindrome)) {
+                minDifference = difference;
+                nearestPalindrome = candidate;
+            }
+        }
+
+        return String.valueOf(nearestPalindrome);
     }
 
-    public String nearestPalindromic(String n) {
-        if (n.equals("1")) return "0";
-        
-        long num = Long.parseLong(n);
-        int length = n.length();
-        long prefix = Long.parseLong(n.substring(0, (length + 1) / 2));
-        
-        Set<Long> candidates = new HashSet<>(Arrays.asList(
-            (long) Math.pow(10, length - 1) - 1,
-            (long) Math.pow(10, length) + 1,
-            generatePalindrome(prefix - 1, length % 2 == 0),
-            generatePalindrome(prefix, length % 2 == 0),
-            generatePalindrome(prefix + 1, length % 2 == 0)
-        ));
-        
-        candidates.remove(num);
-        return Long.toString(Collections.min(candidates, (a, b) -> {
-            long diffA = Math.abs(a - num);
-            long diffB = Math.abs(b - num);
-            return diffA == diffB ? Long.compare(a, b) : Long.compare(diffA, diffB);
-        }));
+    private long generatePalindromeFromLeft(long leftHalf, boolean isEvenLength) {
+        long palindrome = leftHalf;
+        if (!isEvenLength) leftHalf /= 10;
+        while (leftHalf > 0) {
+            palindrome = palindrome * 10 + leftHalf % 10;
+            leftHalf /= 10;
+        }
+        return palindrome;
     }
 }
