@@ -1,46 +1,23 @@
 class Solution {
-    public int maxPoints(int[][] p) {
-        if (p.length == 1) return 1;
-        int max = 2;
-        for (int i = 0; i < p.length - 1; i++) {
-            int x1 = p[i][0], y1 = p[i][1];
-            for (int j = i + 1; j < p.length; j++) {
-                int x2 = p[j][0], y2 = p[j][1];
-                int count = 2;
-                if (x2 == x1) {
-                //if x's are equal then I check x's for other points
-                //since only points with equal x's will lie on the same line
-                    for (int l = 0; l < p.length; l++) {
-                        if (l == i || l == j) continue;
-                        int x3 = p[l][0];
-                        if (x3 == x1) count++;
-                    }
-                } else if (y2 == y1) {
-                //if y's are equal then I check y's for other points
-                //since only points with equal y's will lie on the same 
-                    for (int l = 0; l < p.length; l++) {
-                        if (l == i || l == j) continue;
-                        int y3 = p[l][1];
-                        if (y3 == y2) count++;
-                    }
-                } else {
-                //here I use the formula above
-                //I find k and b
-                //then I round potential y to 4 digits after "."
-                //since we are given numbers with limits of 10^4 
-                    double k = (y2 * 1.0 - y1) / (x2 - x1);
-                    double b = y1 - k * x1;
-                    for (int l = 0; l < p.length; l++) {
-                        if (l == i || l == j) continue;
-                        int x3 = p[l][0], y3 = p[l][1];
-                        double yPotential = k * x3 + b;
-                        yPotential = Math.round(yPotential * 10000.0) / 10000.0;
-                        if (y3 == yPotential) count++;
+    public int maxPoints(int[][] points) {
+        int n = points.length;
+        int ans = 1;
+        for (int i = 0; i < n; ++i) {
+            int x1 = points[i][0], y1 = points[i][1];
+            for (int j = i + 1; j < n; ++j) {
+                int x2 = points[j][0], y2 = points[j][1];
+                int cnt = 2;
+                for (int k = j + 1; k < n; ++k) {
+                    int x3 = points[k][0], y3 = points[k][1];
+                    int a = (y2 - y1) * (x3 - x1);
+                    int b = (y3 - y1) * (x2 - x1);
+                    if (a == b) {
+                        ++cnt;
                     }
                 }
-                if (max < count) max = count;
+                ans = Math.max(ans, cnt);
             }
         }
-        return max;
+        return ans;
     }
 }
