@@ -1,23 +1,25 @@
 class Solution {
-    public int[] answerQueries(int[] arr, int[] q) {
-        int n = arr.length;
-        Arrays.sort(arr);
-        int pre[] = new int[n];
-        pre[0] = arr[0];
-
-        for(int i=1; i<n; i++){
-            pre[i] = arr[i]+pre[i-1];
+    public int[] answerQueries(int[] nums, int[] queries) {
+        Arrays.sort(nums);
+        int maxs[] = new int[queries.length];
+        for(int i=1;i<nums.length;i++){
+            nums[i]+=nums[i-1];
         }
-        int ans[] = new int[q.length];
 
-        for(int i=0; i<q.length; i++){
-            int x=0;
-            for(int j=0; j<n; j++){
-                if(q[i]>=pre[j]) x++;
-                else break;
+        for(int i=0;i<queries.length;i++){
+            int l=0;
+            int r = nums.length-1;
+            while(l<=r){
+                int mid= l+ (r-l)/2;
+                if(nums[mid]>queries[i]){
+                    r=mid-1;
+                }
+                else{
+                    l=mid+1;
+                }
             }
-            ans[i] = x;
+            maxs[i]=r+1;
         }
-        return ans;
+        return maxs;
     }
 }
