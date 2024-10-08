@@ -1,32 +1,36 @@
 class Solution {
-    public int[] kWeakestRows(int[][] arr, int k) {
-                ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        int res[] = new int[k];
+    public int[] kWeakestRows(int[][] mat, int k) {
+        List<int[]> soldierCount = new ArrayList<>();
 
-        for (int i = 0; i < arr.length; i++) {
-            int c = 0;
-            ArrayList<Integer> rowList = new ArrayList<>(); 
-            for (int j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] == 1)
-                    c++;
-            }
-            rowList.add(c);
-            rowList.add(i);
-            list.add(rowList); 
+        for (int i = 0; i < mat.length; i++) {
+            int count = countSoldiers(mat[i]);
+            soldierCount.add(new int[]{count, i});
         }
 
-        Collections.sort(list, new Comparator<ArrayList<Integer>>() {
-            @Override
-            public int compare(ArrayList<Integer> list1, ArrayList<Integer> list2) {
-                Integer firstElement1 = list1.get(0);
-                Integer firstElement2 = list2.get(0);
-                return firstElement1.compareTo(firstElement2);
+        soldierCount.sort((a, b) -> {
+            if (a[0] == b[0]) {
+                return Integer.compare(a[1], b[1]);
             }
+            return Integer.compare(a[0], b[0]);
         });
 
+        int[] result = new int[k];
         for (int i = 0; i < k; i++) {
-            res[i] = list.get(i).get(1);
+            result[i] = soldierCount.get(i)[1];
         }
-        return res;
+
+        return result;
+    }
+
+    private int countSoldiers(int[] row) {
+        int count = 0;
+        for (int val : row) {
+            if (val == 1) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count;
     }
 }
