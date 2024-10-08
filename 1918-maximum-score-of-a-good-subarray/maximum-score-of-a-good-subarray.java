@@ -1,19 +1,19 @@
-public class Solution {
+class Solution {
     public int maximumScore(int[] nums, int k) {
-        int left = k, right = k;
-        int min_val = nums[k];
-        int max_score = min_val;
+        int n = nums.length, l = k - 1, r = k + 1;
+        int min = nums[k], maxScore = nums[k];
 
-        while (left > 0 || right < nums.length - 1) {
-            if (left == 0 || (right < nums.length - 1 && nums[right + 1] > nums[left - 1])) {
-                right++;
+        while (l >= 0 || r < n) {
+            if (l < 0 || (r < n && nums[l] < nums[r])) {
+                min = Integer.min(min, nums[r]);
+                r++;
             } else {
-                left--;
+                min = Integer.min(min, nums[l]);
+                l--;
             }
-            min_val = Math.min(min_val, Math.min(nums[left], nums[right]));
-            max_score = Math.max(max_score, min_val * (right - left + 1));
+            maxScore = Integer.max(maxScore, (r - l - 1) * min);
         }
-        
-        return max_score;
+
+        return maxScore;
     }
 }
