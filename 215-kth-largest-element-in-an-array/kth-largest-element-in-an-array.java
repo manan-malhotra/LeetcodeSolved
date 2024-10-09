@@ -3,7 +3,7 @@ class Solution {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for(int i:nums){
             pq.offer(i);
-            if(pq.size()>k) pq.poll();
+            if(pq.size()>k) pq.remove();
         }
         return pq.peek();
     }
