@@ -2,7 +2,7 @@ class Solution {
     public List<Integer> pancakeSort(int[] arr) {
         int max=arr.length;
         List<Integer> ans=new ArrayList<>();
-        while(max>0){
+        while(max>1){
             int x=0;
             for(int i=0;i<max;i++){
                 if(arr[i]==max){
