@@ -10,9 +10,9 @@ class Solution {
                     break;
                 }
             }
-            ans.add(x+1);
+            if(x+1>1) ans.add(x+1);
             rev(arr,x);
-            ans.add(max);
+            if(max>1) ans.add(max);
             rev(arr,max-1);
             max--;
         }
