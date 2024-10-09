@@ -3,15 +3,11 @@ class Solution {
         boolean found = false;
         StringBuilder sb = new StringBuilder();
         for(char c : word.toCharArray()){
-            if(!found){
                 sb.append(c);
-                if(c==ch) {
-                    found=true;
+                if(c==ch && !found) {
                     sb=sb.reverse();
+                    found = true;
                 }
-            }else{
-                sb.append(c);
-            }
         }
         return sb.toString();
     }
