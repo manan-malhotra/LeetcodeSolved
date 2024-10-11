@@ -1,39 +1,30 @@
 class Solution {
     public int maxScoreWords(String[] words, char[] letters, int[] score) {
-        int [] frequency = new int[26];
-        for(int i = 0;i<letters.length;i++){
-            frequency[letters[i]-'a']++;
+        int[] cnts = new int[128];
+        for(char c: letters) {
+            cnts[c]++;
         }
-        int result = backtrack(words,frequency,score,0);
-        return result;
-        
-        
+        return helper(score, words, 0, cnts);
     }
-    public static int backtrack(String[] words, int[] frr, int[] score,int idx){
-        if(idx == words.length){
-            return 0;
+
+    int helper(int[] score, String[] words, int idx, int[] cnts) {
+        if(idx == words.length) return 0;
+        int skip = helper(score, words, idx + 1, cnts);
+        boolean canUse = true;
+        var w = words[idx];
+        int use = 0;
+        for(int i = 0; i < w.length(); i++) {
+            char c = w.charAt(i);
+            if(--cnts[c] < 0) canUse = false;
+            use += score[c - 'a'];
         }
-        int scoreOfaWord =0;
-        int no = backtrack(words,frr,score,idx+1);
-        boolean isValid = true;
-        for(int i =0;i<words[idx].length();i++){
-            char ch = words[idx].charAt(i);
-            if(frr[ch-'a']<=0){
-                isValid = false;
-            }
-            frr[ch-'a']--;
-            scoreOfaWord += score[ch-'a'];
-            
+        if(canUse) {
+            use += helper(score, words, idx + 1, cnts);
         }
-        int yes =0;
-        if(isValid){
-            yes = scoreOfaWord + backtrack(words,frr,score,idx+1);
+        for(int i = 0; i < w.length(); i++) {
+            char c = w.charAt(i);
+            ++cnts[c];
         }
-        for(int i =0;i<words[idx].length();i++){
-            frr[words[idx].charAt(i)-'a']++;
-        }
-        return Math.max(no,yes);
-        
-        
+        return canUse ? Math.max(use, skip) : skip;
     }
 }
