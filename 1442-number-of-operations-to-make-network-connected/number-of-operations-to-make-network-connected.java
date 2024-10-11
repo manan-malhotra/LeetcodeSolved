@@ -1,46 +1,38 @@
 class Solution {
     public int makeConnected(int n, int[][] connections) {
-        int edges = connections.length;
-        int minimumRequired = n-1;
-        if(edges<minimumRequired) return -1;
-        int newRequired = findSeperated(n,connections)-1;
-        return newRequired;
+        int m = connections.length;
+        if(m<n-1) return -1;
+        List<List<Integer>> adj = createGraph(connections,n);
+        int connectedIsland = connectedGraphs(adj);
+        return connectedIsland-1;
     }
-    public int findSeperated(int n, int[][] connections){
+    public List<List<Integer>> createGraph(int[][] connections,int n){
         List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0;i<n;i++){
-            adj.add(new ArrayList<Integer>());
+        for(int i=0;i<n;i++) adj.add(new ArrayList<>());
+        for(int[] connection : connections){
+            int to = connection[0];
+            int from = connection[1];
+            adj.get(to).add(from);
+            adj.get(from).add(to);
         }
-        for(int[] arr:connections){
-            int u = arr[0];
-            int v = arr[1];
-            adj.get(u).add(v);
-            adj.get(v).add(u);
-        }
-        int[] visited = new int[n];
+        return adj;
+    }
+    public int connectedGraphs(List<List<Integer>> adj){
         int count = 0;
+        int n = adj.size();
+        int[] vis = new int[n];
         for(int i=0;i<n;i++){
-            if(visited[i]==0){
+            if(vis[i]==0) {
+                dfs(i,vis,adj);
                 count++;
-                bfs(i,adj,visited);
-            }
+            }    
         }
         return count;
     }
-    public void bfs(int start, List<List<Integer>> adj, int[] vis){
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(start);
-        vis[start]=1;
-        while(!queue.isEmpty()){
-            int node = queue.poll();
-            List<Integer> arr = adj.get(node);
-            for(int j=0;j<arr.size();j++){
-                    int curr = arr.get(j);
-                    if(vis[curr]==0){
-                    vis[curr]=1;
-                    queue.offer(curr);
-                }
+    public void dfs(int parent, int[] vis, List<List<Integer>> adj){
+            vis[parent] = 1;
+            for(int child : adj.get(parent)){
+                if(vis[child]==0) dfs(child,vis,adj);
             }
-        }
     }
 }
