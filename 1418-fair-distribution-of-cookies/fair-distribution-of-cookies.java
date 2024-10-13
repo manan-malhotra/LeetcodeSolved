@@ -1,34 +1,44 @@
 class Solution {
-    private int dfs(int idx, int[] distribute, int[] cookies, int k, int zeroCount) {
-        if (cookies.length - idx < zeroCount) {
-            return Integer.MAX_VALUE;   
+    public int distributeCookies(int[] nums, int k) {
+        
+          int set[] = new int[k];
+       
+           helper(set,nums,nums.length-1);
+         return ans;
+    }
+   
+   int ans=Integer.MAX_VALUE; 
+    public void helper(int[] set, int[] nums, int idx) {
+
+            
+        if (idx == -1) {
+            int mx=0;
+            for (int ss : set) {
+                
+                mx=Math.max(mx,ss);
+            }
+
+            ans=Math.min(ans,mx);
+            return;
+        }
+              
+        for (int j = 0; j < set.length; j++) {
+
+            
+                set[j] += nums[idx];
+
+                helper(set, nums, idx -1); 
+                 
+
+                set[j] -= nums[idx];
+            
+
+            if (set[j] == 0)
+                break;
+
         }
 
-        if (idx == cookies.length) {
-            int unfairness = Integer.MIN_VALUE;
-            for (int value : distribute) {
-                unfairness = Math.max(unfairness, value);
-            }
-            return unfairness;
-        }
-        
-        int minUnfairness = Integer.MAX_VALUE;
-        for (int j = 0; j < k; ++j) {
-            zeroCount -= distribute[j] == 0 ? 1 : 0;
-            distribute[j] += cookies[idx];
-            
-            minUnfairness = Math.min(minUnfairness, dfs(idx + 1, distribute, cookies, k, zeroCount));
-            
-            distribute[j] -= cookies[idx];
-            zeroCount += distribute[j] == 0 ? 1 : 0;
-        }
-        
-        return minUnfairness;
-    }
-    
-    public int distributeCookies(int[] cookies, int k) {
-        int[] distribute = new int[k];
-        
-        return dfs(0, distribute, cookies, k, k);
+        return ;
+
     }
 }
