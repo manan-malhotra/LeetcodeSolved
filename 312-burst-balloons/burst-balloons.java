@@ -5,7 +5,7 @@ class Solution {
         for(int num:nums) arr.add(num);
         arr.add(1);
         int n = arr.size();
-        int[][] dp = new int[n+2][n+2];
+        int[][] dp = new int[n][n];
         for(int[] row:dp) Arrays.fill(row,-1);
         return f(1,n-2,arr,dp);
     }
