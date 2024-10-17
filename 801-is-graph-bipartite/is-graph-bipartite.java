@@ -14,8 +14,8 @@ class Solution {
         vis[node] = val;
         int[] child = graph[node];
         for(int ch : child){
-            if(vis[ch]==0) if(dfs(ch,-1*val,vis,graph))return true;
             if(vis[ch]==val) return true;
+            if(vis[ch]==0)  if(dfs(ch,-val,vis,graph))return true;
         }
         return false;
     }
