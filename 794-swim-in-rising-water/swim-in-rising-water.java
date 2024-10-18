@@ -29,7 +29,6 @@ class Solution {
             for(int i=0;i<4;i++){
                 int newI = oldI + row[i];
                 int newJ = oldJ + col[i];
-                    System.out.println("Adding "+ newI+" "+newJ);
                 if(newI>=0 && newJ>=0 && newI<n && newJ<n && vis[newI][newJ]==0){
                     vis[newI][newJ] = 1;
                     pq.add(new Level(grid[newI][newJ],newI,newJ));
