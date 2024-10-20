@@ -2,27 +2,20 @@ class Solution {
     public int findRotateSteps(String ring, String key) {
         int m = ring.length();
         int n = key.length();
-        
-        int dp[][]=new int[m][n];
-        for(int []row:dp)
-          Arrays.fill(row, -1);
-        return n+method(0,0,ring, key, m,n,dp);
+        int[][] dp = new int[m][n];
+        for(int[] row:dp) Arrays.fill(row,-1);
+        return n + f(0,0,ring,key,m,n,dp);
     }
-    public int method(int i1, int i2, String ring, String key, int m, int n, int dp[][])
-    {
-        if(i2==n)
-          return 0;
-        if(dp[i1][i2]!=-1)
-         return dp[i1][i2];
+    public int f(int i,int j, String ring, String key, int m, int n, int[][] dp){
+        if(j==n) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
         int ans = Integer.MAX_VALUE;
-        for(int i=0;i<m;i++)
-        {
-            if(ring.charAt(i)==key.charAt(i2))
-            {
-                int count = Math.min(Math.abs(i1-i), m - Math.abs(i1-i));
-                ans = Math.min(ans, count + method(i,i2+1,ring, key, m,n,dp));
+        for(int k=0;k<m;k++){
+            if(key.charAt(j)==ring.charAt(k)){
+                int count = Math.min(m-Math.abs(i-k),Math.abs(i-k));
+                ans = Math.min(ans,count + f(k,j+1,ring,key,m,n,dp));
             }
         }
-        return dp[i1][i2]=ans;
+        return dp[i][j] = ans;
     }
 }
