@@ -1,35 +1,31 @@
-enum Result {
-    TRUE, FALSE
-}
-
 class Solution {
-    Result[][] dp;
-
-    public boolean isMatch(String text, String pattern) {
-        dp = new Result[text.length() + 1][pattern.length() + 1];
-        return dp(0, 0, text, pattern);
+    	Boolean[][] mem;
+    public boolean isMatch(String s, String p) {
+        mem = new Boolean[s.length()+1][p.length()];
+        return isMatch(0,s,0,p);
     }
-
-    public boolean dp(int i, int j, String text, String pattern) {
-        if (dp[i][j] != null) {
-            return dp[i][j] == Result.TRUE;
+    private boolean isMatch(int i, String s, int j, String p) { 
+        int sn = s.length(), pn = p.length();
+        if(j==pn) { // since * in p can match 0 of previous char, so empty string(i==sn) may match p
+            return i==sn;    
         }
-        boolean ans;
-        if (j == pattern.length()){
-            ans = i == text.length();
-        } else{
-            boolean first_match = (i < text.length() &&
-                                   (pattern.charAt(j) == text.charAt(i) ||
-                                    pattern.charAt(j) == '.'));
-
-            if (j + 1 < pattern.length() && pattern.charAt(j+1) == '*'){
-                ans = (dp(i, j+2, text, pattern) ||
-                       first_match && dp(i+1, j, text, pattern));
-            } else {
-                ans = first_match && dp(i+1, j+1, text, pattern);
+        if(mem[i][j]!=null) {
+            return mem[i][j];
+        }
+        char pj = p.charAt(j);
+        if(j+1<pn && p.charAt(j+1)=='*') { //match *, needs to look at the next char to repeate current char
+            if(isMatch(i,s,j+2,p)) {
+                return mem[i][j]=true;
             }
+            if(i<sn && (pj == '.'||pj==s.charAt(i))) {
+                if(isMatch(i+1,s,j,p)) {
+                    return mem[i][j]=true;
+                }
+            }
+        } else if(i<sn && (s.charAt(i) == pj ||    //match char
+                   pj=='.')) {              //match dot
+            return mem[i][j]=isMatch(i+1, s, j+1, p);
         }
-        dp[i][j] = ans ? Result.TRUE : Result.FALSE;
-        return ans;
+        return mem[i][j]=false;
     }
 }
