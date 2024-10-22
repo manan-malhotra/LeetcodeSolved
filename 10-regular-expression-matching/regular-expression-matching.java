@@ -10,17 +10,18 @@ class Solution {
             return i==n;    
         }
         if(dp[i][j]!=null) return dp[i][j];
+        char pAtJ = p.charAt(j);
         if(j+1<m && p.charAt(j+1)=='*') { //match *, needs to look at the next char to repeate current char
             if(isMatch(i,s,j+2,p,n,m)) {
                 return dp[i][j] = true;
             }
-            while(i<n && (p.charAt(j) == '.'||p.charAt(j)==s.charAt(i))) {
+            while(i<n && (pAtJ == '.'||pAtJ==s.charAt(i))) {
                 if(isMatch(++i,s,j+2,p,n,m)) {
                     return dp[i][j] = true;
                 }
             }
-        } else if(i<n && (s.charAt(i) == p.charAt(j) ||    //match char
-                   p.charAt(j)=='.')) {              //match dot
+        } else if(i<n && (s.charAt(i) == pAtJ ||    //match char
+                   pAtJ=='.')) {              //match dot
             return dp[i][j] = isMatch(i+1, s, j+1, p,n,m);
         }
         return dp[i][j] = false;
