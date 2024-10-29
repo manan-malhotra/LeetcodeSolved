@@ -1,23 +1,27 @@
 class Solution {
     public int maxCoins(int[] nums) {
+        int n = nums.length;
         List<Integer> arr = new ArrayList<>();
         arr.add(1);
         for(int num:nums) arr.add(num);
         arr.add(1);
-        int n = arr.size();
-        int[][] dp = new int[n][n];
-        for(int[] row:dp) Arrays.fill(row,-1);
-        return f(1,n-2,arr,dp);
-    }
-    public int f(int i, int j, List<Integer> arr, int[][] dp){
-        if(i>j) return 0;
-        if(dp[i][j]>=0) return dp[i][j];
-        int maxi = Integer.MIN_VALUE;
-        for(int k=i;k<=j;k++){
-            int cost = arr.get(i-1)*arr.get(j+1)*arr.get(k); 
-            cost+=f(i,k-1,arr,dp) + f(k+1,j,arr,dp);
-            maxi = Math.max(cost,maxi);
+        int[][] dp = new int[n+2][n+2];
+        for(int i=1;i<=n;i++){
+            dp[i][i] = arr.get(i-1)*arr.get(i)*arr.get(i+1);
         }
-        return dp[i][j] = maxi;
+        for(int i=n;i>=1;i--){
+            for(int j=1;j<=n;j++){
+                if(i>=j) continue;
+                int maxi = Integer.MIN_VALUE;
+                for(int k=i;k<=j;k++){
+                    int total = dp[i][k-1] + dp[k+1][j] + (arr.get(i-1) * arr.get(k) * arr.get(j+1));
+                    maxi = Math.max(maxi,total);
+                }
+                dp[i][j] = maxi;
+            }
+        }
+        return dp[1][n];
     }
 }
+
+
