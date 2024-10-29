@@ -2,37 +2,45 @@ class Solution {
     public int makeConnected(int n, int[][] connections) {
         int m = connections.length;
         if(m<n-1) return -1;
-        List<List<Integer>> adj = createGraph(connections,n);
-        int connectedIsland = connectedGraphs(adj);
-        return connectedIsland-1;
-    }
-    public List<List<Integer>> createGraph(int[][] connections,int n){
-        List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0;i<n;i++) adj.add(new ArrayList<>());
-        for(int[] connection : connections){
-            int to = connection[0];
-            int from = connection[1];
-            adj.get(to).add(from);
-            adj.get(from).add(to);
+        Disjoint dsu = new Disjoint(n);
+        for(int[] edge : connections){
+            dsu.union(edge[0],edge[1]);
         }
-        return adj;
-    }
-    public int connectedGraphs(List<List<Integer>> adj){
         int count = 0;
-        int n = adj.size();
-        int[] vis = new int[n];
         for(int i=0;i<n;i++){
-            if(vis[i]==0) {
-                dfs(i,vis,adj);
-                count++;
-            }    
+            if(dsu.findUPar(i)==i) count++;
         }
-        return count;
+        return count-1;
     }
-    public void dfs(int parent, int[] vis, List<List<Integer>> adj){
-            vis[parent] = 1;
-            for(int child : adj.get(parent)){
-                if(vis[child]==0) dfs(child,vis,adj);
-            }
+}
+class Disjoint{
+    List<Integer> parent = new ArrayList<>();
+    List<Integer> size = new ArrayList<>();
+    public Disjoint(int n){
+        for(int i=0;i<n;i++){
+            parent.add(i);
+            size.add(1);
+        }
+    }
+    public int findUPar(int node){
+        int parentNode = parent.get(node);
+        if(parentNode == node) return node;
+        parentNode = findUPar(parentNode);
+        parent.set(node,parentNode);
+        return parentNode;
+    }
+    public void union(int u, int v){
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if(ulp_u==ulp_v) return;
+        int sizeU = size.get(ulp_u);
+        int sizeV = size.get(ulp_v);
+        if(sizeU<sizeV){
+            parent.set(ulp_u,ulp_v);
+            size.set(ulp_v,sizeU+sizeV);
+        }else{
+            parent.set(ulp_v,ulp_u);
+            size.set(ulp_u,sizeU+sizeV);
+        }
     }
 }
