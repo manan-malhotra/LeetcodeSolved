@@ -9,7 +9,7 @@ class Solution {
         for(int i=1;i<=n;i++){
             dp[i][i] = arr.get(i-1)*arr.get(i)*arr.get(i+1);
         }
-        for(int i=n;i>=1;i--){
+        for(int i=n-1;i>=1;i--){
             for(int j=i+1;j<=n;j++){
                 // if(i>=j) continue;
                 int maxi = Integer.MIN_VALUE;
