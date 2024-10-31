@@ -18,14 +18,12 @@ class Solution {
             pivotCount--;
             result[index++]=pivot;
         }
-
-        int end = nums.length - 1;
-        index = end;
-        while (end >= 0) {
-            if (nums[end] > pivot) {
-                result[index--] = nums[end];
+        start=0;
+        while (start < nums.length) {
+            if (nums[start] > pivot) {
+                result[index++] = nums[start];
             }
-            end--;
+            start++;
         }
 
         nums = result;
