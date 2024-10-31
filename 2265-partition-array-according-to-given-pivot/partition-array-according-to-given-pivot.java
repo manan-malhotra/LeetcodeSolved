@@ -5,16 +5,19 @@ class Solution {
         }
 
         int[] result = new int[nums.length];
-
         int start = 0;
         int index = start;
+        int pivotCount = 0;
         while (start < nums.length) {
             if (nums[start] < pivot) {
                 result[index++] = nums[start];
-            }
+            }else if(nums[start]==pivot)pivotCount++;
             start++;
         }
-        int pivotLeft = index;
+        while(pivotCount>0){
+            pivotCount--;
+            result[index++]=pivot;
+        }
 
         int end = nums.length - 1;
         index = end;
@@ -23,11 +26,6 @@ class Solution {
                 result[index--] = nums[end];
             }
             end--;
-        }
-        int pivotRight = index;
-
-        for (int i = pivotLeft; i <= pivotRight; i++) {
-            result[i] = pivot;
         }
 
         nums = result;
