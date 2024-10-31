@@ -14,9 +14,7 @@ class Solution {
             }
         }
 
-        if (stack.size() == 2) {
-            return 1;
-        }
+        
 
         int single = stack.size() / 2;
 
