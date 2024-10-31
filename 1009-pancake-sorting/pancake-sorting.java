@@ -10,6 +10,10 @@ class Solution {
                     break;
                 }
             }
+            if(x==max-1) {
+                max--;
+                continue;
+            }
             if(x+1>1) ans.add(x+1);
             rev(arr,x);
             if(max>1) ans.add(max);
