@@ -1,30 +1,42 @@
 class Solution {
-    public int solve(String answerKey, int k, char letter)
-    {
-        int left = 0;
-        int right = 0;
-        int c = 0;
-        int ans = 0;
-        while(right<answerKey.length())
-        {
-            if(answerKey.charAt(right)==letter)
-            {
-                c++;
-            }
-            if(c>k)
-            {
-                if(answerKey.charAt(left)==letter)
-                {
-                    c--;
-                }
-                left++;
-            }
-            ans = Math.max(ans,right-left+1);
-            right++;
-        }
-        return ans;
-    }
     public int maxConsecutiveAnswers(String answerKey, int k) {
-        return Math.max(solve(answerKey,k,'T'),solve(answerKey,k,'F'));
+        int max_consec_len = 0;
+        int n = answerKey.length();
+        int l = 0;
+        int r = 0;
+        int fcount = 0;
+        int tcount = 0;
+        int m = Math.min(fcount, tcount);
+        while(r < n){
+            while(r < n && m <= k){
+                char c = answerKey.charAt(r);
+                if(c == 'F'){
+                    fcount++;
+                }
+                else{
+                    tcount++;
+                }
+                m = Math.min(fcount, tcount);
+                if(m > k){
+                    r++;
+                    break;
+                }
+                int len = r - l + 1;
+                max_consec_len = Math.max(max_consec_len, len);
+                r++;
+            }
+            while(l < r && m > k){
+                char c = answerKey.charAt(l);
+                if(c == 'F'){
+                    fcount--;
+                }
+                else{
+                    tcount--;
+                }
+                m = Math.min(fcount, tcount);
+                l++;
+            }
+        }
+        return max_consec_len;
     }
 }
