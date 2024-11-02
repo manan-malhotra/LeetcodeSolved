@@ -12,15 +12,14 @@ class Solution {
         for(int i = -1; i<=1; i++) {
             for(int j = -1; j<=1; j++) {
                 int curr = f(grid, r+1, c1+i, c2+j);
-                if(curr == -1) continue;
+                // if(curr == -1) continue;
                 max = Math.max(max, curr);
             }
         }
         return dp[r][c1][c2] = grid[r][c1] + grid[r][c2] + max;
     }
     private boolean check(int m, int c1, int c2) {
-        if(c1 < 0 || c2 < 0 || c1 >= m || c2 >= m) return false;
-        if(c1 == c2) return false;
+        if(c1 < 0 || c2 < 0 || c1 >= m || c2 >= m || c1==c2) return false;
         return true;
     }
 }
