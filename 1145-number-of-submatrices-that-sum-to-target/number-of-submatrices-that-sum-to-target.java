@@ -1,31 +1,51 @@
 class Solution {
+
+    private int m;
+    private int n;
+    
     public int numSubmatrixSumTarget(int[][] matrix, int target) {
-        int rows = matrix.length, cols = matrix[0].length;
-        
-        for(int[] row : matrix){
-            for(int col = 1; col < cols; col++){
-                row[col] += row[col-1];
-            }
-        }
-        
-        int sumCnt = 0;
-        
-        for(int left = 0; left < cols; left++){
-            for(int right = left; right < cols; right++){
-                int currPrefSum = 0;
-                Map<Integer, Integer> sumFreq = new HashMap<>();
-                sumFreq.put(0, 1);
-                
-                for(int r = 0; r < rows; r++){
-                    int prefSumCurrRow = matrix[r][right] - ((left - 1 > -1) ? matrix[r][left - 1] : 0);
-                    currPrefSum += prefSumCurrRow;
-                    if(sumFreq.containsKey(currPrefSum - target)){
-                        sumCnt += sumFreq.get(currPrefSum - target);
+        m = matrix.length;
+        n = matrix[0].length;
+        int[][] sumMatrix = prepareSumMatrix(matrix);
+        int count = 0;
+        Map<Integer, Integer> countsMap = new HashMap<>();
+        for (int x1 = 0; x1 < m; x1++) {
+            countsMap.clear();
+            for (int k1 = 0; x1 + k1 < m; k1++) {
+                int x2 = x1 + k1;
+                countsMap.clear();
+                for (int y2 = 0; y2 < n; y2++) {
+                    int currSum = matrixSumFor(sumMatrix, x1, 0, x2, y2);
+                    if (currSum == target) {                        
+                        count++;
                     }
-                    sumFreq.put(currPrefSum, sumFreq.getOrDefault(currPrefSum, 0) + 1);
+                    count += countsMap.getOrDefault(currSum - target, 0);
+                    countsMap.put(currSum, countsMap.getOrDefault(currSum, 0) + 1);
                 }
             }
         }
-        return sumCnt;
+        return count;
+    }
+
+    private int matrixSumFor(int[][] sumMatrix, int x1, int y1, int x2, int y2) {
+        return sumMatrix[x2][y2] - (x1 == 0? 0 : sumMatrix[x1 - 1][y2]) - (y1 == 0? 0 : sumMatrix[x2][y1-1]) 
+            + (x1 == 0 || y1 == 0 ? 0 : sumMatrix[x1-1][y1-1]);
+    }
+
+    private int[][] prepareSumMatrix(int[][] matrix) {
+        int[][] sum = new int[m][n];
+        sum[0][0] = matrix[0][0];
+        for (int i = 1; i < m; i++) {
+            sum[i][0] = sum[i-1][0] + matrix[i][0];
+        }
+        for (int j = 1; j < n; j++) {
+            sum[0][j] = sum[0][j-1] + matrix[0][j];
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                sum[i][j] = matrix[i][j] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1];
+            }
+        }
+        return sum;
     }
 }
