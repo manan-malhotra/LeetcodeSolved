@@ -1,51 +1,39 @@
 class Solution {
+  public int numSubmatrixSumTarget(int[][] matrix, int target) {
+    int r = matrix.length, c = matrix[0].length;
 
-    private int m;
-    private int n;
-    
-    public int numSubmatrixSumTarget(int[][] matrix, int target) {
-        m = matrix.length;
-        n = matrix[0].length;
-        int[][] sumMatrix = prepareSumMatrix(matrix);
-        int count = 0;
-        Map<Integer, Integer> countsMap = new HashMap<>();
-        for (int x1 = 0; x1 < m; x1++) {
-            countsMap.clear();
-            for (int k1 = 0; x1 + k1 < m; k1++) {
-                int x2 = x1 + k1;
-                countsMap.clear();
-                for (int y2 = 0; y2 < n; y2++) {
-                    int currSum = matrixSumFor(sumMatrix, x1, 0, x2, y2);
-                    if (currSum == target) {                        
-                        count++;
-                    }
-                    count += countsMap.getOrDefault(currSum - target, 0);
-                    countsMap.put(currSum, countsMap.getOrDefault(currSum, 0) + 1);
-                }
-            }
-        }
-        return count;
+    // compute 2D prefix sum
+    int[][] prefixSum = new int[r + 1][c + 1];
+
+    for (int i = 1; i < r + 1; i++) {
+      for (int j = 1; j < c + 1; j++) {
+        prefixSum[i][j] = (prefixSum[i - 1][j] + prefixSum[i][j - 1]) - prefixSum[i - 1][j - 1] + matrix[i - 1][j - 1];
+      }
     }
 
-    private int matrixSumFor(int[][] sumMatrix, int x1, int y1, int x2, int y2) {
-        return sumMatrix[x2][y2] - (x1 == 0? 0 : sumMatrix[x1 - 1][y2]) - (y1 == 0? 0 : sumMatrix[x2][y1-1]) 
-            + (x1 == 0 || y1 == 0 ? 0 : sumMatrix[x1-1][y1-1]);
+    int count = 0; 
+    int currSum = 0;
+    Map<Integer, Integer> map = new HashMap<>();
+    // reduce 2D problem to 1D one
+    // by fixing two rows r1 and r2 and 
+    // computing 1D prefix sum for all matrices using [r1..r2] rows
+    for (int r1 = 1; r1 < r + 1; ++r1) {
+      for (int r2 = r1; r2 < r + 1; ++r2) {
+        map.clear();
+        map.put(0, 1);
+        for (int col = 1; col < c + 1; ++col) {
+          // current 1D prefix sum
+          currSum = prefixSum[r2][col] - prefixSum[r1 - 1][col];
+
+          // add subarrays which sum up to (currSum - target)
+          count += map.getOrDefault(currSum - target, 0);
+
+          // save current prefix sum
+          map.put(currSum, map.getOrDefault(currSum, 0) + 1);
+        }
+      }
     }
 
-    private int[][] prepareSumMatrix(int[][] matrix) {
-        int[][] sum = new int[m][n];
-        sum[0][0] = matrix[0][0];
-        for (int i = 1; i < m; i++) {
-            sum[i][0] = sum[i-1][0] + matrix[i][0];
-        }
-        for (int j = 1; j < n; j++) {
-            sum[0][j] = sum[0][j-1] + matrix[0][j];
-        }
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                sum[i][j] = matrix[i][j] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1];
-            }
-        }
-        return sum;
-    }
+    return count;
+  }
 }
