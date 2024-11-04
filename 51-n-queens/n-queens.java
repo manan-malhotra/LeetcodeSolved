@@ -2,11 +2,11 @@ class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> ans = new ArrayList<>();
         List<String> temp = new ArrayList<>();
+        StringBuilder sb = new StringBuilder("");
+        for(int j=0;j<n;j++){
+            sb.append(".");
+        }
         for(int i=0;i<n;i++){
-            StringBuilder sb = new StringBuilder("");
-            for(int j=0;j<n;j++){
-                sb.append(".");
-            }
             temp.add(sb.toString());
         }
         solve(ans,temp,0);
