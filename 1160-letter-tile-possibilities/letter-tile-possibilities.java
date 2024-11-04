@@ -1,7 +1,7 @@
 class Solution {
 
     public Set<String> tilePossiblity(Set<String> result, StringBuilder ds, String tiles, boolean[] used){
-        if(!ds.isEmpty()){
+        if(!ds.isEmpty() && !result.contains(ds.toString())){
             result.add(new String(ds.toString()));
         }
 
