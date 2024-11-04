@@ -1,8 +1,8 @@
 class Solution {
     public int maxScoreWords(String[] words, char[] letters, int[] score) {
-        int[] cnts = new int[128];
+        int[] cnts = new int[26];
         for(char c: letters) {
-            cnts[c]++;
+            cnts[c-'a']++;
         }
         return helper(score, words, 0, cnts);
     }
@@ -15,7 +15,7 @@ class Solution {
         int use = 0;
         for(int i = 0; i < w.length(); i++) {
             char c = w.charAt(i);
-            if(--cnts[c] < 0) canUse = false;
+            if(--cnts[c-'a'] < 0) canUse = false;
             use += score[c - 'a'];
         }
         if(canUse) {
@@ -23,7 +23,7 @@ class Solution {
         }
         for(int i = 0; i < w.length(); i++) {
             char c = w.charAt(i);
-            ++cnts[c];
+            ++cnts[c-'a'];
         }
         return canUse ? Math.max(use, skip) : skip;
     }
