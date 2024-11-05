@@ -12,9 +12,9 @@ class Solution {
             if (j > 0) {
                 StringBuilder ns = new StringBuilder(s.substring(i - j, i + 1));
                 s.replace(i - j, i + 1, ns.reverse().toString());
+                j = 0;
             }
 
-            j = 0;
         }
 
         return s.toString();
