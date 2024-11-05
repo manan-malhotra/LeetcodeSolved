@@ -1,18 +1,24 @@
 class Solution {
     public int maxChunksToSorted(int[] arr) {
-        Stack<Integer> a= new Stack<Integer>();
+        int n = arr.length;
+        int[] maxOfLeft = new int[n];
+        int[] minOfRight = new int[n];
 
-        for(int i=0;i<arr.length;i++)
-        {
-                int mx=arr[i];
-            while(!a.isEmpty()&&arr[i]<a.peek())
-            {
-                mx= Math.max(mx,a.peek());
-                a.pop();
-            }
-
-            a.push(mx);
+        maxOfLeft[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            maxOfLeft[i] = Math.max(maxOfLeft[i-1], arr[i]);
         }
-        return(a.size());
+
+        minOfRight[n - 1] = arr[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            minOfRight[i] = Math.min(minOfRight[i + 1], arr[i]);
+        }
+
+        int res = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (maxOfLeft[i] <= minOfRight[i + 1]) res++;
+        }
+
+        return res + 1;
     }
 }
